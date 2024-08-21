@@ -69,8 +69,24 @@
   </div>
 
   <div class="play-container" v-if="!play">
-    <div style="position: fixed; bottom: 0; display: inline-block;">
-      <img src="./components/icons/Rectangle 1.png"/>
+    <div class="bottom-image">
+      <img
+        src="./components/icons/RectangleBack.png"
+        alt="Bottom Image"
+        class="bottom-image-item"
+      />
+      <img
+        src="./components/icons/RectangleFront.png"
+        alt="Top Image"
+        class="top-image-item"
+      />
+      <div class="bottom-container">
+        <img src="./components/icons/Home.png" alt="Home" />
+        <img src="./components/icons/Inventory.png" alt="Home" />
+        <img src="./components/icons/Hook.png" alt="Home" />
+        <img src="./components/icons/Shop.png" alt="Home" />
+        <img src="./components/icons/Bookmark.png" alt="Home" />
+      </div>
     </div>
   </div>
 </template>
@@ -114,10 +130,49 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: url("./components/image/PlayBackground.png"); /*เปลี่ยน path ของรูปตามที่ต้องการ*/
+  background-image: url("./components/image/PlayBackground.png"); /* เปลี่ยน path ของรูปตามที่ต้องการ */
   background-size: cover; /* ปรับขนาดให้รูปภาพครอบคลุมทั้ง background */
   background-position: center; /* ปรับให้รูปอยู่ตรงกลาง */
   position: relative;
+}
+
+.bottom-image {
+  position: relative; /* Relative positioning to allow for absolute positioning of children */
+  width: 100%; /* Full width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.bottom-image-item,
+.top-image-item {
+  position: fixed; /* Absolute positioning to stack images */
+  left: 0;
+  bottom: 0;
+  width: 100%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image fits within the container */
+}
+
+.top-image-item {
+  /* Adjust z-index if needed to control stacking order */
+  z-index: 1; /* Make sure it is on top of the bottom image */
+}
+
+.bottom-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Full viewport width */
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly */
+  align-items: center; /* Center images vertically */
+  padding: 0 2rem; /* Add horizontal padding to avoid images touching edges */
+  box-sizing: border-box; /* Include padding in width calculations */
+  z-index: 2;
+}
+
+.bottom-container img {
+  max-width: 20%; /* Adjust based on the number of images */
+  height: auto; /* Maintain aspect ratio */
 }
 
 @font-face {
