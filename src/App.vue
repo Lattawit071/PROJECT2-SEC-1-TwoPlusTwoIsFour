@@ -194,35 +194,55 @@ function hookFish(rodId) {
     }
   });
 }
-
 const waiting = ref(false);
 const ranNumber = ref(0);
 const caughtFish = ref();
-
-// Example Usage
+const gottenFish = ref(false);
+/*// Example Usage
 addCoins(500); // Add 500 coins to the player
 deductCoins(300); // Deduct 300 coins from the player
 addRod(1); // Add the Basic Rod to the player's inventory
 addCaughtFish(4); // Add Catfish to the player's caught fish list
 addEnhancement(2); // Add the Sharper Hook enhancement to the player's inventory
-// console.log(playerStore);
+// console.log(playerStore);*/
 
 import { ref } from "vue";
 
 export default {
   setup() {
     const play = ref(true);
+    const gottenFish = ref(false);
+    const fishName = ref();
     const togglePlay = () => {
       play.value = !play.value;
     };
     const hooking = () => {
       waitingForFunction();
+      if (getRodEnhancementById(2) === getEnhacementPlayerById(2)) {
+        setTimeout(() => {
+          gottenFish.value = true;
+          fishName.value =
+            playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
+        }, 5000);
+      } else {
+        setTimeout(() => {
+          gottenFish.value = true;
+          fishName.value =
+            playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
+        }, 8000);
+      }
+    };
+    const closeModal = () => {
+      gottenFish.value = false;
     };
 
     return {
       play,
       togglePlay,
       hooking,
+      closeModal,
+      gottenFish,
+      fishName,
     };
   },
 };
@@ -300,27 +320,87 @@ export default {
   </div>
 
   <div class="play-container" v-if="!play">
-    <div class="bottom-image">
-      <img
-        src="./components/icons/RectangleBack.png"
-        alt="Bottom Image"
-        class="bottom-image-item"
-      />
-      <img
-        src="./components/icons/RectangleFront.png"
-        alt="Top Image"
-        class="top-image-item"
-      />
-      <div class="bottom-container">
-        <img src="./components/icons/Home.png" alt="Home" @click="togglePlay" />
-        <img src="./components/icons/Inventory.png" alt="Inventory" />
-        <img src="./components/icons/Hook.png" alt="Hook" @click="hooking" />
-        <img src="./components/icons/Shop.png" alt="Shop" />
-        <img src="./components/icons/Bookmark.png" alt="Bookmark" />
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      v-show="gottenFish"
+    >
+      <!-- Modal Content -->
+      <div
+        class="p-8 rounded-2xl shadow-lg w-11/12 my-10 h-4/6 md:w-1/2 max-w-4xl background-image text-center flex flex-col items-center"
+      >
+        <!-- Header -->
+        <div
+          class="text-4xl text-yellow-600 font-sans font-extrabold border-8 border-blue-500 rounded-xl bg-blue-100 mx-8 md:mx-16 p-6 flex items-center justify-center"
+        >
+          <span>You got a</span>
+          <div
+            class="text-4xl text-blue-700 font-sans font-extrabold flex items-center"
+          >
+            &nbsp; "
+            <span class="text-4xl text-green-600 font-extrabold">
+              {{ fishName }}
+            </span>
+            "
+          </div>
+        </div>
+
+        <!-- Image Container -->
+        <div class="w-full h-1/2 flex items-center justify-center mt-8">
+          <div
+            class="bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-md w-full h-10/12 mb-2"
+          >
+            <img
+              src=""
+              alt="Fish Image"
+              class="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+        </div>
+        <!-- Close Button -->
+        <button
+          @click="closeModal"
+          class="bg-black text-white border-2 border-black rounded-lg w-1/2 p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 mt-10"
+        >
+          Close
+        </button>
       </div>
     </div>
-    <div class="h-screen bg-green-500">
-      hiii
+    <div class="bottom-image">
+      <img
+        src="./components/icons/Back.png"
+        alt="Bottom Image"
+        class="bottom-image-item w-full"
+      />
+      <img
+        src="./components/icons/front.png"
+        alt="Top Image"
+        class="top-image-item w-full"
+      />
+      <div class="bottom-container">
+        <img
+          src="./components/icons/Home.png"
+          alt="Home"
+          @click="togglePlay"
+          class="w-20 ml-36"
+        />
+        <img
+          src="./components/icons/Inventory.png"
+          alt="Inventory"
+          class="w-24"
+        />
+        <img
+          src="./components/icons/Hook.png"
+          alt="Hook"
+          @click="hooking"
+          class="w-32"
+        />
+        <img src="./components/icons/Shop.png" alt="Shop" class="w-28" />
+        <img
+          src="./components/icons/Bookmark.png"
+          alt="Bookmark"
+          class="w-28 mr-36"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -341,7 +421,7 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: url("./components/image/PlayBackground.png");/* เปลี่ยน path ของรูปตามที่ต้องการ */
+  background-image: url("./components/image/PlayBackground.png"); /* เปลี่ยน path ของรูปตามที่ต้องการ */
   background-size: cover; /* ปรับขนาดให้รูปภาพครอบคลุมทั้ง background */
   background-position: center; /* ปรับให้รูปอยู่ตรงกลาง */
   position: relative;
@@ -349,8 +429,9 @@ export default {
 
 .bottom-image {
   position: relative; /* Relative positioning to allow for absolute positioning of children */
-  width: 100%; /* Full width */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%;
+  /* Full width */
+  /* Maintain aspect ratio */
 }
 
 .bottom-image-item,
@@ -358,8 +439,7 @@ export default {
   position: fixed; /* Absolute positioning to stack images */
   left: 0;
   bottom: 0;
-  width: 100%; /* Adjust width as needed */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%; /* Adjust width as needed */ /* Maintain aspect ratio */
   object-fit: contain; /* Ensure the image fits within the container */
 }
 
@@ -384,6 +464,13 @@ export default {
 .bottom-container img {
   max-width: 20%; /* Adjust based on the number of images */
   height: auto; /* Maintain aspect ratio */
+}
+
+.background-image {
+  background-image: url("./components/image/SeaBackground.png"); /* Set the correct path to your image */
+  background-size: cover; /* Cover the entire div */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image repetition */
 }
 
 /* @font-face {
