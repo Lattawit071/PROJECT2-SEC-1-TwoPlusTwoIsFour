@@ -155,6 +155,7 @@ export default {
     const caughtFish = ref();
     const ranTime = ref();
     const check = ref();
+    const reducesHp = ref();
     const togglePlay = () => {
       play.value = !play.value;
     };
@@ -164,17 +165,17 @@ export default {
     // }
 
     function reduceHpRods() {
-      let reducesHp = 0;
+      reducesHp.value = 0;
       if (playerStore.usingRods.id === 1) {
-        reducesHp = 3;
+        reducesHp.value = 3;
       } else if (playerStore.usingRods.id === 2) {
-        reducesHp = 2;
+        reducesHp.value = 2;
       } else {
-        reducesHp = 1;
+        reducesHp.value = 1;
       }
 
       if (getEnhacementPlayerById(3) === getRodEnhancementById(3)) {
-        playerStore.usingRods.hp - (reducesHp * 80) / 100;
+        reducesHp = reducesHp * 80 / 100;
       }
     }
 
@@ -285,11 +286,16 @@ export default {
     const hook = (rodId) => {
       if (playerStore.usingRods.hp != 0) {
         reduceHpRods();
+        if(playerStore.usingRods.hp < reducesHp.value ) {
+          alert("Caution! Your Rod is broken pls fix before hook");
+        } else {
+        playerStore.usingRods.hp = playerStore.usingRods.hp - reducesHp.value
         rodId.value = rodId;
         hooking.value = true;
         waitingForFunction();
+        }
       } else {
-        alert("Caution! Your Rod hp is 0 pls fix before hook");
+        alert("Caution! Your Rod is broken pls fix before hook");
       }
     };
 
