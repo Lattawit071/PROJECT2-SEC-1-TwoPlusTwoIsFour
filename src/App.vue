@@ -249,7 +249,15 @@ export default {
 </script>
 
 <template>
-  <div class="main-container" v-if="play">
+  <!-- <div class="main-container" v-if="play"> -->
+  <div
+    class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
+    style="
+      background-image: url('/src/components/image/Background.png');
+      height: 400px;
+    "
+    v-if="play"
+  >
     <!-- Top Left Button -->
     <div style="position: absolute; top: 1rem; left: 1rem">
       <img
@@ -319,14 +327,24 @@ export default {
     </div>
   </div>
 
-  <div class="play-container" v-if="!play">
+  <div
+    class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
+    style="background-image: url('/src/components/image/PlayBackground.png')"
+    v-if="!play"
+  >
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       v-show="gottenFish"
     >
       <!-- Modal Content -->
       <div
-        class="p-8 rounded-2xl shadow-lg w-11/12 my-10 h-4/6 md:w-1/2 max-w-4xl background-image text-center flex flex-col items-center"
+        class="p-8 rounded-2xl shadow-lg w-11/12 my-10 h-4/6 md:w-1/2 max-w-4xl text-center flex flex-col items-center"
+        style="
+          background-image: url('/src/components/image/SeaBackground.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "
       >
         <!-- Header -->
         <div
@@ -365,18 +383,23 @@ export default {
         </button>
       </div>
     </div>
-    <div class="bottom-image">
+    <div class="relative w-full">
       <img
         src="./components/icons/Back.png"
         alt="Bottom Image"
-        class="bottom-image-item w-full"
+        class="fixed left-0 bottom-0 w-full object-contain"
       />
+
       <img
         src="./components/icons/front.png"
         alt="Top Image"
-        class="top-image-item w-full"
+        class="fixed left-0 bottom-0 w-full object-contain"
+        style="z-index: 1"
       />
-      <div class="bottom-container">
+      <!-- <div class="bottom-container"> -->
+      <div
+        class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-2 z-20"
+      >
         <img
           src="./components/icons/Home.png"
           alt="Home"
@@ -405,76 +428,7 @@ export default {
   </div>
 </template>
 
-<style scoped>
-.main-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-image: url("./components/image/Background.png"); /* เปลี่ยน path ของรูปตามที่ต้องการ */
-  background-size: cover; /* ปรับขนาดให้รูปภาพครอบคลุมทั้ง background */
-  background-position: center; /* ปรับให้รูปอยู่ตรงกลาง */
-  position: relative;
-}
-.play-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-image: url("./components/image/PlayBackground.png"); /* เปลี่ยน path ของรูปตามที่ต้องการ */
-  background-size: cover; /* ปรับขนาดให้รูปภาพครอบคลุมทั้ง background */
-  background-position: center; /* ปรับให้รูปอยู่ตรงกลาง */
-  position: relative;
-}
+<style scoped></style>
 
-.bottom-image {
-  position: relative; /* Relative positioning to allow for absolute positioning of children */
-  width: 100%;
-  /* Full width */
-  /* Maintain aspect ratio */
-}
-
-.bottom-image-item,
-.top-image-item {
-  position: fixed; /* Absolute positioning to stack images */
-  left: 0;
-  bottom: 0;
-  width: 100%; /* Adjust width as needed */ /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure the image fits within the container */
-}
-
-.top-image-item {
-  /* Adjust z-index if needed to control stacking order */
-  z-index: 1; /* Make sure it is on top of the bottom image */
-}
-
-.bottom-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%; /* Full viewport width */
-  display: flex;
-  justify-content: space-between; /* Distribute space evenly */
-  align-items: center; /* Center images vertically */
-  padding: 0 2rem; /* Add horizontal padding to avoid images touching edges */
-  box-sizing: border-box; /* Include padding in width calculations */
-  z-index: 2;
-}
-
-.bottom-container img {
-  max-width: 20%; /* Adjust based on the number of images */
-  height: auto; /* Maintain aspect ratio */
-}
-
-.background-image {
-  background-image: url("./components/image/SeaBackground.png"); /* Set the correct path to your image */
-  background-size: cover; /* Cover the entire div */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent image repetition */
-}
-
-/* @font-face {
-  font-family: "YourHandwrittenFont";
-  src: url("/path/to/your/font-file.woff2") format("woff2");
-} */
-</style>
+/* @font-face { font-family: "YourHandwrittenFont"; src:
+url("/path/to/your/font-file.woff2") format("woff2"); } */
