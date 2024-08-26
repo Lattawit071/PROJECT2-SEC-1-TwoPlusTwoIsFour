@@ -87,6 +87,7 @@ const playerStore = {
   ownedRods: [], // Array to store fishing rods owned by the player
   caughtFish: [], // Array to store the fish caught by the player
   enhancements: [], // Array to store enhancements owned by the player
+  usingRods: getRodById(1),
 };
 
 // Function to add coins to the player
@@ -131,125 +132,164 @@ function getEnhacementPlayerById(id) {
   return playerStore.enhancements.find((enhancement) => enhancement.id === id);
 }
 
-function waitingForFunction(id) {
-  if (waiting.value == true) {
-    alert("Caution! Don't be hurry while still catching fish");
-  } else {
-    hookFish(id);
-  }
-}
-
-function doAfterTimeOut(callback) {
-  if (getRodEnhancementById(2) === getEnhacementPlayerById(2)) {
-    waiting.value = true;
-    setTimeout(() => {
-      waiting.value = false;
-      callback();
-    }, 5000);
-  } else {
-    waiting.value = true;
-    setTimeout(() => {
-      waiting.value = false;
-      callback();
-    }, 8000);
-  }
-}
-
-function random(type) {
-  switch (type) {
-    case "common":
-      ranNumber.value = Math.floor(Math.random() * 10);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "rare":
-      ranNumber.value = Math.floor(Math.random() * (15 - 10) + 10);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "epic":
-      ranNumber.value = Math.floor(Math.random() * (20 - 14) + 14);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "legendary":
-      ranNumber.value = Math.floor(Math.random() * (20 - 20) + 20);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-  }
-}
-
-function hookFish(rodId) {
-  const rate = Math.random() * 100;
-  doAfterTimeOut(() => {
-    if (rate >= 65) {
-      random("common");
-      addCaughtFish(caughtFish.value.id);
-    } else if (rate >= 20 && rate < 65) {
-      random("rare");
-      addCaughtFish(caughtFish.value.id);
-    } else if (rate >= 10 && rate < 20) {
-      random("epic");
-      addCaughtFish(caughtFish.value.id);
-    } else {
-      random("legendary");
-      addCaughtFish(caughtFish.value.id);
-    }
-  });
-}
-const waiting = ref(false);
-const ranNumber = ref(0);
-const caughtFish = ref();
-const gottenFish = ref(false);
-/*// Example Usage
+// Example Usage
 addCoins(500); // Add 500 coins to the player
 deductCoins(300); // Deduct 300 coins from the player
 addRod(1); // Add the Basic Rod to the player's inventory
 addCaughtFish(4); // Add Catfish to the player's caught fish list
 addEnhancement(2); // Add the Sharper Hook enhancement to the player's inventory
-// console.log(playerStore);*/
+// console.log(playerStore);
 
 import { ref } from "vue";
 
 export default {
   setup() {
+    const hooking = ref(false);
     const play = ref(true);
+    const rodId = ref();
     const gottenFish = ref(false);
     const fishName = ref();
+    const escapedFish = ref(false);
+    const waiting = ref(false);
+    const ranNumber = ref(0);
+    const caughtFish = ref();
+    const ranTime = ref();
+    const check = ref();
     const togglePlay = () => {
       play.value = !play.value;
     };
-    const hooking = () => {
-      waitingForFunction();
-      if (getRodEnhancementById(2) === getEnhacementPlayerById(2)) {
-        setTimeout(() => {
-          gottenFish.value = true;
-          fishName.value =
-            playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
-        }, 5000);
+
+    function waitingForFunction(id) {
+      if (waiting.value == true) {
+        alert("Caution! Don't be hurry while still catching fish");
       } else {
-        setTimeout(() => {
+        hookFish(id);
+      }
+    }
+
+    function randomFishing() {
+      const rate = Math.random() * 100;
+      if (rate >= 35 && check.value == true) {
+        ranTime.value = Math.floor(Math.random() * (9 - 5) + 4) * 1000;
+      } else {
+        ranTime.value = Math.floor(Math.random() * (10 - 5) + 4) * 1000;
+      }
+    }
+
+    function doAfterTimeOut(callback) {
+      check.value = getRodEnhancementById(2) === getEnhacementPlayerById(2);
+      randomFishing();
+      waiting.value = true;
+      setTimeout(() => {
+        waiting.value = false;
+        callback();
+      }, ranTime.value);
+    }
+
+    function random(type) {
+      switch (type) {
+        case "common":
+          ranNumber.value = Math.floor(Math.random() * 10);
+          caughtFish.value = getFishById(ranNumber.value);
+          break;
+        case "rare":
+          ranNumber.value = Math.floor(Math.random() * (15 - 10) + 10);
+          caughtFish.value = getFishById(ranNumber.value);
+          break;
+        case "epic":
+          ranNumber.value = Math.floor(Math.random() * (20 - 14) + 14);
+          caughtFish.value = getFishById(ranNumber.value);
+          break;
+        case "legendary":
+          ranNumber.value = Math.floor(Math.random() * (20 - 20) + 20);
+          caughtFish.value = getFishById(ranNumber.value);
+          break;
+      }
+    }
+
+    function ranFish(luck) {
+      const rate = Math.random() * 100;
+      if (rate >= 55) {
+        random("common");
+        addCaughtFish(caughtFish.value.id);
+      } else if (rate >= 25 + luck * 5 && rate < 55) {
+        random("rare");
+        addCaughtFish(caughtFish.value.id);
+      } else if (rate >= 7 + luck * 2 && rate < 25 + luck * 5) {
+        random("epic");
+        addCaughtFish(caughtFish.value.id);
+      } else {
+        random("legendary");
+        addCaughtFish(caughtFish.value.id);
+      }
+    }
+
+    function checkRod() {
+      const luckpoint = 0;
+      const checkEnhance =
+        getRodEnhancementById(5) === getEnhacementPlayerById(5);
+      const checkRod = playerStore.usingRods.id;
+      if (checkEnhance) {
+        luckpoint + 1;
+      }
+      luckpoint + checkRod - 1;
+      ranFish(luckpoint);
+    }
+
+    function hookFish() {
+      const chanceToGet = Math.random() * 100;
+
+      doAfterTimeOut(() => {
+        if (
+          getRodEnhancementById(1) === getEnhacementPlayerById(1) &&
+          chanceToGet > 20
+        ) {
+          checkRod();
           gottenFish.value = true;
           fishName.value =
             playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
-        }, 8000);
-      }
+        } else if (
+          getRodEnhancementById(1) != getEnhacementPlayerById(1) &&
+          chanceToGet > 30
+        ) {
+          checkRod();
+          gottenFish.value = true;
+          fishName.value =
+            playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
+        } else {
+          escapedFish.value = true;
+        }
+        hooking.value = false
+      });
+    }
+
+    const hook = (rodId) => {
+      rodId.value = rodId;
+      hooking.value = true;
+      waitingForFunction();
     };
+
     const closeModal = () => {
       gottenFish.value = false;
+      escapedFish.value = false;
     };
 
     return {
       play,
       togglePlay,
-      hooking,
+      hook,
       closeModal,
       gottenFish,
       fishName,
+      escapedFish,
+      rodId,
+      hooking
     };
   },
 };
 </script>
 
 <template>
-  <!-- <div class="main-container" v-if="play"> -->
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
     style="
@@ -258,7 +298,6 @@ export default {
     "
     v-if="play"
   >
-    <!-- Top Left Button -->
     <div style="position: absolute; top: 1rem; left: 1rem">
       <img
         @click="openSettings"
@@ -272,7 +311,6 @@ export default {
         "
       />
     </div>
-    <!-- Top Right Button -->
     <div style="position: absolute; top: 1rem; right: 1rem">
       <img
         @click="openHelp"
@@ -286,7 +324,6 @@ export default {
         "
       />
     </div>
-    <!-- Center Content -->
     <div style="text-align: center">
       <div
         style="
@@ -332,11 +369,24 @@ export default {
     style="background-image: url('/src/components/image/PlayBackground.png')"
     v-if="!play"
   >
+    <!-- Centered Hookbait Image at Top Center -->
+    <div
+      class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4"
+      style="
+        width: 500px; /* Set a fixed width for the image container */
+        height: 500px; /* Set a fixed height for the image container */
+        background-image: url('/src/components/icons/Hookbait.png');
+        background-size: contain; /* Ensures the image fits within the container */
+        background-repeat: no-repeat; /* Ensures the image does not repeat */
+        background-position: center; /* Centers the image within the container */
+      "
+      v-show="hooking"
+    ></div>
+
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       v-show="gottenFish"
     >
-      <!-- Modal Content -->
       <div
         class="p-8 rounded-2xl shadow-lg w-11/12 my-10 h-4/6 md:w-1/2 max-w-4xl text-center flex flex-col items-center"
         style="
@@ -346,7 +396,6 @@ export default {
           background-repeat: no-repeat;
         "
       >
-        <!-- Header -->
         <div
           class="text-4xl text-yellow-600 font-sans font-extrabold border-8 border-blue-500 rounded-xl bg-blue-100 mx-8 md:mx-16 p-6 flex items-center justify-center"
         >
@@ -362,7 +411,6 @@ export default {
           </div>
         </div>
 
-        <!-- Image Container -->
         <div class="w-full h-1/2 flex items-center justify-center mt-8">
           <div
             class="bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-md w-full h-10/12 mb-2"
@@ -374,10 +422,39 @@ export default {
             />
           </div>
         </div>
-        <!-- Close Button -->
         <button
           @click="closeModal"
           class="bg-black text-white border-2 border-black rounded-lg w-1/2 p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 mt-10"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      v-show="escapedFish"
+    >
+      <div
+        class="p-6 rounded-xl shadow-lg w-3/4 my-8 h-1/3 md:w-1/3 max-w-md text-center flex flex-col items-center"
+        style="
+          background-image: url('/src/components/image/SeaBackground.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "
+      >
+        <div
+          class="text-2xl text-red-600 font-sans font-bold border-4 border-red-500 rounded-lg bg-red-100 mx-4 md:mx-8 p-4 flex items-center justify-center"
+        >
+          <span>Unfortunately, your fish &nbsp; Escaped!</span>
+          <div
+            class="text-2xl text-red-700 font-sans font-bold flex items-center ml-2"
+          ></div>
+        </div>
+
+        <button
+          @click="closeModal"
+          class="bg-black text-white border-2 border-black rounded-lg w-1/2 p-3 text-sm font-semibold transition-transform transform hover:scale-105 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 mt-20"
         >
           Close
         </button>
@@ -396,7 +473,6 @@ export default {
         class="fixed left-0 bottom-0 w-full object-contain"
         style="z-index: 1"
       />
-      <!-- <div class="bottom-container"> -->
       <div
         class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-2 z-20"
       >
@@ -414,7 +490,7 @@ export default {
         <img
           src="./components/icons/Hook.png"
           alt="Hook"
-          @click="hooking"
+          @click="hook"
           class="w-32"
         />
         <img src="./components/icons/Shop.png" alt="Shop" class="w-28" />
@@ -429,8 +505,8 @@ export default {
 </template>
 
 <style scoped>
-@font-face {
+/* @font-face {
   font-family: "YourHandwrittenFont";
   src: url("/path/to/your/font-file.woff2") format("woff2");
-}
+} */
 </style>
