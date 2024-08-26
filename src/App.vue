@@ -159,25 +159,23 @@ export default {
       play.value = !play.value;
     };
 
-    function fixHpRods() {
-      playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp
-    }
+    // function fixHpRods() {
+    //   playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp
+    // }
 
     function reduceHpRods() {
-      const reducesHp = 0;
-      if (playerStore.ownedRods.id === 1) {
+      let reducesHp = 0;
+      if (playerStore.usingRods.id === 1) {
         reducesHp = 3;
-      } else if (playerStore.ownedRods.id === 2) {
+      } else if (playerStore.usingRods.id === 2) {
         reducesHp = 2;
       } else {
         reducesHp = 1;
       }
-      console.log(reducesHp);
 
       if (getEnhacementPlayerById(3) === getRodEnhancementById(3)) {
         playerStore.usingRods.hp - (reducesHp * 80) / 100;
       }
-      console.log(playerStore.usingRods);
     }
 
     function waitingForFunction(id) {
