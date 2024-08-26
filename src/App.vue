@@ -138,7 +138,6 @@ deductCoins(300); // Deduct 300 coins from the player
 addRod(1); // Add the Basic Rod to the player's inventory
 addCaughtFish(4); // Add Catfish to the player's caught fish list
 addEnhancement(2); // Add the Sharper Hook enhancement to the player's inventory
-// console.log(playerStore);
 
 import { ref } from "vue";
 
@@ -160,9 +159,9 @@ export default {
       play.value = !play.value;
     };
 
-    // function fixHpRods() {
-    //   playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp
-    // }
+    function fixHpRods() {
+      playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp
+    }
 
     function reduceHpRods() {
       reducesHp.value = 0;
