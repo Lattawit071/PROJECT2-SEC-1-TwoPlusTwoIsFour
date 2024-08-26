@@ -87,7 +87,7 @@ const playerStore = {
   ownedRods: [], // Array to store fishing rods owned by the player
   caughtFish: [], // Array to store the fish caught by the player
   enhancements: [], // Array to store enhancements owned by the player
-  usingRods: getRodById(1),
+  usingRods: {}
 };
 
 // Function to add coins to the player
@@ -127,6 +127,12 @@ function addEnhancement(enhancementId) {
     playerStore.enhancements.push(enhancement);
   }
 }
+function addUsingRod(rodId) {
+  const rod = getRodById(rodId);
+  if(rod) {
+    playerStore.usingRods = rod;
+  }
+}
 
 function getEnhacementPlayerById(id) {
   return playerStore.enhancements.find((enhancement) => enhancement.id === id);
@@ -138,7 +144,7 @@ deductCoins(300); // Deduct 300 coins from the player
 addRod(1); // Add the Basic Rod to the player's inventory
 addCaughtFish(4); // Add Catfish to the player's caught fish list
 addEnhancement(2); // Add the Sharper Hook enhancement to the player's inventory
-
+addUsingRod(1)
 import { ref } from "vue";
 
 export default {
