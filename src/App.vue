@@ -190,9 +190,9 @@ export default {
     function randomFishing() {
       const rate = Math.random() * 100;
       if (rate >= 35 && check.value == true) {
-        ranTime.value = Math.floor(Math.random() * (9 - 5) + 4) * 1000;
+        ranTime.value = Math.floor(Math.random() * (15 - 5) + 5) * 1000;
       } else {
-        ranTime.value = Math.floor(Math.random() * (10 - 5) + 4) * 1000;
+        ranTime.value = Math.floor(Math.random() * (18 - 5) + 5) * 1000;
       }
     }
 
