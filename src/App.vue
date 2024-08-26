@@ -428,7 +428,9 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
-
-/* @font-face { font-family: "YourHandwrittenFont"; src:
-url("/path/to/your/font-file.woff2") format("woff2"); } */
+<style scoped>
+@font-face {
+  font-family: "YourHandwrittenFont";
+  src: url("/path/to/your/font-file.woff2") format("woff2");
+}
+</style>
