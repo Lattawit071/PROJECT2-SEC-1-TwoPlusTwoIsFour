@@ -25,9 +25,9 @@ const fishStore = [
 
 // Data Store for Fishing Rods
 const fishingRods = [
-  { id: 1, name: "Basic Rod", price: 100 },
-  { id: 2, name: "Advanced Rod", price: 500 },
-  { id: 3, name: "Pro Rod", price: 1000 },
+  { id: 1, name: "Basic Rod", price: 100, hp: 100 },
+  { id: 2, name: "Advanced Rod", price: 500, hp: 150 },
+  { id: 3, name: "Pro Rod", price: 1000, hp: 200 },
 ];
 
 // Data Store for Fishing Rod Enhancements
@@ -159,6 +159,27 @@ export default {
       play.value = !play.value;
     };
 
+    function fixHpRods() {
+      playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp
+    }
+
+    function reduceHpRods() {
+      const reducesHp = 0;
+      if (playerStore.ownedRods.id === 1) {
+        reducesHp = 3;
+      } else if (playerStore.ownedRods.id === 2) {
+        reducesHp = 2;
+      } else {
+        reducesHp = 1;
+      }
+      console.log(reducesHp);
+
+      if (getEnhacementPlayerById(3) === getRodEnhancementById(3)) {
+        playerStore.usingRods.hp - (reducesHp * 80) / 100;
+      }
+      console.log(playerStore.usingRods);
+    }
+
     function waitingForFunction(id) {
       if (waiting.value == true) {
         alert("Caution! Don't be hurry while still catching fish");
@@ -259,14 +280,19 @@ export default {
         } else {
           escapedFish.value = true;
         }
-        hooking.value = false
+        hooking.value = false;
       });
     }
 
     const hook = (rodId) => {
-      rodId.value = rodId;
-      hooking.value = true;
-      waitingForFunction();
+      if (playerStore.usingRods.hp != 0) {
+        reduceHpRods();
+        rodId.value = rodId;
+        hooking.value = true;
+        waitingForFunction();
+      } else {
+        alert("Caution! Your Rod hp is 0 pls fix before hook");
+      }
     };
 
     const closeModal = () => {
@@ -283,7 +309,7 @@ export default {
       fishName,
       escapedFish,
       rodId,
-      hooking
+      hooking,
     };
   },
 };
