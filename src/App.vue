@@ -180,7 +180,7 @@ export default {
       }
 
       if (getEnhacementPlayerById(3) === getRodEnhancementById(3)) {
-        reducesHp = reducesHp * 80 / 100;
+        reducesHp.value = reducesHp.value * 80 / 100;
       }
     }
 
