@@ -1,66 +1,189 @@
 <script scope>
+import { ref } from "vue";
 // Data Store for Fish
 const fishStore = [
-  { id: 1, name: "Salmon", price: 100 },
-  { id: 2, name: "Tuna", price: 150 },
-  { id: 3, name: "Trout", price: 90 },
-  { id: 4, name: "Catfish", price: 80 },
-  { id: 5, name: "Bass", price: 120 },
-  { id: 6, name: "Carp", price: 70 },
-  { id: 7, name: "Pike", price: 110 },
-  { id: 8, name: "Cod", price: 130 },
-  { id: 9, name: "Herring", price: 60 },
-  { id: 10, name: "Perch", price: 85 },
-  { id: 11, name: "Swordfish", price: 200 },
-  { id: 12, name: "Eel", price: 75 },
-  { id: 13, name: "Mackerel", price: 95 },
-  { id: 14, name: "Sardine", price: 50 },
-  { id: 15, name: "Grouper", price: 140 },
-  { id: 16, name: "Snapper", price: 125 },
-  { id: 17, name: "Flounder", price: 100 },
-  { id: 18, name: "Halibut", price: 160 },
-  { id: 19, name: "Barracuda", price: 180 },
-  { id: 20, name: "Marlin", price: 220 },
+  {
+    id: 1,
+    name: "Sardine",
+    price: 50,
+    icon: "/src/assets/images/fish/Sardine.png",
+  },
+  {
+    id: 2,
+    name: "Clownfish",
+    price: 150,
+    icon: "/src/assets/images/fish/Clownfish.png",
+  },
+  {
+    id: 3,
+    name: "Catfish",
+    price: 200,
+    icon: "/src/assets/images/fish/Catfish.png",
+  },
+  {
+    id: 4,
+    name: "Salmon",
+    price: 250,
+    icon: "/src/assets/images/fish/Salmon.png",
+  },
+  { id: 5, name: "Tuna", price: 250, icon: "/src/assets/images/fish/Tuna.png" },
+  {
+    id: 6,
+    name: "Marlin",
+    price: 700,
+    icon: "/src/assets/images/fish/Marlin.png",
+  },
+  {
+    id: 7,
+    name: "Stingray",
+    price: 500,
+    icon: "/src/assets/images/fish/Stingray.png",
+  },
+  { id: 8, name: "Eel", price: 300, icon: "/src/assets/images/fish/Eel.png" },
+  {
+    id: 9,
+    name: "White_Koi",
+    price: 800,
+    icon: "/src/assets/images/fish/White_Koi.png",
+  },
+  {
+    id: 10,
+    name: "Squid",
+    price: 850,
+    icon: "/src/assets/images/fish/Squid.png",
+  },
+  {
+    id: 11,
+    name: "Shark",
+    price: 1500,
+    icon: "/src/assets/images/fish/Shark.png",
+  },
+  {
+    id: 12,
+    name: "Orca",
+    price: 2000,
+    icon: "/src/assets/images/fish/Orca.png",
+  },
+  {
+    id: 13,
+    name: "Blue_Whale",
+    price: 2500,
+    icon: "/src/assets/images/fish/Blue_Whale.png",
+  },
+  {
+    id: 14,
+    name: "Giant_Pacific_Octopuse",
+    price: 2500,
+    icon: "/src/assets/images/fish/Giant_Pacific_Octopuse.png",
+  },
+  {
+    id: 15,
+    name: "Golden_Fish",
+    price: 3000,
+    icon: "/src/assets/images/fish/Golden_Fish.png",
+  },
+  {
+    id: 16,
+    name: "Rainbow_Fish",
+    price: 3500,
+    icon: "/src/assets/images/fish/Rainbow_Fish.png",
+  },
+  {
+    id: 17,
+    name: "Pearl",
+    price: 4500,
+    icon: "/src/assets/images/fish/Pearl.png",
+  },
+  {
+    id: 18,
+    name: "Diamond",
+    price: 5000,
+    icon: "/src/assets/images/fish/Diamond.png",
+  },
+  {
+    id: 19,
+    name: "Chest",
+    price: 8000,
+    icon: "/src/assets/images/fish/Chest.png",
+  },
+  {
+    id: 20,
+    name: "Dragon",
+    price: 100000,
+    icon: "/src/assets/images/fish/Dragon.png",
+  },
 ];
 
 // Data Store for Fishing Rods
 const fishingRods = [
-  { id: 1, name: "Basic Rod", price: 100 },
-  { id: 2, name: "Advanced Rod", price: 500 },
-  { id: 3, name: "Pro Rod", price: 1000 },
+  {
+    id: 1,
+    name: "Basic_Rod",
+    price: 0,
+    icon: "/src/assets/images/rod/Basic_Rod.png",
+  },
+  {
+    id: 2,
+    name: "Star_Rod",
+    price: 50000,
+    icon: "/src/assets/images/rod/Star_Rod.png",
+  },
+  {
+    id: 3,
+    name: "Galaxy_Rod",
+    price: 50000,
+    icon: "/src/assets/images/rod/Galaxy_Rod.png",
+  },
+  {
+    id: 4,
+    name: "Lover_Rod",
+    price: 50000,
+    icon: "/src/assets/images/rod/Lover_Rod.png",
+  },
+  {
+    id: 5,
+    name: "Thunder_Rod",
+    price: 100000,
+    icon: "/src/assets/images/rod/Thunder_Rod.png",
+  },
 ];
 
 // Data Store for Fishing Rod Enhancements
 const rodEnhancements = [
   {
     id: 1,
-    name: "Stronger Line",
-    price: 200,
+    name: "Luck_5m",
+    price: 2500,
     effect: "Increases fish catch rate by 10%",
+    icon: "/src/assets/images/potion/Luck_5m.png",
   },
   {
     id: 2,
-    name: "Sharper Hook",
-    price: 300,
+    name: "Speed_5m",
+    price: 2500,
     effect: "Increases fish catch chance by 15%",
+    icon: "/src/assets/images/potion/Speed_5m.png",
   },
   {
     id: 3,
-    name: "Durable Rod",
-    price: 400,
+    name: "Luck_1h",
+    price: 10000,
     effect: "Reduces rod wear and tear by 20%",
+    icon: "/src/assets/images/potion/",
   },
   {
     id: 4,
-    name: "Lightweight Reel",
-    price: 250,
+    name: "Speed_1h",
+    price: 10000,
     effect: "Decreases fatigue during long fishing sessions",
+    icon: "/src/assets/images/potion/Speed_1h.png",
   },
   {
     id: 5,
-    name: "Enhanced Bait",
-    price: 150,
+    name: "Full_Potion",
+    price: 100000,
     effect: "Attracts rare fish with a 5% higher probability",
+    icon: "/src/assets/images/potion/Full_Potion.png",
   },
 ];
 
@@ -186,10 +309,10 @@ function hookFish(rodId) {
       random("rare");
       addCaughtFish(caughtFish.value.id);
     } else if (rate >= 10 && rate < 20) {
-      random("epic");
+      random("legendary");
       addCaughtFish(caughtFish.value.id);
     } else {
-      random("legendary");
+      random("secret");
       addCaughtFish(caughtFish.value.id);
     }
   });
@@ -205,8 +328,6 @@ addRod(1); // Add the Basic Rod to the player's inventory
 addCaughtFish(4); // Add Catfish to the player's caught fish list
 addEnhancement(2); // Add the Sharper Hook enhancement to the player's inventory
 // console.log(playerStore);*/
-
-import { ref } from "vue";
 
 export default {
   setup() {
@@ -249,80 +370,58 @@ export default {
 </script>
 
 <template>
-  <!-- <div class="main-container" v-if="play"> -->
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
-    style="
-      background-image: url('/src/components/image/Background.png');
-      height: 400px;
-    "
+    style="user-select: none; background-image: url('/src/components/image/Background.png'"
     v-if="play"
   >
     <!-- Top Left Button -->
-    <div style="position: absolute; top: 1rem; left: 1rem">
+    <div class="absolute top-4 left-4" style="user-select: none">
       <img
         @click="openSettings"
         src="./components/icons/Setting.png"
         alt="Settings"
-        style="
-          width: 15rem;
-          height: 15rem;
-          cursor: pointer;
-          object-fit: contain;
-        "
+        class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
+        @mouseover="playHoverSound"
       />
     </div>
     <!-- Top Right Button -->
-    <div style="position: absolute; top: 1rem; right: 1rem">
+    <div class="absolute top-4 right-4" style="user-select: none">
       <img
         @click="openHelp"
         src="./components/icons/Question.png"
         alt="Help"
-        style="
-          width: 15rem;
-          height: 15rem;
-          cursor: pointer;
-          object-fit: contain;
-        "
+        class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
+        @mouseover="playHoverSound"
       />
     </div>
     <!-- Center Content -->
-    <div style="text-align: center">
+    <div class="text-center" style="user-select: none">
       <div
-        style="
-          font-size: 10rem;
-          font-family: 'YourHandwrittenFont', sans-serif;
-          margin-bottom: 10rem;
-        "
+        class="text-5xl md:text-8xl font-handwritten mb-16 wave-animation"
+        style="font-family: 'Pacifico', cursive"
       >
-        Fish For Life
+        <span>F</span><span>i</span><span>s</span><span>h</span> <span>F</span
+        ><span>o</span><span>r</span> <span>L</span><span>i</span><span>f</span
+        ><span>e</span>
       </div>
-      <div style="position: relative; display: inline-block" class="template">
-        <img
-          src="./components/icons/Button.png"
-          alt="Play"
-          style="
-            width: 40rem;
-            height: 15rem;
-            margin: 0 auto;
-            cursor: pointer;
-            object-fit: contain;
-          "
-        />
-        <span
-          style="
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 6rem;
-            color: white;
-            font-family: 'YourHandwrittenFont', sans-serif;
-          "
+      <div class="relative inline-block template" style="user-select: none">
+        <div
+          class="relative w-64 h-24 md:w-96 md:h-40 cursor-pointer transition-transform duration-300 hover:scale-110"
           @click="togglePlay"
+          @mouseover="playHoverSound"
         >
-          PLAY
-        </span>
+          <img
+            src="./components/icons/Button.png"
+            alt="Play"
+            class="w-full h-full object-contain"
+          />
+          <span
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-6xl text-white font-handwritten transition-colors duration-300 hover:text-black"
+          >
+            PLAY
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -384,44 +483,53 @@ export default {
       </div>
     </div>
     <div class="relative w-full">
-      <img
-        src="./components/icons/Back.png"
-        alt="Bottom Image"
-        class="fixed left-0 bottom-0 w-full object-contain"
-      />
+      <div class="fixed left-0 bottom-0 w-full bg-[#4E342E]">
+    <img
+      src="./components/icons/Back.png"
+      alt="Bottom Image"
+      class="w-full object-contain"
+    />
+  </div>
 
-      <img
-        src="./components/icons/front.png"
-        alt="Top Image"
-        class="fixed left-0 bottom-0 w-full object-contain"
-        style="z-index: 1"
-      />
-      <!-- <div class="bottom-container"> -->
+      <!-- Foreground Image -->
+      <div class="fixed left-0 bottom-0 w-full bg-[#4E342E] z-10">
+    <img
+      src="./components/icons/front.png"
+      alt="Top Image"
+      class="w-full object-contain"
+    />
+  </div>
+
+      <!-- Navigation Icons -->
       <div
-        class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-2 z-20"
+        class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-4 z-20 bg-transparent"
       >
         <img
-          src="./components/icons/Home.png"
+          src="./assets/images/button/Home.png"
           alt="Home"
           @click="togglePlay"
-          class="w-20 ml-36"
+          class="w-16 md:w-20 transition-transform transform hover:scale-110 ml-10 md:ml-36"
         />
         <img
-          src="./components/icons/Inventory.png"
+          src="./assets/images/button/BackPack.png"
           alt="Inventory"
-          class="w-24"
+          class="w-20 md:w-24 transition-transform transform hover:scale-110"
         />
         <img
-          src="./components/icons/Hook.png"
+          src="./assets/images/button/Play.png"
           alt="Hook"
           @click="hooking"
-          class="w-32"
+          class="w-24 md:w-32 transition-transform transform hover:scale-110"
         />
-        <img src="./components/icons/Shop.png" alt="Shop" class="w-28" />
         <img
-          src="./components/icons/Bookmark.png"
+          src="./assets/images/button/Shop.png"
+          alt="Shop"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110"
+        />
+        <img
+          src="./assets/images/button//BookMark.png"
           alt="Bookmark"
-          class="w-28 mr-36"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110 mr-10 md:mr-36"
         />
       </div>
     </div>
@@ -432,5 +540,44 @@ export default {
 @font-face {
   font-family: "YourHandwrittenFont";
   src: url("/path/to/your/font-file.woff2") format("woff2");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+.wave-animation {
+  /* display: inline-block; */
+}
+
+.wave-animation span {
+  display: inline-block;
+  animation: wave 1.5s infinite ease-in-out;
+}
+
+.wave-animation span:nth-child(1) {
+  animation-delay: 0s;
+}
+.wave-animation span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.wave-animation span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+/* เพิ่ม nth-child() สำหรับแต่ละตัวอักษร */
+.wave-animation span:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.wave-animation span:nth-child(5) {
+  animation-delay: 0.4s;
+}
+/* ...เพิ่มต่อไปตามความยาวของข้อความ... */
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 </style>
