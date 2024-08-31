@@ -148,6 +148,7 @@ const fishingRods = [
   {
     id: 1,
     name: "Basic_Rod",
+    quantity: 1,
     price: 0,
     icon: "/src/assets/images/rod/Basic_Rod.png",
     hp: 50,
@@ -155,6 +156,7 @@ const fishingRods = [
   {
     id: 2,
     name: "Star_Rod",
+    quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Star_Rod.png",
     hp: 75,
@@ -162,6 +164,7 @@ const fishingRods = [
   {
     id: 3,
     name: "Galaxy_Rod",
+    quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Galaxy_Rod.png",
     hp: 100,
@@ -169,6 +172,7 @@ const fishingRods = [
   {
     id: 4,
     name: "Lover_Rod",
+    quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Lover_Rod.png",
     hp: 200,
@@ -176,6 +180,7 @@ const fishingRods = [
   {
     id: 5,
     name: "Thunder_Rod",
+    quantity: 1,
     price: 100000,
     icon: "/src/assets/images/rod/Thunder_Rod.png",
     hp: 1000,
@@ -233,6 +238,7 @@ const playerStore = ref({
     {
       id: 1,
       name: "Basic_Rod",
+      quantity: 1,
       price: 0,
       icon: "/src/assets/images/rod/Basic_Rod.png",
       hp: 50,
@@ -251,6 +257,7 @@ const playerStore = ref({
   usingRods: {
     id: 1,
     name: "Basic_Rod",
+    quantity: 1,
     price: 0,
     icon: "/src/assets/images/rod/Basic_Rod.png",
     hp: 50,
@@ -263,12 +270,12 @@ const playerStore = ref({
 function getFishById(id) {
   return fishStore.find((fish) => fish.id === id);
 }
-//Shop
+
 // get a Rods by ID
 function getRodById(id) {
   return fishingRods.find((rod) => rod.id === id);
 }
-//Shop
+
 // get a Potion by ID
 function getPotionById(id) {
   return potion.find((potion) => potion.id === id);
@@ -461,7 +468,7 @@ const closeModal = () => {
 };
 
 //======================================== Inventory Page ========================================
-const maxCapacity = 100;
+const maxCapacity = 1000;
 const selectedCategory = ref("all");
 const setCategory = (category) => {
   selectedCategory.value = category;
@@ -492,8 +499,47 @@ const filteredItems = computed(() => {
 const inventoryCapacity = computed(() => {
   return filteredItems.value.reduce((acc, item) => acc + item.quantity, 0);
 });
+
+// ฟังก์ชันสำหรับขายปลา
+function sellFish(fish) {
+  playerStore.value.coins += fish.price * fish.quantity;
+  playerStore.value.caughtFish = playerStore.value.caughtFish.filter(f => f.id !== fish.id);
+  console.log(playerStore)
+}
+
+// ฟังก์ชันสำหรับใส่ Rod
+function equipRod(rod) {
+  playerStore.value.usingRods = rod;
+  console.log(playerStore)
+}
+
+// ฟังก์ชันสำหรับใช้ Potion
+function usePotion(potion) {
+  const existingPotion = playerStore.value.usingPosion.find(p => p.id === potion.id);
+  if (!existingPotion) {
+    playerStore.value.usingPosion.push(potion);
+  }
+  playerStore.value.potions = playerStore.value.potions.filter(p => p.id !== potion.id || p.quantity > 1);
+  if (potion.quantity > 1) {
+    potion.quantity -= 1;
+  }
+  console.log(playerStore)
+}
+
+// Helper functions เพื่อตรวจสอบประเภทของ item
+function isFish(item) {
+  return playerStore.value.caughtFish.some(fish => fish.id === item.id);
+}
+
+function isRod(item) {
+  return playerStore.value.ownedRods.some(rod => rod.id === item.id);
+}
+
+function isPotion(item) {
+  return playerStore.value.potions.some(potion => potion.id === item.id);
+}
 //======================================== Shop Page ========================================
-// Bus -Coins
+// Buy -Coins
 function deductCoins(amount) {
   if (playerStore.value.coins >= amount) {
     playerStore.value.coins -= amount;
@@ -524,33 +570,24 @@ function addPotion(potionId) {
     }
   }
 }
-function determineItemType(item) {
-  if (fishingRods.some((rod) => rod.id === item.id)) {
-    return 'rod';
-  } else if (potion.some((p) => p.id === item.id)) {
-    return 'potion';
+
+// ฟังก์ชันสำหรับซื้อสินค้า
+function purchaseRods(item) {
+  if (playerStore.value.coins >= item.price) {
+    deductCoins(item.price);
+    if (fishingRods.some((rod) => rod.id === item.id)) {
+      addRod(item.id);
+    }
   } else {
-    return 'unknown'; // กรณีที่ id ไม่ตรงกับ Rod หรือ Potion
+    console.log("Not enough coins to purchase this item!");
   }
 }
 
-// ฟังก์ชันสำหรับซื้อสินค้า
-function purchaseItem(item) {
-  const itemType = determineItemType(item);
-
-  if (itemType === 'unknown') {
-    console.log("Item type not recognized!");
-    return;
-  }
-
+function purchasePotion(item) {
   if (playerStore.value.coins >= item.price) {
     deductCoins(item.price);
     
-    if (itemType === 'rod') {
-      console.log("1");
-      addRod(item.id);
-    } else if (itemType === 'potion') {
-      console.log("2");
+    if (potion.some((potions) => potions.id === item.id)) {
       addPotion(item.id);
     }
   } else {
@@ -559,6 +596,14 @@ function purchaseItem(item) {
 }
 
 const playerCoins = computed(() => playerStore.value.coins);
+//======================================== BookMark Page ========================================
+const selectFish = ref("common");
+const selectItem = ref("noselectitem");
+
+function filterFish(a, b) {
+  // กรองปลา จากปลา id a ถึง id b
+  return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
+}
 </script>
 
 <template>
@@ -782,59 +827,93 @@ const playerCoins = computed(() => playerStore.value.coins);
     </div>
   </div>
   <!-- ==================== Inventory ====================-->
-  <div class="p-6 bg-gray-900 min-h-screen flex" v-if="page === 2">
-    <!-- Sidebar for Categories -->
-    <div
-      class="w-20 bg-gradient-to-b from-yellow-800 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4"
+  <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
+<!-- Sidebar for Categories -->
+<div
+  class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
+>
+ <!-- ปุ่ม Back -->
+ <button
+      @click="togglePage(5)"
+      class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
     >
-      <button
-        @click="setCategory('all')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-600 rounded-full"
+      Back
+    </button>
+  <button
+    @click="setCategory('all')"
+    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+  >
+    <img src="/src/assets/images/inventory/All.png" alt="All" />
+  </button>
+  <button
+    @click="setCategory('fish')"
+    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+  >
+    <img src="/src/assets/images/inventory/Fish.png" alt="Fish" />
+  </button>
+  <button
+    @click="setCategory('rods')"
+    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+  >
+    <img src="/src/assets/images/inventory/Rods.png" alt="Rods" />
+  </button>
+  <button
+    @click="setCategory('potions')"
+    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+  >
+    <img src="/src/assets/images/inventory/Potion.png" alt="potions" />
+  </button>
+</div>
+
+<!-- Main Inventory Section -->
+<div class="flex-1 bg-gray-900 p-6 rounded-lg shadow-lg text-yellow-100">
+  <h1 class="text-3xl font-bold mb-6">Inventory</h1>
+  <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
+
+  <!-- Inventory Grid -->
+  <div class="grid grid-cols-4 gap-4">
+    <div
+      v-for="(item, index) in filteredItems"
+      :key="index"
+      class="relative p-4 bg-yellow-800 border border-yellow-400 rounded-lg hover:border-yellow-300"
+    >
+      <img :src="item.icon" :alt="item.name" class="mb-2 h-20 w-20 mx-auto" />
+      <p class="text-center font-semibold">{{ item.name }}</p>
+      <span
+        class="absolute top-0 right-0 bg-red-600 text-white text-sm rounded-full px-2"
       >
-        <img src="/src/assets/images/inventory/All.png" alt="All" />
+        x{{ item.quantity }}
+      </span>
+
+      <!-- ปุ่มขายสำหรับปลา -->
+      <button
+        v-if="isFish(item)"
+        @click="sellFish(item)"
+        class="mt-2 bg-red-600 text-white py-1 px-3 rounded hover:bg-red-500 w-full"
+      >
+        Sell for {{ item.price }} coins
       </button>
+
+      <!-- ปุ่มใช้สำหรับ Rods -->
       <button
-        @click="setCategory('fish')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-600 rounded-full"
+        v-if="isRod(item)"
+        @click="equipRod(item)"
+        class="mt-2 bg-green-600 text-white py-1 px-3 rounded hover:bg-green-500 w-full"
       >
-        <img src="/src/assets/images/inventory/Fish.png" alt="Fish" />
+        Equip Rod
       </button>
+
+      <!-- ปุ่มใช้สำหรับ Potions -->
       <button
-        @click="setCategory('rods')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-600 rounded-full"
+        v-if="isPotion(item)"
+        @click="usePotion(item)"
+        class="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-500 w-full"
       >
-        <img src="/src/assets/images/inventory/Rods.png" alt="Rods" />
-      </button>
-      <button
-        @click="setCategory('potions')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-600 rounded-full"
-      >
-        <img src="/src/assets/images/inventory/Potion.png" alt="potions" />
+        Use Potion
       </button>
     </div>
-
-    <!-- Main Inventory Section -->
-    <div class="flex-1 bg-yellow-900 p-6 rounded-lg shadow-lg text-yellow-100">
-      <h1 class="text-3xl font-bold mb-6">Inventory</h1>
-      <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
-
-      <!-- Inventory Grid -->
-      <div class="grid grid-cols-4 gap-4">
-        <div
-          v-for="(item, index) in filteredItems"
-          :key="index"
-          class="relative p-4 bg-yellow-800 border border-yellow-400 rounded-lg hover:border-yellow-300"
-        >
-          <img :src="item.icon" :alt="item.name" class="mb-2" />
-          <p class="text-center font-semibold">{{ item.name }}</p>
-          <span
-            class="absolute top-0 right-0 bg-red-600 text-white text-sm rounded-full px-2"
-          >
-            x{{ item.quantity }}
-          </span>
-        </div>
-      </div>
-    </div>
+  </div>
+</div>
   </div>
   <!-- ==================== Shop ====================-->
   <div
@@ -861,7 +940,7 @@ const playerCoins = computed(() => playerStore.value.coins);
         <p class="text-yellow-100 font-bold">{{ rod.name }}</p>
         <p class="text-yellow-200">Price: {{ rod.price }} coins</p>
         <button
-          @click="purchaseItem(rod)"
+          @click="purchaseRods(rod)"
           class="mt-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >
           Buy
@@ -884,7 +963,7 @@ const playerCoins = computed(() => playerStore.value.coins);
         <p class="text-yellow-200">Price: {{ potionItem.price }} coins</p>
         <p class="text-yellow-300 text-sm">{{ potionItem.effect }}</p>
         <button
-          @click="purchaseItem(potionItem)"
+          @click="purchasePotion(potionItem)"
           class="mt-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >
           Buy
@@ -893,7 +972,132 @@ const playerCoins = computed(() => playerStore.value.coins);
     </div>
   </div>
   <!-- ==================== Bookmark ====================-->
-  <div v-if="page === 4"></div>
+    <div  v-if="page === 4">
+      <div
+        class="bg-black/50 w-screen h-screen fixed top-0 left-0 font-nonto overflow-scroll"
+      >
+        <div class="flex justify-center w-screen mt-[30px]">
+          <div
+            class="header fade-up bg bg-slate-200 border-black w-[60%] min-w-[300px] min-h-[900px] rounded-[7px]"
+          >
+            <div>
+              <p
+                class="text-2xl font-mono text-gray-800 text-center bg-slate-300 pt-[10px]"
+              >
+                Achievement
+              </p>
+            </div>
+
+            <div class="bg-slate-300 flex gap-5 justify-evenly">
+              <div class="relative inline-block w-59 my-[15px] font-mono">
+                <p class="text-center text-lg">Fish</p>
+                <select
+                  v-model="selectFish"
+                  class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-6 rounded-lg shadow-md hover:bg-gray-100 transition duration-300 focus:outline-none"
+                >
+                  <option value="common">Common</option>
+                  <option value="rare">Rare</option>
+                  <option value="epic">Epic</option>
+                  <option value="legend">Legend</option>
+                </select>
+                <div
+                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 mt-7 text-gray-700"
+                >
+                  <svg
+                    class="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 12l-4-4h8l-4 4z" />
+                  </svg>
+                </div>
+              </div>
+
+              
+            </div>
+
+            <!--  fish data  -->
+            <div v-show="selectFish === 'noselectfish'"></div>
+
+            <!--  common -->
+            <div
+              v-show="selectFish === 'common'"
+              class="transition-opacity justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+            >
+              <div
+                v-for="fish in filterFish(1, 10)"
+                :key="fish.id"
+              >
+                <img
+                  class="brightness-0"
+                  :src="fish.icon"
+                  width="150px"
+                />
+                <h3>{{ fish.name }}</h3>
+                <p>${{ fish.price }}</p>
+              </div>
+            </div>
+
+            <!-- rare -->
+            <div
+              v-show="selectFish === 'rare'"
+              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+            >
+              <div
+                v-for="fish in filterFish(11, 14)"
+                :key="fish.id"
+              >
+                <img
+                  class="brightness-0"
+                  :src="fish.icon"
+                  width="150px"
+                />
+                <h3>{{ fish.name }}</h3>
+                <p>${{ fish.price }}</p>
+              </div>
+            </div>
+
+            <!-- epic -->
+            <div
+              v-show="selectFish === 'epic'"
+              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+            >
+              <div
+                v-for="fish in filterFish(15, 19)"
+                :key="fish.id"
+              >
+                <img
+                  class="brightness-0"
+                  :src="fish.icon"
+                  width="150px"
+                />
+                <h3>{{ fish.name }}</h3>
+                <p>${{ fish.price }}</p>
+              </div>
+            </div>
+
+            <!-- legend -->
+            <div
+              v-show="selectFish === 'legend'"
+              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+            >
+              <div
+                v-for="fish in filterFish(20, 20)"
+                :key="fish.id"
+              >
+                <img
+                  class="brightness-0 noselect"
+                  :src="fish.icon"
+                  width="150px"
+                />
+                <h3>{{ fish.name }}</h3>
+                <p>${{ fish.price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <style scoped>
@@ -902,6 +1106,10 @@ const playerCoins = computed(() => playerStore.value.coins);
 }
 .bg-gray-900 {
   background-color: #2b1b17;
+}
+
+.bg-gray-1000 {
+  background-color: #160a06;
 }
 .text-yellow-100 {
   color: #fff9c4;
@@ -925,10 +1133,6 @@ const playerCoins = computed(() => playerStore.value.coins);
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
-
-.wave-animation {
-  /* display: inline-block; */
-}
 
 .wave-animation span {
   display: inline-block;
