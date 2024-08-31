@@ -286,7 +286,7 @@ function getPotionById(id) {
 function addCaughtFish(fishId) {
   const fish = getFishById(fishId);
   if (fish) {
-    playerStore.caughtFish.push(fish);
+    playerStore.value.caughtFish.push(fish);
   }
 }
 
@@ -314,27 +314,27 @@ const ranTime = ref();
 const check = ref();
 const reducesHp = ref();
 const fishId = ref();
+const rodId = ref();
+const hookAnimationClass = ref("hook-animation-down");
 
-function getEnhacementPlayerById(id) {
-  return playerStore.potions.find((potion) => potion.id === id);
+function getPotionPlayerById(id) {
+  return playerStore.value.potions.find((potion) => potion.id === id);
 }
 
 function fixHpRods() {
-  playerStore.usingRods.hp = getRodById(playerStore.usingRods.id).hp;
+  playerStore.value.usingRods.hp = getRodById(
+    playerStore.value.usingRods.id
+  ).hp;
 }
 
 function reduceHpRods() {
   reducesHp.value = 0;
-  if (playerStore.usingRods.id === 1) {
+  if (playerStore.value.usingRods.id === 1) {
     reducesHp.value = 3;
-  } else if (playerStore.usingRods.id === 2) {
+  } else if (playerStore.value.usingRods.id === 2) {
     reducesHp.value = 2;
   } else {
     reducesHp.value = 1;
-  }
-
-  if (getEnhacementPlayerById(3) === getRodEnhancementById(3)) {
-    reducesHp.value = (reducesHp.value * 80) / 100;
   }
 }
 
@@ -356,7 +356,7 @@ function randomFishing() {
 }
 
 function doAfterTimeOut(callback) {
-  check.value = getRodEnhancementById(2) === getEnhacementPlayerById(2);
+  check.value = getPotionById(2) === getPotionPlayerById(2);
   randomFishing();
   waiting.value = true;
   setTimeout(() => {
@@ -391,27 +391,27 @@ function ranFish(luck) {
   if (rate >= 55) {
     random("common");
 
-    fishId.value = caughtFish.value.id;
+    fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   } else if (rate >= 25 + luck * 5 && rate < 55) {
     random("rare");
-    fishId.value = caughtFish.value.id;
+    fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   } else if (rate >= 7 + luck * 2 && rate < 25 + luck * 5) {
     random("epic");
-    fishId.value = caughtFish.value.id;
+    fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   } else {
     random("legendary");
-    fishId.value = caughtFish.value.id;
+    fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   }
 }
 
 function checkRod() {
   const luckpoint = 0;
-  const checkEnhance = getRodEnhancementById(5) === getEnhacementPlayerById(5);
-  const checkRod = playerStore.usingRods.id;
+  const checkEnhance = getPotionById(5) === getPotionPlayerById(5);
+  const checkRod = playerStore.value.usingRods.id;
   if (checkEnhance) {
     luckpoint + 1;
   }
@@ -423,37 +423,39 @@ function hookFish() {
   const chanceToGet = Math.random() * 100;
 
   doAfterTimeOut(() => {
-    if (
-      getRodEnhancementById(1) === getEnhacementPlayerById(1) &&
-      chanceToGet > 20
-    ) {
+    if (getPotionById(1) === getPotionPlayerById(1) && chanceToGet > 20) {
       checkRod();
       gottenFish.value = true;
-      fishName.value =
-        playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
-    } else if (
-      getRodEnhancementById(1) != getEnhacementPlayerById(1) &&
-      chanceToGet > 30
-    ) {
+      fishName.value = playerStore.value.caughtFish[playerStore.value.caughtFish.length - 1].name;
+    } else if (getPotionById(1) !== getPotionPlayerById(1) && chanceToGet > 30) {
       checkRod();
       gottenFish.value = true;
-      fishName.value =
-        playerStore.caughtFish[playerStore.caughtFish.length - 1].name;
+      fishName.value = playerStore.value.caughtFish[playerStore.value.caughtFish.length - 1].name;
     } else {
       escapedFish.value = true;
     }
-    hooking.value = false;
+
+    // เปลี่ยนคลาสเป็นแอนิเมชันเลื่อนกลับขึ้นเมื่อกระบวนการตกปลาเสร็จ
+    hookAnimationClass.value = 'hook-animation-up';
+
+    // รอให้แอนิเมชันเลื่อนกลับขึ้นเสร็จสิ้นก่อนซ่อน Hook
+    setTimeout(() => {
+      hooking.value = false;
+    }, 2000); // ระยะเวลาต้องตรงกับความยาวของแอนิเมชัน
   });
 }
 
-const hook = (rodId) => {
-  if (playerStore.usingRods.hp != 0) {
+const hook = () => {
+  if (playerStore.value.usingRods.hp != 0) {
     reduceHpRods();
-    if (playerStore.usingRods.hp < reducesHp.value) {
+    if (playerStore.value.usingRods.hp < reducesHp.value) {
       alert("Caution! Your Rod is broken pls fix before hook");
     } else {
-      playerStore.usingRods.hp = playerStore.usingRods.hp - reducesHp.value;
-      rodId.value = rodId;
+      playerStore.value.usingRods.hp = playerStore.value.usingRods.hp - reducesHp.value;
+      rodId.value = playerStore.value.usingRods.id;
+
+      // เริ่มการตกปลาและแสดง Hook
+      hookAnimationClass.value = 'hook-animation-down'; // ให้ Hook เลื่อนลงมา
       hooking.value = true;
       waitingForFunction();
     }
@@ -473,11 +475,6 @@ const selectedCategory = ref("all");
 const setCategory = (category) => {
   selectedCategory.value = category;
 };
-
-// ฟังก์ชันสำหรับเพิ่มเหรียญ
-function addCoins(amount) {
-  playerStore.value.coins += amount;
-}
 
 const filteredItems = computed(() => {
   if (selectedCategory.value === "all") {
@@ -503,40 +500,46 @@ const inventoryCapacity = computed(() => {
 // ฟังก์ชันสำหรับขายปลา
 function sellFish(fish) {
   playerStore.value.coins += fish.price * fish.quantity;
-  playerStore.value.caughtFish = playerStore.value.caughtFish.filter(f => f.id !== fish.id);
-  console.log(playerStore)
+  playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
+    (f) => f.id !== fish.id
+  );
+  console.log(playerStore);
 }
 
 // ฟังก์ชันสำหรับใส่ Rod
 function equipRod(rod) {
   playerStore.value.usingRods = rod;
-  console.log(playerStore)
+  console.log(playerStore);
 }
 
 // ฟังก์ชันสำหรับใช้ Potion
 function usePotion(potion) {
-  const existingPotion = playerStore.value.usingPosion.find(p => p.id === potion.id);
+  const existingPotion = playerStore.value.usingPosion.find(
+    (p) => p.id === potion.id
+  );
   if (!existingPotion) {
     playerStore.value.usingPosion.push(potion);
   }
-  playerStore.value.potions = playerStore.value.potions.filter(p => p.id !== potion.id || p.quantity > 1);
+  playerStore.value.potions = playerStore.value.potions.filter(
+    (p) => p.id !== potion.id || p.quantity > 1
+  );
   if (potion.quantity > 1) {
     potion.quantity -= 1;
   }
-  console.log(playerStore)
+  console.log(playerStore);
 }
 
 // Helper functions เพื่อตรวจสอบประเภทของ item
 function isFish(item) {
-  return playerStore.value.caughtFish.some(fish => fish.id === item.id);
+  return playerStore.value.caughtFish.some((fish) => fish.id === item.id);
 }
 
 function isRod(item) {
-  return playerStore.value.ownedRods.some(rod => rod.id === item.id);
+  return playerStore.value.ownedRods.some((rod) => rod.id === item.id);
 }
 
 function isPotion(item) {
-  return playerStore.value.potions.some(potion => potion.id === item.id);
+  return playerStore.value.potions.some((potion) => potion.id === item.id);
 }
 //======================================== Shop Page ========================================
 // Buy -Coins
@@ -586,7 +589,7 @@ function purchaseRods(item) {
 function purchasePotion(item) {
   if (playerStore.value.coins >= item.price) {
     deductCoins(item.price);
-    
+
     if (potion.some((potions) => potions.id === item.id)) {
       addPotion(item.id);
     }
@@ -598,11 +601,18 @@ function purchasePotion(item) {
 const playerCoins = computed(() => playerStore.value.coins);
 //======================================== BookMark Page ========================================
 const selectFish = ref("common");
-const selectItem = ref("noselectitem");
+const highlightedFish = ref(new Set());
 
 function filterFish(a, b) {
-  // กรองปลา จากปลา id a ถึง id b
   return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
+}
+
+function isFishInPlayerStore(fishId) {
+  if (playerStore.value.caughtFish.some((fish) => fish.id === fishId)) {
+    highlightedFish.value.add(fishId);
+    return true;
+  }
+  return highlightedFish.value.has(fishId);
 }
 </script>
 
@@ -670,108 +680,116 @@ function filterFish(a, b) {
 
   <!-- ==================== Play ====================-->
   <div
-    class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
+    class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
     style="background-image: url('/src/assets/images/image/PLAY.png')"
     v-if="page === 5"
   >
-    <img
-      src="/src/assets/images/svg/PLAY.svg"
-      alt="Animated SVG"
-      class="animated-svg"
-    />
-    <!-- Hook -->
-    <div
-      class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4"
+    <!-- Hook and SVG Image Section -->
+    <div class="relative flex justify-center items-center h-screen w-full">
+      <!-- SVG Image -->
+      <img
+        src="/src/assets/images/svg/PLAY.svg"
+        alt="Animated SVG"
+        class="animated-svg relative z-10"
+      />
+
+<!-- Hook -->
+<div
+      :class="hookAnimationClass"
       style="
-        width: 500px;
-        height: 500px;
-        background-image: url('/src/components/icons/Hookbait.png');
+        width: 1250px;
+        height: 5250px;
+        background-image: url('/src/assets/images/image/Hook.png');
         background-size: contain;
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: bottom;
+        z-index: 5;
       "
       v-show="hooking"
     ></div>
-    <!-- Modal Get Fish -->
-    <div
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      v-show="gottenFish"
-    >
-      <div
-        class="p-8 rounded-2xl shadow-lg w-11/12 my-10 h-4/6 md:w-1/2 max-w-4xl text-center flex flex-col items-center"
-        style="
-          background-image: url('/src/components/images/SeaBackground.png');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-        "
-      >
-        <div
-          class="text-4xl text-yellow-600 font-sans font-extrabold border-8 border-blue-500 rounded-xl bg-blue-100 mx-8 md:mx-16 p-6 flex items-center justify-center"
-        >
-          <span>You got a</span>
-          <div
-            class="text-4xl text-blue-700 font-sans font-extrabold flex items-center"
-          >
-            &nbsp; "
-            <span class="text-4xl text-green-600 font-extrabold">
-              {{ fishName }}
-            </span>
-            "
-          </div>
-        </div>
+    </div>
 
-        <div class="w-full h-1/2 flex items-center justify-center mt-8">
-          <div
-            class="bg-pink-100 border border-gray-200 rounded-lg shadow-lg p-4 max-w-md w-full h-10/12 mb-2 flex justify-center"
-          >
-            <img
-              :src="`/src/components/fishs/${fishId}.png`"
-              alt="Fish Image"
-              class="w-full h-full object-cover rounded-lg"
-              style="max-width: 200px; max-height: 200px; object-fit: cover"
-            />
-          </div>
-        </div>
-        <button
-          @click="closeModal"
-          class="bg-black text-white border-2 border-black rounded-lg w-1/2 p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 mt-10"
-        >
-          Close
-        </button>
+<!-- Modal Get Fish -->
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  v-show="gottenFish"
+>
+  <div
+    class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center bg-gray-1000"
+    style="
+      background-image: url('/src/components/images/SeaBackground.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    "
+  >
+    <div
+      class="text-xl md:text-2xl bg-gradient-to-b from-gray-900 to-yellow-900 text-yellow-100 font-sans font-bold rounded-lg mx-2 md:mx-4 lg:mx-8 p-3 md:p-4 flex items-center justify-center"
+    >
+      <span>You got a</span>
+      <div
+        class="text-xl md:text-2xl text-yellow-100 font-sans font-bold flex items-center"
+      >
+        &nbsp; "
+        <span class="text-xl md:text-2xl text-green-600 font-extrabold">
+          {{ fishName }}
+        </span>
+        "
       </div>
     </div>
-    <div
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      v-show="escapedFish"
-    >
-      <div
-        class="p-6 rounded-xl shadow-lg w-3/4 my-8 h-1/3 md:w-1/3 max-w-md text-center flex flex-col items-center"
-        style="
-          background-image: url('/src/components/images/SeaBackground.png');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-        "
-      >
-        <div
-          class="text-2xl text-red-600 font-sans font-bold border-4 border-red-500 rounded-lg bg-red-100 mx-4 md:mx-8 p-4 flex items-center justify-center"
-        >
-          <span>Unfortunately, your fish &nbsp; Escaped!</span>
-          <div
-            class="text-2xl text-red-700 font-sans font-bold flex items-center ml-2"
-          ></div>
-        </div>
 
-        <button
-          @click="closeModal"
-          class="bg-black text-white border-2 border-black rounded-lg w-1/2 p-3 text-sm font-semibold transition-transform transform hover:scale-105 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 mt-20"
-        >
-          Close
-        </button>
+    <div class="w-full h-auto md:h-1/2 flex items-center justify-center mt-8">
+      <div
+        class="bg-gray-900 border border-yellow-400 rounded-lg shadow-lg p-4 max-w-xs md:max-w-md w-full h-full flex justify-center items-center"
+      >
+        <img
+          :src="fishId"
+          alt="Fish Image"
+          class="w-full h-full object-cover rounded-lg"
+          style="max-width: 200px; max-height: 200px"
+        />
       </div>
     </div>
-    <div class="relative w-full">
+    <button
+      @click="closeModal"
+      class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
+    >
+      Close
+    </button>
+  </div>
+</div>
+
+    <!-- Modal Escaped Fish -->
+    <div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  v-show="escapedFish"
+>
+  <div
+    class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center  bg-gray-1000"
+    style="
+      background-image: url('/src/components/images/SeaBackground.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    "
+  >
+    <div
+      class="text-xl md:text-2xl bg-gradient-to-b bg-gray-900 text-yellow-100 text-yellow-100 font-sans font-bold rounded-lg mx-2 md:mx-4 lg:mx-8 p-3 md:p-4 flex items-center justify-center"
+    >
+      <span>Unfortunately, your fish &nbsp; Escaped!</span>
+    </div>
+
+    <button
+      @click="closeModal"
+      class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
+    >
+      Close
+    </button>
+  </div>
+</div>
+
+    <!-- Navigation and Bottom Image -->
+    <div class="relative w-full mt-auto">
       <div class="fixed left-0 bottom-0 w-full bg-[#4E342E]">
         <img
           src="./assets/images/button/Back.png"
@@ -808,7 +826,7 @@ function filterFish(a, b) {
         <img
           src="./assets/images/button/Play.png"
           alt="Hook"
-          @click="hooking"
+          @click="hook"
           class="w-24 md:w-32 transition-transform transform hover:scale-110"
         />
         <img
@@ -828,92 +846,96 @@ function filterFish(a, b) {
   </div>
   <!-- ==================== Inventory ====================-->
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
-<!-- Sidebar for Categories -->
-<div
-  class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
->
- <!-- ปุ่ม Back -->
- <button
-      @click="togglePage(5)"
-      class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
-    >
-      Back
-    </button>
-  <button
-    @click="setCategory('all')"
-    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-  >
-    <img src="/src/assets/images/inventory/All.png" alt="All" />
-  </button>
-  <button
-    @click="setCategory('fish')"
-    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-  >
-    <img src="/src/assets/images/inventory/Fish.png" alt="Fish" />
-  </button>
-  <button
-    @click="setCategory('rods')"
-    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-  >
-    <img src="/src/assets/images/inventory/Rods.png" alt="Rods" />
-  </button>
-  <button
-    @click="setCategory('potions')"
-    class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-  >
-    <img src="/src/assets/images/inventory/Potion.png" alt="potions" />
-  </button>
-</div>
-
-<!-- Main Inventory Section -->
-<div class="flex-1 bg-gray-900 p-6 rounded-lg shadow-lg text-yellow-100">
-  <h1 class="text-3xl font-bold mb-6">Inventory</h1>
-  <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
-
-  <!-- Inventory Grid -->
-  <div class="grid grid-cols-4 gap-4">
+    <!-- Sidebar for Categories -->
     <div
-      v-for="(item, index) in filteredItems"
-      :key="index"
-      class="relative p-4 bg-yellow-800 border border-yellow-400 rounded-lg hover:border-yellow-300"
+      class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
     >
-      <img :src="item.icon" :alt="item.name" class="mb-2 h-20 w-20 mx-auto" />
-      <p class="text-center font-semibold">{{ item.name }}</p>
-      <span
-        class="absolute top-0 right-0 bg-red-600 text-white text-sm rounded-full px-2"
-      >
-        x{{ item.quantity }}
-      </span>
-
-      <!-- ปุ่มขายสำหรับปลา -->
+      <!-- ปุ่ม Back -->
       <button
-        v-if="isFish(item)"
-        @click="sellFish(item)"
-        class="mt-2 bg-red-600 text-white py-1 px-3 rounded hover:bg-red-500 w-full"
+        @click="togglePage(5)"
+        class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
       >
-        Sell for {{ item.price }} coins
+        Back
       </button>
-
-      <!-- ปุ่มใช้สำหรับ Rods -->
       <button
-        v-if="isRod(item)"
-        @click="equipRod(item)"
-        class="mt-2 bg-green-600 text-white py-1 px-3 rounded hover:bg-green-500 w-full"
+        @click="setCategory('all')"
+        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
       >
-        Equip Rod
+        <img src="/src/assets/images/inventory/All.png" alt="All" />
       </button>
-
-      <!-- ปุ่มใช้สำหรับ Potions -->
       <button
-        v-if="isPotion(item)"
-        @click="usePotion(item)"
-        class="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-500 w-full"
+        @click="setCategory('fish')"
+        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
       >
-        Use Potion
+        <img src="/src/assets/images/inventory/Fish.png" alt="Fish" />
+      </button>
+      <button
+        @click="setCategory('rods')"
+        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+      >
+        <img src="/src/assets/images/inventory/Rods.png" alt="Rods" />
+      </button>
+      <button
+        @click="setCategory('potions')"
+        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
+      >
+        <img src="/src/assets/images/inventory/Potion.png" alt="potions" />
       </button>
     </div>
-  </div>
-</div>
+
+    <!-- Main Inventory Section -->
+    <div class="flex-1 bg-gray-900 p-6 rounded-lg shadow-lg text-yellow-100">
+      <h1 class="text-3xl font-bold mb-6">Inventory</h1>
+      <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
+
+      <!-- Inventory Grid -->
+      <div class="grid grid-cols-4 gap-4">
+        <div
+          v-for="(item, index) in filteredItems"
+          :key="index"
+          class="relative p-4 bg-yellow-800 border border-yellow-400 rounded-lg hover:border-yellow-300"
+        >
+          <img
+            :src="item.icon"
+            :alt="item.name"
+            class="mb-2 h-20 w-20 mx-auto"
+          />
+          <p class="text-center font-semibold">{{ item.name }}</p>
+          <span
+            class="absolute top-0 right-0 bg-red-600 text-white text-sm rounded-full px-2"
+          >
+            x{{ item.quantity }}
+          </span>
+
+          <!-- ปุ่มขายสำหรับปลา -->
+          <button
+            v-if="isFish(item)"
+            @click="sellFish(item)"
+            class="mt-2 bg-red-600 text-white py-1 px-3 rounded hover:bg-red-500 w-full"
+          >
+            Sell for {{ item.price }} coins
+          </button>
+
+          <!-- ปุ่มใช้สำหรับ Rods -->
+          <button
+            v-if="isRod(item)"
+            @click="equipRod(item)"
+            class="mt-2 bg-green-600 text-white py-1 px-3 rounded hover:bg-green-500 w-full"
+          >
+            Equip Rod
+          </button>
+
+          <!-- ปุ่มใช้สำหรับ Potions -->
+          <button
+            v-if="isPotion(item)"
+            @click="usePotion(item)"
+            class="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-500 w-full"
+          >
+            Use Potion
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- ==================== Shop ====================-->
   <div
@@ -971,133 +993,153 @@ function filterFish(a, b) {
       </div>
     </div>
   </div>
-  <!-- ==================== Bookmark ====================-->
-    <div  v-if="page === 4">
-      <div
-        class="bg-black/50 w-screen h-screen fixed top-0 left-0 font-nonto overflow-scroll"
-      >
-        <div class="flex justify-center w-screen mt-[30px]">
-          <div
-            class="header fade-up bg bg-slate-200 border-black w-[60%] min-w-[300px] min-h-[900px] rounded-[7px]"
+  <!-- ==================== Bookmark (Achievement) ====================-->
+  <div v-if="page === 4">
+    <div
+      class="bg-gray-1000 w-screen h-screen fixed top-0 left-0 font-nonto overflow-scroll"
+    >
+      <div class="flex justify-center w-screen mt-8">
+        <div
+          class="header fade-up bg-gradient-to-b bg-gray-900 to-yellow-900 border-black w-[90%] md:w-[60%] min-w-[300px] rounded-lg shadow-lg p-6"
+        >
+          <button
+            @click="togglePage(5)"
+            class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
           >
-            <div>
-              <p
-                class="text-2xl font-mono text-gray-800 text-center bg-slate-300 pt-[10px]"
-              >
-                Achievement
+            Back
+          </button>
+          <!-- Header -->
+          <div class="mb-6">
+            <p
+              class="text-3xl font-bold text-center text-yellow-100 bg-gray-900 py-4 rounded-t-lg"
+            >
+              Achievement
+            </p>
+          </div>
+
+          <!-- Fish Category Selection -->
+          <div
+            class="bg-gray-900 flex gap-5 justify-evenly p-4 rounded-lg mb-6"
+          >
+            <div class="relative inline-block w-full md:w-1/3">
+              <p class="text-center text-lg text-yellow-100 mb-2">
+                Fish Category
               </p>
-            </div>
-
-            <div class="bg-slate-300 flex gap-5 justify-evenly">
-              <div class="relative inline-block w-59 my-[15px] font-mono">
-                <p class="text-center text-lg">Fish</p>
-                <select
-                  v-model="selectFish"
-                  class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-6 rounded-lg shadow-md hover:bg-gray-100 transition duration-300 focus:outline-none"
+              <select
+                v-model="selectFish"
+                class="block appearance-none w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md hover:bg-yellow-100 focus:outline-none transition duration-300"
+              >
+                <option value="common">Common</option>
+                <option value="rare">Rare</option>
+                <option value="Legendary">Legendary</option>
+                <option value="Secret">Secret</option>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+              >
+                <svg
+                  class="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
                 >
-                  <option value="common">Common</option>
-                  <option value="rare">Rare</option>
-                  <option value="epic">Epic</option>
-                  <option value="legend">Legend</option>
-                </select>
-                <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 mt-7 text-gray-700"
-                >
-                  <svg
-                    class="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 12l-4-4h8l-4 4z" />
-                  </svg>
-                </div>
-              </div>
-
-              
-            </div>
-
-            <!--  fish data  -->
-            <div v-show="selectFish === 'noselectfish'"></div>
-
-            <!--  common -->
-            <div
-              v-show="selectFish === 'common'"
-              class="transition-opacity justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
-            >
-              <div
-                v-for="fish in filterFish(1, 10)"
-                :key="fish.id"
-              >
-                <img
-                  class="brightness-0"
-                  :src="fish.icon"
-                  width="150px"
-                />
-                <h3>{{ fish.name }}</h3>
-                <p>${{ fish.price }}</p>
+                  <path d="M10 12l-4-4h8l-4 4z" />
+                </svg>
               </div>
             </div>
+          </div>
 
-            <!-- rare -->
+          <!-- Fish Data Grids -->
+          <div
+            v-show="selectFish === 'common'"
+            class="grid grid-cols-2 md:grid-cols-3 gap-4"
+          >
             <div
-              v-show="selectFish === 'rare'"
-              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+              v-for="fish in filterFish(1, 10)"
+              :key="fish.id"
+              class="green-gradient-bg border border-green-400 rounded-lg p-4 hover:border-green-300"
             >
-              <div
-                v-for="fish in filterFish(11, 14)"
-                :key="fish.id"
-              >
-                <img
-                  class="brightness-0"
-                  :src="fish.icon"
-                  width="150px"
-                />
-                <h3>{{ fish.name }}</h3>
-                <p>${{ fish.price }}</p>
-              </div>
+              <img
+                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
+                class="brightness-100 rounded-lg mb-2"
+                :src="fish.icon"
+                :alt="fish.name"
+              />
+              <h3 class="text-green-900 text-lg font-semibold">
+                {{ fish.name }}
+              </h3>
+              <p class="text-green-900">${{ fish.price }}</p>
             </div>
+          </div>
 
-            <!-- epic -->
+          <div
+            v-show="selectFish === 'rare'"
+            class="grid grid-cols-2 md:grid-cols-3 gap-4"
+          >
             <div
-              v-show="selectFish === 'epic'"
-              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+              v-for="fish in filterFish(11, 14)"
+              :key="fish.id"
+              class="blue-gradient-bg border border-blue-400 rounded-lg p-4 hover:border-blue-300"
             >
-              <div
-                v-for="fish in filterFish(15, 19)"
-                :key="fish.id"
-              >
-                <img
-                  class="brightness-0"
-                  :src="fish.icon"
-                  width="150px"
-                />
-                <h3>{{ fish.name }}</h3>
-                <p>${{ fish.price }}</p>
-              </div>
+              <img
+                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
+                class="brightness-100 rounded-lg mb-2"
+                :src="fish.icon"
+                :alt="fish.name"
+              />
+              <h3 class="text-blue-100 text-lg font-semibold">
+                {{ fish.name }}
+              </h3>
+              <p class="text-blue-200">${{ fish.price }}</p>
             </div>
+          </div>
 
-            <!-- legend -->
+          <div
+            v-show="selectFish === 'Legendary'"
+            class="grid grid-cols-2 md:grid-cols-3 gap-4"
+          >
             <div
-              v-show="selectFish === 'legend'"
-              class="justify-evenly gap-10 mt-[10px] ml-[10px] text-center grid grid-cols-3 justify-items-center"
+              v-for="fish in filterFish(15, 19)"
+              :key="fish.id"
+              class="pastel-red-gradient-bg border border-yellow-400 rounded-lg p-4 hover:border-yellow-300"
             >
-              <div
-                v-for="fish in filterFish(20, 20)"
-                :key="fish.id"
-              >
-                <img
-                  class="brightness-0 noselect"
-                  :src="fish.icon"
-                  width="150px"
-                />
-                <h3>{{ fish.name }}</h3>
-                <p>${{ fish.price }}</p>
-              </div>
+              <img
+                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
+                class="brightness-100 rounded-lg mb-2"
+                :src="fish.icon"
+                :alt="fish.name"
+              />
+              <h3 class="text-yellow-900 text-lg font-semibold">
+                {{ fish.name }}
+              </h3>
+              <p class="text-yellow-800">${{ fish.price }}</p>
+            </div>
+          </div>
+
+          <div
+            v-show="selectFish === 'Secret'"
+            class="grid grid-cols-2 md:grid-cols-3 gap-4"
+          >
+            <div
+              v-for="fish in filterFish(20, 20)"
+              :key="fish.id"
+              class="hologram-bg border border-yellow-400 rounded-lg p-4 hover:border-yellow-300"
+            >
+              <img
+                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
+                class="brightness-100 rounded-lg mb-2 noselect"
+                :src="fish.icon"
+                :alt="fish.name"
+              />
+              <h3 class="text-yellow-100 text-lg font-semibold">
+                {{ fish.name }}
+              </h3>
+              <p class="text-yellow-200">${{ fish.price }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -1125,6 +1167,161 @@ function filterFish(a, b) {
 }
 .hover:bg-yellow-500:hover {
   background-color: #ffa726;
+}
+
+@keyframes hookMoveDown {
+  0% {
+    transform: translate(-50%, -100%); /* เริ่มต้นจากนอกจอด้านบน */
+  }
+  100% {
+    transform: translate(-50%, -85%); /* อยู่ในตำแหน่งพอเหมาะ (เลื่อนลงมาครึ่งหนึ่งของหน้าจอ) */
+  }
+}
+
+@keyframes hookMoveUp {
+  0% {
+    transform: translate(-50%, -85%); /* เริ่มต้นจากตำแหน่งที่เลื่อนลงมา */
+  }
+  100% {
+    transform: translate(-50%, -150%); /* เลื่อนไปนอกจอด้านบน */
+  }
+}
+
+.hook-animation-down {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  animation: hookMoveDown 2s ease forwards; /* เลื่อนลงมาด้านล่าง */
+}
+
+.hook-animation-up {
+  position: absolute;
+  top: 50%; /* เริ่มจากตรงกลาง */
+  left: 50%;
+  transform: translate(-50%, -40%);
+  animation: hookMoveUp 2s ease forwards; /* เลื่อนกลับขึ้นไป */
+}
+
+@keyframes blueGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.blue-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #89cff0,
+    #a0d8f1,
+    #c9ebf6,
+    #a0d8f1,
+    #89cff0
+  );
+  background-size: 600% 600%;
+  animation: blueGradient 10s ease infinite;
+}
+
+@keyframes greenGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.green-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #a8e6cf,
+    #dcedc1,
+    #f6ffed,
+    #dcedc1,
+    #a8e6cf
+  );
+  background-size: 600% 600%;
+  animation: greenGradient 10s ease infinite;
+}
+
+@keyframes pastelRedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.pastel-red-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #ffc1c1,
+    #ffb6c1,
+    #ffd1dc,
+    #ffaaaa,
+    #ffc1c1
+  );
+  background-size: 400% 400%;
+  animation: pastelRedGradient 10s ease infinite;
+  border-radius: 15px;
+  border: 4px solid transparent;
+
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+@keyframes hologramBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hologram-bg {
+  background: linear-gradient(
+    270deg,
+    #ffb3ff,
+    #b3ffff,
+    #b3ffb3,
+    #ffb3b3,
+    #b3b3ff
+  );
+  background-size: 400% 400%;
+  animation: hologramBackground 15s ease infinite;
+  border-radius: 15px;
+  padding: 10px;
+  border: 4px solid transparent;
+  border-image: linear-gradient(
+      45deg,
+      #ffb3ff,
+      #b3ffff,
+      #b3ffb3,
+      #ffb3b3,
+      #b3b3ff
+    )
+    1;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 179, 255, 0.5), 0 0 30px rgba(179, 255, 255, 0.5),
+    0 0 40px rgba(179, 255, 179, 0.5), 0 0 50px rgba(255, 179, 179, 0.5),
+    0 0 60px rgba(179, 179, 255, 0.5);
 }
 
 @font-face {
