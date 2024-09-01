@@ -815,31 +815,31 @@ function isFishInPlayerStore(fishId) {
           src="./assets/images/button/Home.png"
           alt="Home"
           @click="togglePage(1)"
-          class="w-16 md:w-20 transition-transform transform hover:scale-110 ml-10 md:ml-36"
+          class="w-16 md:w-20 transition-transform transform hover:scale-110 ml-10 md:ml-36 cursor-pointer"
         />
         <img
           src="./assets/images/button/BackPack.png"
           alt="Inventory"
           @click="togglePage(2)"
-          class="w-20 md:w-24 transition-transform transform hover:scale-110"
+          class="w-20 md:w-24 transition-transform transform hover:scale-110 cursor-pointer"
         />
         <img
           src="./assets/images/button/Play.png"
           alt="Hook"
           @click="hook"
-          class="w-24 md:w-32 transition-transform transform hover:scale-110"
+          class="w-24 md:w-32 transition-transform transform hover:scale-110 cursor-pointer"
         />
         <img
           src="./assets/images/button/Shop.png"
           alt="Shop"
           @click="togglePage(3)"
-          class="w-20 md:w-28 transition-transform transform hover:scale-110"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110 cursor-pointer"
         />
         <img
           src="./assets/images/button//BookMark.png"
           alt="Bookmark"
           @click="togglePage(4)"
-          class="w-20 md:w-28 transition-transform transform hover:scale-110 mr-10 md:mr-36"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110 mr-10 md:mr-36 cursor-pointer"
         />
       </div>
     </div>
@@ -1027,7 +1027,7 @@ function isFishInPlayerStore(fishId) {
               </p>
               <select
                 v-model="selectFish"
-                class="block appearance-none w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md hover:bg-yellow-100 focus:outline-none transition duration-300"
+                class="block appearance-none w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md hover:bg-yellow-100 focus:outline-none transition duration-300 cursor-pointer"
               >
                 <option value="common">Common</option>
                 <option value="rare">Rare</option>
