@@ -1060,7 +1060,7 @@ function isFishInPlayerStore(fishId) {
             >
               <img
                 :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-100 rounded-lg mb-2"
+                class="brightness-0 rounded-lg mb-2"
                 :src="fish.icon"
                 :alt="fish.name"
               />
@@ -1082,7 +1082,7 @@ function isFishInPlayerStore(fishId) {
             >
               <img
                 :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-100 rounded-lg mb-2"
+                class="brightness-0 rounded-lg mb-2"
                 :src="fish.icon"
                 :alt="fish.name"
               />
@@ -1104,7 +1104,7 @@ function isFishInPlayerStore(fishId) {
             >
               <img
                 :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-100 rounded-lg mb-2"
+                class="brightness-0 rounded-lg mb-2"
                 :src="fish.icon"
                 :alt="fish.name"
               />
@@ -1126,7 +1126,7 @@ function isFishInPlayerStore(fishId) {
             >
               <img
                 :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-100 rounded-lg mb-2 noselect"
+                class="brightness-0 rounded-lg mb-2 noselect"
                 :src="fish.icon"
                 :alt="fish.name"
               />
