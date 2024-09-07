@@ -9,6 +9,7 @@ const fishStore = [
     quantity: 1,
     price: 50,
     icon: "/src/assets/images/fish/Sardine.png",
+    type: "fish",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const fishStore = [
     quantity: 1,
     price: 150,
     icon: "/src/assets/images/fish/Clownfish.png",
+    type: "fish",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ const fishStore = [
     quantity: 1,
     price: 200,
     icon: "/src/assets/images/fish/Catfish.png",
+    type: "fish",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const fishStore = [
     quantity: 1,
     price: 250,
     icon: "/src/assets/images/fish/Salmon.png",
+    type: "fish",
   },
   {
     id: 5,
@@ -37,6 +41,7 @@ const fishStore = [
     quantity: 1,
     price: 250,
     icon: "/src/assets/images/fish/Tuna.png",
+    type: "fish",
   },
   {
     id: 6,
@@ -44,12 +49,14 @@ const fishStore = [
     quantity: 1,
     price: 700,
     icon: "/src/assets/images/fish/Marlin.png",
+    type: "fish",
   },
   {
     id: 7,
     name: "Stingray",
     price: 500,
     icon: "/src/assets/images/fish/Stingray.png",
+    type: "fish",
   },
   {
     id: 8,
@@ -57,13 +64,15 @@ const fishStore = [
     quantity: 1,
     price: 300,
     icon: "/src/assets/images/fish/Eel.png",
+    type: "fish",
   },
   {
     id: 9,
-    name: "White_Koi",
+    name: "White Koi",
     quantity: 1,
     price: 800,
     icon: "/src/assets/images/fish/White_Koi.png",
+    type: "fish",
   },
   {
     id: 10,
@@ -71,6 +80,7 @@ const fishStore = [
     quantity: 1,
     price: 850,
     icon: "/src/assets/images/fish/Squid.png",
+    type: "fish",
   },
   {
     id: 11,
@@ -78,6 +88,7 @@ const fishStore = [
     quantity: 1,
     price: 1500,
     icon: "/src/assets/images/fish/Shark.png",
+    type: "fish",
   },
   {
     id: 12,
@@ -85,31 +96,35 @@ const fishStore = [
     quantity: 1,
     price: 2000,
     icon: "/src/assets/images/fish/Orca.png",
+    type: "fish",
   },
   {
     id: 13,
-    name: "Blue_Whale",
+    name: "Blue Whale",
     quantity: 1,
     price: 2500,
     icon: "/src/assets/images/fish/Blue_Whale.png",
+    type: "fish",
   },
   {
     id: 14,
-    name: "Giant_Pacific_Octopus",
+    name: "Giant Pacific Octopus",
     quantity: 1,
     price: 2500,
     icon: "/src/assets/images/fish/Giant_Pacific_Octopus.png",
+    type: "fish",
   },
   {
     id: 15,
-    name: "Golden_Fish",
+    name: "Golden Fish",
     quantity: 1,
     price: 3000,
     icon: "/src/assets/images/fish/Golden_Fish.png",
+    type: "fish",
   },
   {
     id: 16,
-    name: "Rainbow_Fish",
+    name: "Rainbow Fish",
     quantity: 1,
     price: 3500,
     icon: "/src/assets/images/fish/Rainbow_Fish.png",
@@ -120,6 +135,7 @@ const fishStore = [
     quantity: 1,
     price: 4500,
     icon: "/src/assets/images/fish/Pearl.png",
+    type: "fish",
   },
   {
     id: 18,
@@ -127,6 +143,7 @@ const fishStore = [
     quantity: 1,
     price: 5000,
     icon: "/src/assets/images/fish/Diamond.png",
+    type: "fish",
   },
   {
     id: 19,
@@ -134,6 +151,7 @@ const fishStore = [
     quantity: 1,
     price: 8000,
     icon: "/src/assets/images/fish/Chest.png",
+    type: "fish",
   },
   {
     id: 20,
@@ -141,92 +159,108 @@ const fishStore = [
     quantity: 1,
     price: 100000,
     icon: "/src/assets/images/fish/Dragon.png",
+    type: "fish",
   },
 ];
 // Rods
 const fishingRods = [
   {
     id: 1,
-    name: "Basic_Rod",
+    name: "Basic Rod",
     quantity: 1,
     price: 0,
     icon: "/src/assets/images/rod/Basic_Rod.png",
     hp: 50,
+    type: "rod",
   },
   {
     id: 2,
-    name: "Star_Rod",
+    name: "Star Rod",
     quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Star_Rod.png",
     hp: 75,
+    type: "rod",
   },
   {
     id: 3,
-    name: "Galaxy_Rod",
+    name: "Galaxy Rod",
     quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Galaxy_Rod.png",
     hp: 100,
+    type: "rod",
   },
   {
     id: 4,
-    name: "Lover_Rod",
+    name: "Lover Rod",
     quantity: 1,
     price: 50000,
     icon: "/src/assets/images/rod/Lover_Rod.png",
     hp: 200,
+    type: "rod",
   },
   {
     id: 5,
-    name: "Thunder_Rod",
+    name: "Thunder Rod",
     quantity: 1,
     price: 100000,
     icon: "/src/assets/images/rod/Thunder_Rod.png",
     hp: 1000,
+    type: "rod",
   },
 ];
 // Potion
 const potion = [
   {
     id: 1,
-    name: "Luck +10% 5 minute",
+    name: "Luck Potion",
     quantity: 1,
     price: 2500,
-    effect: "Lucky ",
+    effect: "Luck +10% 5 minute",
     icon: "/src/assets/images/potion/Luck_5m.png",
+    type: "potion",
+    duration: 300,
   },
   {
     id: 2,
-    name: "Speed +15% 5 minute",
+    name: "Speed Potion",
     quantity: 1,
     price: 2500,
-    effect: "Increases fish catch chance by 15%",
+    effect: "Speed +15% 5 minute",
     icon: "/src/assets/images/potion/Speed_5m.png",
+    type: "potion",
+    duration: 300,
   },
   {
     id: 3,
-    name: "Luck +10% 1 hours",
+    name: "Full Luck Potion",
     quantity: 1,
     price: 10000,
-    effect: "Reduces rod wear and tear by 20%",
+    effect: "Luck +10% 1 hours",
     icon: "/src/assets/images/potion/Luck_1h.png",
+    type: "potion",
+    duration: 3600,
   },
   {
     id: 4,
-    name: "Speed +15% 1 hours",
+    name: "Full Speed Potion",
     quantity: 1,
     price: 10000,
-    effect: "Decreases fatigue during long fishing sessions",
+    effect: "Speed +15% 1 hours",
     icon: "/src/assets/images/potion/Speed_1h.png",
+    type: "potion",
+    duration: 3600,
   },
   {
     id: 5,
-    name: "Full_Potion",
+    name: "Super Full Potion",
     quantity: 1,
     price: 100000,
     effect: "Luck+Speed 20% 1 hours",
     icon: "/src/assets/images/potion/Full_Potion.png",
+    type: "potion",
+    duration: 3600,
   },
 ];
 // Players
@@ -244,15 +278,7 @@ const playerStore = ref({
       hp: 50,
     },
   ],
-  caughtFish: [
-    {
-      id: 20,
-      name: "Dragon",
-      quantity: 55,
-      price: 100000,
-      icon: "/src/assets/images/fish/Dragon.png",
-    },
-  ],
+  caughtFish: [],
   potions: [],
   usingRods: {
     id: 1,
@@ -262,7 +288,7 @@ const playerStore = ref({
     icon: "/src/assets/images/rod/Basic_Rod.png",
     hp: 50,
   },
-  usingPosion: [],
+  usingPotion: [],
 });
 // All Function
 //Play
@@ -286,9 +312,12 @@ function getPotionById(id) {
 function addCaughtFish(fishId) {
   const fish = getFishById(fishId);
   if (fish) {
-    if(playerStore.value.caughtFish.find((fish) => fish.id === fishId)) {
-      playerStore.value.caughtFish.find((fish) => fish.id === fishId).quantity += 1
+    if (playerStore.value.caughtFish.find((fish) => fish.id === fishId)) {
+      playerStore.value.caughtFish.find(
+        (fish) => fish.id === fishId
+      ).quantity += 1;
     } else {
+      fish.quantity += 20;
       playerStore.value.caughtFish.push(fish);
     }
   }
@@ -323,7 +352,7 @@ const hookAnimationClass = ref("hook-animation-down");
 
 //getpotionplayer
 function getPotionPlayerById(id) {
-  return playerStore.value.usingPosion.find((potion) => potion.id === id);
+  return playerStore.value.usingPotion.find((potion) => potion.id === id);
 }
 
 //first
@@ -333,11 +362,12 @@ const hook = () => {
     if (playerStore.value.usingRods.hp < reducesHp.value) {
       alert("Caution! Your Rod is broken pls fix before hook");
     } else {
-      playerStore.value.usingRods.hp = playerStore.value.usingRods.hp - reducesHp.value;
+      playerStore.value.usingRods.hp =
+        playerStore.value.usingRods.hp - reducesHp.value;
       rodId.value = playerStore.value.usingRods.id;
- 
+
       // เริ่มการตกปลาและแสดง Hook
-      hookAnimationClass.value = 'hook-animation-down'; // ให้ Hook เลื่อนลงมา
+      hookAnimationClass.value = "hook-animation-down"; // ให้ Hook เลื่อนลงมา
       hooking.value = true;
       waitingForFunction();
     }
@@ -356,19 +386,22 @@ function waitingForFunction(id) {
 //third
 function hookFish() {
   const chanceToGet = Math.random() * 100;
- 
+
   doAfterTimeOut(() => {
     if (chanceToGet > 20) {
       checkRod();
       gottenFish.value = true;
-      fishName.value = playerStore.value.caughtFish[playerStore.value.caughtFish.length - 1].name;
+      fishName.value =
+        playerStore.value.caughtFish[
+          playerStore.value.caughtFish.length - 1
+        ].name;
     } else {
-      escapedFish.value = true
+      escapedFish.value = true;
     }
- 
+
     // เปลี่ยนคลาสเป็นแอนิเมชันเลื่อนกลับขึ้นเมื่อกระบวนการตกปลาเสร็จ
-    hookAnimationClass.value = 'hook-animation-up';
- 
+    hookAnimationClass.value = "hook-animation-up";
+
     // รอให้แอนิเมชันเลื่อนกลับขึ้นเสร็จสิ้นก่อนซ่อน Hook
     setTimeout(() => {
       hooking.value = false;
@@ -387,51 +420,58 @@ function doAfterTimeOut(callback) {
 //fifth
 function fishingTime() {
   const speed = 0;
-  if (checkEqualPotion(1,1)) {
-    luck.value+15
+  if (checkEqualPotion(1, 1)) {
+    luck.value + 15;
   }
-  if (checkEqualPotion(2,2)) {
-    speed+10
+  if (checkEqualPotion(2, 2)) {
+    speed + 10;
   }
-  if (checkEqualPotion(3,3)) {
-    luck.value+15
+  if (checkEqualPotion(3, 3)) {
+    luck.value + 15;
   }
-  if (checkEqualPotion(4,4)) {
-    speed+10
+  if (checkEqualPotion(4, 4)) {
+    speed + 10;
   }
-  if (checkEqualPotion(5,5)) {
-    speed+20
-    luck.value+20
+  if (checkEqualPotion(5, 5)) {
+    speed + 20;
+    luck.value + 20;
   }
-  ranTime.value = Math.floor(Math.random() * ((18*(100-speed)/100) - 5) + 5) * 1000;
+  ranTime.value =
+    Math.floor(Math.random() * ((18 * (100 - speed)) / 100 - 5) + 5) * 1000;
 }
 //sixth
-function checkEqualPotion(store,player) {
-  if(getPotionById(store)?.id===getPotionPlayerById(player)?.id){
-    return true
+function checkEqualPotion(store, player) {
+  if (getPotionById(store)?.id === getPotionPlayerById(player)?.id) {
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 //seventh
 function checkRod() {
   const checkRod = playerStore.value.usingRods.id;
-  luck.value = luck.value+checkRod*10;
+  luck.value = luck.value + checkRod * 10;
   ranFish();
 }
 //eigth
 function ranFish() {
   const rate = Math.random() * 100;
- 
-  if (rate >= 55+(5*(100+luck.value))/100) {
+
+  if (rate >= 55 + (5 * (100 + luck.value)) / 100) {
     random("common");
     fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
-  } else if (rate >= 25+(5*(100+luck.value))/100 && rate < 55+(5*(100+luck.value))/100) {
+  } else if (
+    rate >= 25 + (5 * (100 + luck.value)) / 100 &&
+    rate < 55 + (5 * (100 + luck.value)) / 100
+  ) {
     random("rare");
     fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
-  } else if (rate >= (1*(100+luck.value))/100 && rate < 25+(5*(100+luck.value))/100 ) {
+  } else if (
+    rate >= (1 * (100 + luck.value)) / 100 &&
+    rate < 25 + (5 * (100 + luck.value)) / 100
+  ) {
     random("epic");
     fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
@@ -462,13 +502,13 @@ function random(type) {
       break;
   }
 }
- 
+
 function fixHpRods() {
   playerStore.value.usingRods.hp = getRodById(
     playerStore.value.usingRods.id
   ).hp;
 }
- 
+
 function reduceHpRods() {
   reducesHp.value = 0;
   if (playerStore.value.usingRods.id === 1) {
@@ -479,7 +519,7 @@ function reduceHpRods() {
     reducesHp.value = 1;
   }
 }
- 
+
 const closeModal = () => {
   gottenFish.value = false;
   escapedFish.value = false;
@@ -487,75 +527,126 @@ const closeModal = () => {
 //======================================== Inventory Page ========================================
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
+const potionTimers = {};
+// ฟังก์ชันสำหรับเลือกหมวดหมู่ใน Inventory
 const setCategory = (category) => {
   selectedCategory.value = category;
 };
 
+// Helper functions เพื่อตรวจสอบประเภทของ item
+function isFish(item) {
+  return item.type === "fish";
+}
+
+function isRod(item) {
+  return item.type === "rod";
+}
+
+function isPotion(item) {
+  return item.type === "potion";
+}
+// กรองรายการใน Inventory ตามหมวดหมู่ที่เลือก
 const filteredItems = computed(() => {
-  if (selectedCategory.value === "all") {
-    return [
-      ...playerStore.value.caughtFish,
-      ...playerStore.value.ownedRods,
-      ...playerStore.value.potions,
-    ];
-  } else if (selectedCategory.value === "fish") {
-    return playerStore.value.caughtFish;
-  } else if (selectedCategory.value === "rods") {
-    return playerStore.value.ownedRods;
-  } else if (selectedCategory.value === "potions") {
-    return playerStore.value.potions;
+  switch (selectedCategory.value) {
+    case "fish":
+      return playerStore.value.caughtFish;
+    case "rods":
+      return playerStore.value.ownedRods;
+    case "potions":
+      return playerStore.value.potions;
+    default:
+      // แสดงทั้งหมด (รวมปลา, Rods, และ Potions)
+      return [
+        ...playerStore.value.caughtFish,
+        ...playerStore.value.ownedRods,
+        ...playerStore.value.potions,
+      ];
   }
-  return [];
 });
 
+// คำนวณความจุของ Inventory ปัจจุบัน
 const inventoryCapacity = computed(() => {
   return filteredItems.value.reduce((acc, item) => acc + item.quantity, 0);
 });
 
 // ฟังก์ชันสำหรับขายปลา
-function sellFish(fish) {
+function sellFishAll(fish) {
+  // เพิ่มเงินให้ player ตามราคาปลา
   playerStore.value.coins += fish.price * fish.quantity;
+
+  // ลบปลาที่ขายออกจาก Inventory
   playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
     (f) => f.id !== fish.id
   );
-  console.log(playerStore);
+  console.log("ขายปลาแล้ว", playerStore);
 }
 
-// ฟังก์ชันสำหรับใส่ Rod
+function sellFish(fish) {
+  playerStore.value.coins += fish.price;
+  fish.quantity -= 1;
+  if (fish.quantity === 0) {
+    playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
+      (f) => f.id !== fish.id
+    );
+  }
+}
+
+// ฟังก์ชันสำหรับ equip Rod
 function equipRod(rod) {
   playerStore.value.usingRods = rod;
-  console.log(playerStore);
+  console.log("ติดตั้ง Rod", playerStore.value.usingRods);
 }
 
 // ฟังก์ชันสำหรับใช้ Potion
 function usePotion(potion) {
-  const existingPotion = playerStore.value.usingPosion.find(
+  let existingPotion = playerStore.value.usingPotion.find(
     (p) => p.id === potion.id
   );
+
+  // ถ้า Potion ยังไม่ได้ใช้อยู่ ให้เพิ่มในรายการที่ใช้แล้ว
   if (!existingPotion) {
-    playerStore.value.usingPosion.push(potion);
+    playerStore.value.usingPotion.push({
+      ...potion,
+      remainingTime: potion.duration,
+      startTime: Date.now(),
+    });
+    existingPotion = playerStore.value.usingPotion.find(
+      (p) => p.id === potion.id
+    );
+  } else {
+    const elapsedTimed = (Date.now() - existingPotion.startTime) / 1000;
+    existingPotion.remainingTime = Math.max(
+      existingPotion.remainingTime - elapsedTimed + potion.duration,
+      0
+    );
+    existingPotion.setTimeout = Date.now();
   }
-  playerStore.value.potions = playerStore.value.potions.filter(
-    (p) => p.id !== potion.id || p.quantity > 1
-  );
+
+  if (potionTimers[potion.id]) {
+    clearTimeout(potionTimers[potion.id]);
+  }
+
+  potionTimers[potion.id] = setTimeout(() => {
+    playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
+      (p) => p.id !== potion.id
+    );
+    console.log("clear" + potion.name);
+    delete potionTimers[potion.id];
+  }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
+
+  // ถ้า Potion มีมากกว่า 1 ให้ลดจำนวน
   if (potion.quantity > 1) {
     potion.quantity -= 1;
+  } else {
+    // ถ้าใช้หมดให้ลบออกจาก Inventory
+    playerStore.value.potions = playerStore.value.potions.filter(
+      (p) => p.id !== potion.id
+    );
   }
-  console.log(playerStore);
+
+  console.log("ใช้ Potion", playerStore);
 }
 
-// Helper functions เพื่อตรวจสอบประเภทของ item
-function isFish(item) {
-  return playerStore.value.caughtFish.some((fish) => fish.id === item.id);
-}
-
-function isRod(item) {
-  return playerStore.value.ownedRods.some((rod) => rod.id === item.id);
-}
-
-function isPotion(item) {
-  return playerStore.value.potions.some((potion) => potion.id === item.id);
-}
 //======================================== Shop Page ========================================
 const showToast = ref(false);
 const selectedItem = ref({});
@@ -584,7 +675,7 @@ function showToastMessage(item) {
 }
 
 function showToastErrorMessage() {
-  showToastError.value = true;  // แสดง Toast
+  showToastError.value = true; // แสดง Toast
 
   // ถ้ามี timeout ก่อนหน้า ให้ยกเลิก
   if (errorTimeoutId) {
@@ -593,7 +684,7 @@ function showToastErrorMessage() {
 
   // เริ่มนับเวลาใหม่ และให้แอนิเมชัน fade out เมื่อใกล้ถึงเวลา
   errorTimeoutId = setTimeout(() => {
-    showToastError.value = false;  // ซ่อน Toast หลังจาก 4 วินาที
+    showToastError.value = false; // ซ่อน Toast หลังจาก 4 วินาที
   }, 4000);
 }
 
@@ -666,7 +757,6 @@ function purchaseRods(item) {
       addRod(item.id);
       console.log("New Rod added:", playerStore.value.ownedRods);
     } else {
-      
       // ถ้ามี Rod แล้วจะแสดงข้อความว่าไม่สามารถซื้อเพิ่มได้
       console.log("คุณมี Rod นี้แล้ว ไม่สามารถซื้อเพิ่มได้");
     }
@@ -675,7 +765,7 @@ function purchaseRods(item) {
 
     console.log(playerStore.value.ownedRods);
   } else {
-    showToastErrorMessage()
+    showToastErrorMessage();
     console.log("Not enough coins to purchase this item!");
   }
 }
@@ -697,7 +787,7 @@ function purchasePotion(item) {
 
     // playPurchaseSound();
   } else {
-    showToastErrorMessage()
+    showToastErrorMessage();
     console.log("Not enough coins to purchase this item!");
   }
 }
@@ -1013,32 +1103,43 @@ function isFishInPlayerStore(fishId) {
             x{{ item.quantity }}
           </span>
 
-          <!-- ปุ่มขายสำหรับปลา -->
-          <button
-            v-if="isFish(item)"
-            @click="sellFish(item)"
-            class="mt-2 bg-red-600 text-white py-1 px-3 rounded hover:bg-red-500 w-full"
-          >
-            Sell for {{ item.price }} coins
-          </button>
+          <!-- ปุ่มขายสำหรับปลาทั้งหมด -->
+          <div v-if="isFish(item)" class="flex flex-col space-y-2">
+            <!-- ปุ่มขายทีละตัว -->
+            <button
+              @click="sellFish(item)"
+              class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
+            >
+              Sell 1 for {{ item.price }} coins
+            </button>
 
-          <!-- ปุ่มใช้สำหรับ Rods -->
-          <button
-            v-if="isRod(item)"
-            @click="equipRod(item)"
-            class="mt-2 bg-green-600 text-white py-1 px-3 rounded hover:bg-green-500 w-full"
-          >
-            Equip Rod
-          </button>
-
+            <!-- ปุ่มขายทั้งหมด -->
+            <button
+              @click="sellFishAll(item)"
+              class="bg-red-700 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
+            >
+              Sell All {{ item.price * item.quantity }} coins
+            </button>
+          </div>
+          <!-- ปุ่มสำหรับ Equip Rod -->
+          <div v-else-if="isRod(item)" class="flex flex-col space-y-2">
+            <button
+              @click="equipRod(item)"
+              class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
+              :class="{'bg-gray-500': item.type === 'rod' && playerStore.usingRods.id === item.id}"
+            >
+              Equip Rod 
+            </button>
+          </div>
           <!-- ปุ่มใช้สำหรับ Potions -->
-          <button
-            v-if="isPotion(item)"
-            @click="usePotion(item)"
-            class="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-500 w-full"
-          >
-            Use Potion
-          </button>
+          <div v-else-if="isPotion(item)" class="flex flex-col space-y-2">
+            <button
+              @click="usePotion(item)"
+              class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-lg w-full"
+            >
+              Use Potion
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1131,15 +1232,12 @@ function isFishInPlayerStore(fishId) {
   </div>
 
   <transition name="slide-fade">
-  <div
-    v-if="showToastError"
-    class="toast-notification-error"
-  >
-    <div class="toast-message-error">
-      Not enough coins to purchase this item!
+    <div v-if="showToastError" class="toast-notification-error">
+      <div class="toast-message-error">
+        Not enough coins to purchase this item!
+      </div>
     </div>
-  </div>
-</transition>
+  </transition>
   <!-- ==================== Bookmark (Achievement) ====================-->
   <div v-if="page === 4">
     <div
@@ -1569,7 +1667,7 @@ function isFishInPlayerStore(fishId) {
   height: 40px;
   margin-right: 10px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 50%; 
+  border-radius: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -1611,7 +1709,8 @@ function isFishInPlayerStore(fishId) {
 }
 
 /* กำหนดแอนิเมชันเมื่อแสดงและซ่อน */
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .slide-fade-enter, .slide-fade-leave-to /* .slide-fade-leave-active ในเวอร์ชันที่เก่ากว่า */ {
