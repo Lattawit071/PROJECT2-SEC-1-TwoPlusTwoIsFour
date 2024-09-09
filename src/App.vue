@@ -1,5 +1,51 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
+//images
+import SardineImg from "/images/fish/Sardine.png";
+import ClownfishImg from "/images/fish/Clownfish.png";
+import CatfishImg from "/images/fish/Catfish.png";
+import SalmonImg from "/images/fish/Salmon.png";
+import TunaImg from "/images/fish/Tuna.png";
+import MarlinImg from "/images/fish/Marlin.png";
+import StingrayImg from "/images/fish/Stingray.png";
+import EelImg from "/images/fish/Eel.png";
+import White_KoiImg from "/images/fish/White_Koi.png";
+import SquidImg from "/images/fish/Squid.png";
+import SharkImg from "/images/fish/Shark.png";
+import OrcaImg from "/images/fish/Orca.png";
+import Blue_WhaleImg from "/images/fish/Blue_Whale.png";
+import Giant_Pacific_OctopusImg from "/images/fish/Giant_Pacific_Octopus.png";
+import Golden_FishImg from "/images/fish/Golden_Fish.png";
+import Rainbow_FishImg from "/images/fish/Rainbow_Fish.png";
+import PearlImg from "/images/fish/Pearl.png";
+import DiamondImg from "/images/fish/Diamond.png";
+import ChestImg from "/images/fish/Chest.png";
+import DragonImg from "/images/fish/Dragon.png";
+
+import Basic_RodImg from "/images/rod/Basic_Rod.png";
+import Star_RodImg from "/images/rod/Star_Rod.png";
+import Galaxy_RodImg from "/images/rod/Galaxy_Rod.png";
+import Lover_RodImg from "/images/rod/Lover_Rod.png";
+import Thunder_RodImg from "/images/rod/Thunder_Rod.png";
+
+import Luck_PotionImg from "/images/potion/Luck_5m.png";
+import Speed_PotionImg from "/images/potion/Speed_5m.png";
+import Full_Luck_PotionImg from "/images/potion/Luck_1h.png";
+import Full_Speed_PotionImg from "/images/potion/Speed_1h.png";
+import Super_Full_PotionImg from "/images/potion/Full_Potion.png";
+
+import pagetwo from "/images/howtoplay/pagetwo.png";
+import pagethree from "/images/howtoplay/pagethree.png";
+import pagefour from "/images/howtoplay/pagefour.png";
+import pagefive from "/images/howtoplay/pagefive.png";
+import pagesix from "/images/howtoplay/pagesix.png";
+
+import backgroundImg from "/images/image/Background.png";
+import playBackgroundImg from "/images/image/PLAY.png";
+import seaImg from "/images/image/sea.png";
+import hookImg from "/images/image/Hook.png";
+
+import playerImg from "/images/image/Player.png";
 const playerName = ref("Int203");
 // All Data (Fish,Rods,Potion,Player)
 // Fish Data
@@ -9,7 +55,7 @@ const fishStore = [
     name: "Sardine",
     quantity: 1,
     price: 50,
-    icon: "/images/fish/Sardine.png",
+    icon: SardineImg,
     type: "fish",
   },
   {
@@ -17,7 +63,7 @@ const fishStore = [
     name: "Clownfish",
     quantity: 1,
     price: 150,
-    icon: "/images/fish/Clownfish.png",
+    icon: ClownfishImg,
     type: "fish",
   },
   {
@@ -25,7 +71,7 @@ const fishStore = [
     name: "Catfish",
     quantity: 1,
     price: 200,
-    icon: "/images/fish/Catfish.png",
+    icon: CatfishImg,
     type: "fish",
   },
   {
@@ -33,7 +79,7 @@ const fishStore = [
     name: "Salmon",
     quantity: 1,
     price: 250,
-    icon: "/images/fish/Salmon.png",
+    icon: SalmonImg,
     type: "fish",
   },
   {
@@ -41,7 +87,7 @@ const fishStore = [
     name: "Tuna",
     quantity: 1,
     price: 250,
-    icon: "/images/fish/Tuna.png",
+    icon: TunaImg,
     type: "fish",
   },
   {
@@ -49,14 +95,14 @@ const fishStore = [
     name: "Marlin",
     quantity: 1,
     price: 700,
-    icon: "/images/fish/Marlin.png",
+    icon: MarlinImg,
     type: "fish",
   },
   {
     id: 7,
     name: "Stingray",
     price: 500,
-    icon: "/images/fish/Stingray.png",
+    icon: StingrayImg,
     type: "fish",
   },
   {
@@ -64,7 +110,7 @@ const fishStore = [
     name: "Eel",
     quantity: 1,
     price: 300,
-    icon: "/images/fish/Eel.png",
+    icon: EelImg,
     type: "fish",
   },
   {
@@ -72,7 +118,7 @@ const fishStore = [
     name: "White Koi",
     quantity: 1,
     price: 800,
-    icon: "/images/fish/White_Koi.png",
+    icon: White_KoiImg,
     type: "fish",
   },
   {
@@ -80,7 +126,7 @@ const fishStore = [
     name: "Squid",
     quantity: 1,
     price: 850,
-    icon: "/images/fish/Squid.png",
+    icon: SquidImg,
     type: "fish",
   },
   {
@@ -88,7 +134,7 @@ const fishStore = [
     name: "Shark",
     quantity: 1,
     price: 1500,
-    icon: "/images/fish/Shark.png",
+    icon: SharkImg,
     type: "fish",
   },
   {
@@ -96,7 +142,7 @@ const fishStore = [
     name: "Orca",
     quantity: 1,
     price: 2000,
-    icon: "/images/fish/Orca.png",
+    icon: OrcaImg,
     type: "fish",
   },
   {
@@ -104,7 +150,7 @@ const fishStore = [
     name: "Blue Whale",
     quantity: 1,
     price: 2500,
-    icon: "/images/fish/Blue_Whale.png",
+    icon: Blue_WhaleImg,
     type: "fish",
   },
   {
@@ -112,7 +158,7 @@ const fishStore = [
     name: "Giant Pacific Octopus",
     quantity: 1,
     price: 2500,
-    icon: "/images/fish/Giant_Pacific_Octopus.png",
+    icon: Giant_Pacific_OctopusImg,
     type: "fish",
   },
   {
@@ -120,7 +166,7 @@ const fishStore = [
     name: "Golden Fish",
     quantity: 1,
     price: 3000,
-    icon: "/images/fish/Golden_Fish.png",
+    icon: Golden_FishImg,
     type: "fish",
   },
   {
@@ -128,7 +174,7 @@ const fishStore = [
     name: "Rainbow Fish",
     quantity: 1,
     price: 3500,
-    icon: "/images/fish/Rainbow_Fish.png",
+    icon: Rainbow_FishImg,
     type: "fish",
   },
   {
@@ -136,7 +182,7 @@ const fishStore = [
     name: "Pearl",
     quantity: 1,
     price: 4500,
-    icon: "/images/fish/Pearl.png",
+    icon: PearlImg,
     type: "fish",
   },
   {
@@ -144,7 +190,7 @@ const fishStore = [
     name: "Diamond",
     quantity: 1,
     price: 5000,
-    icon: "/images/fish/Diamond.png",
+    icon: DiamondImg,
     type: "fish",
   },
   {
@@ -152,7 +198,7 @@ const fishStore = [
     name: "Chest",
     quantity: 1,
     price: 8000,
-    icon: "/images/fish/Chest.png",
+    icon: ChestImg,
     type: "fish",
   },
   {
@@ -160,7 +206,7 @@ const fishStore = [
     name: "Dragon",
     quantity: 1,
     price: 100000,
-    icon: "/images/fish/Dragon.png",
+    icon: DragonImg,
     type: "fish",
   },
 ];
@@ -171,7 +217,7 @@ const fishingRods = [
     name: "Basic Rod",
     quantity: 1,
     price: 0,
-    icon: "/images/rod/Basic_Rod.png",
+    icon: Basic_RodImg,
     hp: 50,
     maxHp: 50,
     type: "rod",
@@ -181,7 +227,7 @@ const fishingRods = [
     name: "Star Rod",
     quantity: 1,
     price: 50000,
-    icon: "/images/rod/Star_Rod.png",
+    icon: Star_RodImg,
     hp: 75,
     maxHp: 75,
     type: "rod",
@@ -191,7 +237,7 @@ const fishingRods = [
     name: "Galaxy Rod",
     quantity: 1,
     price: 50000,
-    icon: "/images/rod/Galaxy_Rod.png",
+    icon: Galaxy_RodImg,
     hp: 100,
     maxHp: 100,
     type: "rod",
@@ -201,7 +247,7 @@ const fishingRods = [
     name: "Lover Rod",
     quantity: 1,
     price: 50000,
-    icon: "/images/rod/Lover_Rod.png",
+    icon: Lover_RodImg,
     hp: 200,
     maxHp: 200,
     type: "rod",
@@ -211,7 +257,7 @@ const fishingRods = [
     name: "Thunder Rod",
     quantity: 1,
     price: 100000,
-    icon: "/images/rod/Thunder_Rod.png",
+    icon: Thunder_RodImg,
     hp: 1000,
     maxHp: 1000,
     type: "rod",
@@ -225,7 +271,7 @@ const potion = [
     quantity: 1,
     price: 2500,
     effect: "Luck +10% 5 minute",
-    icon: "/images/potion/Luck_5m.png",
+    icon: Luck_PotionImg,
     type: "potion",
     duration: 300,
   },
@@ -235,7 +281,7 @@ const potion = [
     quantity: 1,
     price: 2500,
     effect: "Speed +15% 5 minute",
-    icon: "/images/potion/Speed_5m.png",
+    icon: Speed_PotionImg,
     type: "potion",
     duration: 300,
   },
@@ -245,7 +291,7 @@ const potion = [
     quantity: 1,
     price: 10000,
     effect: "Luck +10% 1 hours",
-    icon: "/images/potion/Luck_1h.png",
+    icon: Full_Luck_PotionImg,
     type: "potion",
     duration: 3600,
   },
@@ -255,7 +301,7 @@ const potion = [
     quantity: 1,
     price: 10000,
     effect: "Speed +15% 1 hours",
-    icon: "/images/potion/Speed_1h.png",
+    icon: Full_Speed_PotionImg,
     type: "potion",
     duration: 3600,
   },
@@ -265,7 +311,7 @@ const potion = [
     quantity: 1,
     price: 100000,
     effect: "Luck+Speed 20% 1 hours",
-    icon: "/images/potion/Full_Potion.png",
+    icon: Super_Full_PotionImg,
     type: "potion",
     duration: 3600,
   },
@@ -275,14 +321,14 @@ const playerStore = ref({
   id: 1,
   name: playerName.value,
   coins: 1000,
-  avatar: "/images/image/Player.png",
+  avatar: playerImg,
   ownedRods: [
     {
       id: 1,
       name: "Basic Rod",
       quantity: 1,
       price: 0,
-      icon: "/images/rod/Basic_Rod.png",
+      icon: Basic_RodImg,
       hp: 50,
       maxHp: 50,
       type: "rod",
@@ -292,10 +338,10 @@ const playerStore = ref({
   potions: [],
   usingRods: {
     id: 1,
-    name: "Basic_Rod",
+    name: "Basic Rod",
     quantity: 1,
     price: 0,
-    icon: "/images/rod/Basic_Rod.png",
+    icon: Basic_RodImg,
     hp: 50,
     maxHp: 50,
     type: "rod",
@@ -351,6 +397,17 @@ const sounds = {
 };
 
 sounds.backgroundMusic.loop = true;
+sounds.backgroundMusic.volume = 0.1
+sounds.hover.volume = 0.09;
+sounds.successBuy.volume = 0.4
+sounds.getFish.volume = 0.4
+sounds.failGetFish.volume = 0.4
+sounds.hookFish.volume = 0.5
+sounds.useRod.volume = 0.4
+sounds.sellFish.volume = 0.4
+sounds.usePotionSound.volume = 0.1
+
+sounds.failGetFish.gai
 
 function toggleSound() {
   isSoundOn.value = !isSoundOn.value;
@@ -483,13 +540,7 @@ const saveSettings = () => {
 };
 
 //=========== Navigation
-const imagesHowToPlay = [
-  "/images/howtoplay/3.png",
-  "/images/howtoplay/4.png",
-  "/images/howtoplay/5.png",
-  "/images/howtoplay/6.png",
-  "/images/howtoplay/7.png",
-];
+const imagesHowToPlay = [pagetwo, pagethree, pagefour, pagefive, pagesix];
 
 const currentImageIndex = ref(0);
 const isHowToPlayOpen = ref(false);
@@ -558,6 +609,7 @@ const hook = () => {
       rodId.value = playerStore.value.usingRods.id;
       playHookFishSound();
       hookAnimationClass.value = "hook-animation-down";
+      hooking.value = true;
       waitingForFunction();
     }
   } else {
@@ -1031,16 +1083,15 @@ function isFishInPlayerStore(fishId) {
       ></div>
     </div>
     <button class="start-btn" @click="startGame" :disabled="!isLoaded">
-      Continute
+      Continue
     </button>
   </div>
   <!-- ======================================== Home ========================================  -->
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
-    style="
-      user-select: none;
-      background-image: url('/images/image/Background.png');
-    "
+    :style="{
+      backgroundImage: `url(${backgroundImg})`,
+    }"
     v-if="page === 1"
   >
     <!-- Setting Button -->
@@ -1185,7 +1236,7 @@ function isFishInPlayerStore(fishId) {
       >
         <!-- Title Image -->
         <img
-          src="/images/howtoplay/2.png"
+          src="/images/howtoplay/pageone.png"
           alt="How to Play Title"
           class="w-full max-w-xs md:max-w-sm h-auto mb-4"
         />
@@ -1246,14 +1297,16 @@ function isFishInPlayerStore(fishId) {
   <!--  ======================================== Play  ======================================== -->
   <div
     class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
-    style="background-image: url('/images/image/PLAY.png')"
+    :style="{
+      backgroundImage: `url(${playBackgroundImg})`,
+    }"
     v-if="page === 5"
   >
     <!-- Hook and SVG Image Section -->
     <div class="relative flex justify-center items-center h-screen w-full">
       <!-- SVG Image -->
       <img
-        src="/images/svg/PLAY.svg"
+        :src="seaImg"
         alt="Animated SVG"
         class="animated-svg relative z-10"
       />
@@ -1263,6 +1316,7 @@ function isFishInPlayerStore(fishId) {
         :class="hookAnimationClass"
         class="hook-container"
         v-show="hooking"
+        :style="{ backgroundImage: `url(${hookImg})` }"
       ></div>
     </div>
 
@@ -1887,6 +1941,13 @@ function isFishInPlayerStore(fishId) {
 </template>
 
 <style scoped>
+/* @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+@font-face {
+  font-family: "YourHandwrittenFont";
+  src: url("/path/to/your/font-file.woff2") format("woff2");
+} */
+
 .bg-yellow-800 {
   background-color: #7b5e57;
 }
@@ -1930,6 +1991,7 @@ function isFishInPlayerStore(fishId) {
   width: 300px;
   height: 900px;
   background-image: url("/images/image/Hook.png");
+
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -2083,13 +2145,6 @@ function isFishInPlayerStore(fishId) {
     0 0 60px rgba(179, 179, 255, 0.5);
 }
 
-@font-face {
-  font-family: "YourHandwrittenFont";
-  src: url("/path/to/your/font-file.woff2") format("woff2");
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
-
 .wave-animation span {
   display: inline-block;
   animation: wave 1.5s infinite ease-in-out;
@@ -2104,7 +2159,6 @@ function isFishInPlayerStore(fishId) {
 .wave-animation span:nth-child(3) {
   animation-delay: 0.2s;
 }
-/* เพิ่ม nth-child() สำหรับแต่ละตัวอักษร */
 .wave-animation span:nth-child(4) {
   animation-delay: 0.3s;
 }
@@ -2136,7 +2190,7 @@ function isFishInPlayerStore(fishId) {
     transform: translate(-50%, 0);
   }
   50% {
-    transform: translate(-50%, 20px); 
+    transform: translate(-50%, 20px);
   }
 }
 
@@ -2144,7 +2198,7 @@ function isFishInPlayerStore(fishId) {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: rgba(255, 255, 255, 0.9); 
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 8px;
   background: linear-gradient(
@@ -2222,7 +2276,8 @@ function isFishInPlayerStore(fishId) {
 .slide-fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.slide-fade-enter, .slide-fade-leave-t {
+.slide-fade-enter,
+.slide-fade-leave-t {
   opacity: 0;
   transform: translateY(100%);
 }
@@ -2241,7 +2296,7 @@ function isFishInPlayerStore(fishId) {
     #ffb3b3,
     #ff9999,
     #ffcccc
-  ); 
+  );
   background-size: 200%;
   -webkit-background-clip: border-box;
   background-clip: border-box;
@@ -2249,8 +2304,8 @@ function isFishInPlayerStore(fishId) {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  max-width: 250px; 
-  font-size: 14px; 
+  max-width: 250px;
+  font-size: 14px;
   text-align: center;
 }
 
