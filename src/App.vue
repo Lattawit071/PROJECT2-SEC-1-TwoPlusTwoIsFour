@@ -973,7 +973,6 @@ function addRod(rodId) {
   }
 }
 
-// Buy Potions
 function addPotion(potionId) {
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
@@ -1012,6 +1011,7 @@ function purchaseRods(item) {
 function purchasePotion(item) {
   if (playerStore.value.coins >= item.price) {
     playSuccessBuySound();
+    showToastMessage(item);
     deductCoins(item.price);
     const existingPotion = playerStore.value.potions.find(
       (p) => p.id === item.id
