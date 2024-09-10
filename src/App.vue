@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-//images
 import SardineImg from "/images/fish/Sardine.png";
 import ClownfishImg from "/images/fish/Clownfish.png";
 import CatfishImg from "/images/fish/Catfish.png";
@@ -45,10 +44,21 @@ import playBackgroundImg from "/images/image/PLAY.png";
 import seaImg from "/images/image/sea.png";
 import hookImg from "/images/image/Hook.png";
 
+import bubbleSound from "/sound/EffectsBubble.mp3";
+import successBuySound from "/sound/cash-register-purchase-87313.mp3";
+import failBuySound from "/sound/error-126627.mp3";
+import backgroundMusic from "/sound/game-music-loop-7-145285.mp3";
+import getFishSound from "/sound/cute-level-up-2-189851.mp3";
+import failGetFishSound from "/sound/fail-234710.mp3";
+import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effect for editing.mp3";
+import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
+import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
+import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
+
+
 import playerImg from "/images/image/Player.png";
 const playerName = ref("Int203");
-// All Data (Fish,Rods,Potion,Player)
-// Fish Data
+
 const fishStore = [
   {
     id: 1,
@@ -101,6 +111,7 @@ const fishStore = [
   {
     id: 7,
     name: "Stingray",
+    quantity: 1,
     price: 500,
     icon: StingrayImg,
     type: "fish",
@@ -210,7 +221,7 @@ const fishStore = [
     type: "fish",
   },
 ];
-// Rods Data
+
 const fishingRods = [
   {
     id: 1,
@@ -263,7 +274,7 @@ const fishingRods = [
     type: "rod",
   },
 ];
-// Potion Data
+
 const potion = [
   {
     id: 1,
@@ -316,7 +327,7 @@ const potion = [
     duration: 3600,
   },
 ];
-// Players Data
+
 const playerStore = ref({
   id: 1,
   name: playerName.value,
@@ -354,30 +365,22 @@ function getFishById(id) {
 function getPotionById(id) {
   return potion.find((potion) => potion.id === id);
 }
+
 function addCaughtFish(fishId) {
   const fish = getFishById(fishId);
+  fish.quantity = 1;
   if (fish) {
-    if (playerStore.value.caughtFish.find((fish) => fish.id === fishId)) {
-      playerStore.value.caughtFish.find(
-        (fish) => fish.id === fishId
-      ).quantity += 1;
+    const existingFish = playerStore.value.caughtFish.find(
+      (f) => f.id === fishId
+    );
+
+    if (existingFish) {
+      existingFish.quantity += 1;
     } else {
       playerStore.value.caughtFish.push(fish);
     }
   }
 }
-
-//======================================== Sound ========================================
-import bubbleSound from "/sound/EffectsBubble.mp3";
-import successBuySound from "/sound/cash-register-purchase-87313.mp3";
-import failBuySound from "/sound/error-126627.mp3";
-import backgroundMusic from "/sound/game-music-loop-7-145285.mp3";
-import getFishSound from "/sound/cute-level-up-2-189851.mp3";
-import failGetFishSound from "/sound/fail-234710.mp3";
-import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effect for editing.mp3";
-import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
-import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
-import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
 
 const isSoundOn = ref(true);
 const isMusicOn = ref(true);
@@ -397,17 +400,15 @@ const sounds = {
 };
 
 sounds.backgroundMusic.loop = true;
-sounds.backgroundMusic.volume = 0.1
+sounds.backgroundMusic.volume = 0.1;
 sounds.hover.volume = 0.09;
-sounds.successBuy.volume = 0.4
-sounds.getFish.volume = 0.4
-sounds.failGetFish.volume = 0.4
-sounds.hookFish.volume = 0.5
-sounds.useRod.volume = 0.4
-sounds.sellFish.volume = 0.4
-sounds.usePotionSound.volume = 0.1
-
-sounds.failGetFish.gai
+sounds.successBuy.volume = 0.4;
+sounds.getFish.volume = 0.4;
+sounds.failGetFish.volume = 0.4;
+sounds.hookFish.volume = 0.5;
+sounds.useRod.volume = 0.4;
+sounds.sellFish.volume = 0.4;
+sounds.usePotionSound.volume = 0.4;
 
 function toggleSound() {
   isSoundOn.value = !isSoundOn.value;
@@ -499,7 +500,7 @@ function playUsePotionSound() {
   }
 }
 
-// ======================================== Loading ========================================
+
 const loading = ref(true);
 const loadingProgress = ref(0);
 const isLoaded = ref(false);
@@ -526,15 +527,12 @@ onMounted(() => {
   updateLoadingBar();
 });
 
-//======================================== Toggle Page ========================================
 const page = ref(1);
 
 function togglePage(value) {
   page.value = value;
 }
 
-//======================================== Home ========================================
-//=========== Setting
 const isSettingsOpen = ref(false);
 
 const openSettings = () => {
@@ -545,7 +543,7 @@ const saveSettings = () => {
   isSettingsOpen.value = false;
 };
 
-//=========== Navigation
+
 const imagesHowToPlay = [pagetwo, pagethree, pagefour, pagefive, pagesix];
 
 const currentImageIndex = ref(0);
@@ -574,7 +572,7 @@ const nextImage = () => {
 const goToImage = (index) => {
   currentImageIndex.value = index;
 };
-//======================================== Play Page ========================================
+
 const hooking = ref(false);
 const gottenFish = ref(false);
 const fishName = ref();
@@ -593,15 +591,13 @@ const rodHpPercentage = computed(() => {
   return (playerStore.value.usingRods.hp / maxHp) * 100;
 });
 
-//getpotionplayer
 function getPotionPlayerById(id) {
   return playerStore.value.usingPotion.find((potion) => potion.id === id);
 }
 
-//first
 const hook = () => {
   if (hooking.value || waiting.value) {
-    alert("Please wait until the current fishing process is done.");
+    playFailBuySound();
     return;
   }
 
@@ -609,7 +605,7 @@ const hook = () => {
     reduceHpRods();
 
     if (playerStore.value.usingRods.hp < reducesHp.value) {
-      alert("Caution! Your Rod is broken, please fix it before hooking.");
+      playFailBuySound();
     } else {
       playerStore.value.usingRods.hp -= reducesHp.value;
       rodId.value = playerStore.value.usingRods.id;
@@ -619,20 +615,18 @@ const hook = () => {
       waitingForFunction();
     }
   } else {
-    alert("Caution! Your Rod is broken, please fix it before hooking.");
+    playFailBuySound();
   }
 };
 
-//second
 function waitingForFunction(id) {
   if (waiting.value) {
-    alert("Caution! Don't be hurry while still catching fish");
+    playFailBuySound();
   } else {
     hookFish(id);
   }
 }
 
-//third
 function hookFish() {
   const chanceToGet = Math.random() * 100;
   doAfterTimeOut(() => {
@@ -654,7 +648,6 @@ function hookFish() {
   });
 }
 
-//fourth
 function doAfterTimeOut(callback) {
   fishingTime();
   waiting.value = true;
@@ -664,7 +657,6 @@ function doAfterTimeOut(callback) {
   }, ranTime.value);
 }
 
-//fifth
 function fishingTime() {
   const speed = 0;
   if (checkEqualPotion(1, 1)) {
@@ -687,7 +679,6 @@ function fishingTime() {
     Math.floor(Math.random() * ((18 * (100 - speed)) / 100 - 5) + 5) * 1000;
 }
 
-//sixth
 function checkEqualPotion(store, player) {
   if (getPotionById(store)?.id === getPotionPlayerById(player)?.id) {
     return true;
@@ -696,14 +687,12 @@ function checkEqualPotion(store, player) {
   }
 }
 
-//seventh
 function checkRod() {
   const checkRod = playerStore.value.usingRods.id;
   luck.value = luck.value + checkRod * 10;
   ranFish();
 }
 
-//eigth
 function ranFish() {
   const rate = Math.random() * 100;
   if (rate >= 55 + (5 * (100 + luck.value)) / 100) {
@@ -723,19 +712,18 @@ function ranFish() {
     rate >= (1 * (100 + luck.value)) / 100 &&
     rate < 25 + (5 * (100 + luck.value)) / 100
   ) {
-    random("epic");
+    random("legendary");
     playSuccessGetFishSound();
     fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   } else {
-    random("legendary");
+    random("secret");
     playSuccessGetFishSound();
     fishId.value = caughtFish.value.icon;
     addCaughtFish(caughtFish.value.id);
   }
 }
 
-//nineth
 function random(type) {
   switch (type) {
     case "common":
@@ -746,11 +734,11 @@ function random(type) {
       ranNumber.value = Math.floor(Math.random() * (15 - 11) + 11);
       caughtFish.value = getFishById(ranNumber.value);
       break;
-    case "epic":
+    case "legendary":
       ranNumber.value = Math.floor(Math.random() * (20 - 15) + 15);
       caughtFish.value = getFishById(ranNumber.value);
       break;
-    case "legendary":
+    case "secret":
       ranNumber.value = Math.floor(Math.random() * (20 - 20) + 20);
       caughtFish.value = getFishById(ranNumber.value);
       break;
@@ -773,7 +761,6 @@ const closeModal = () => {
   escapedFish.value = false;
 };
 
-//=========== Rod repair
 const isRepairModalOpen = ref(false);
 
 const openRepairModal = () => {
@@ -797,11 +784,10 @@ const repairRod = () => {
     closeRepairModal();
   } else {
     playFailBuySound();
-    alert("Not enough coins to repair the rod.");
   }
 };
 
-//======================================== Inventory Page ========================================
+
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
 const potionTimers = {};
@@ -872,11 +858,13 @@ function sellFishAll(fish) {
 function sellFish(fish) {
   playerStore.value.coins += fish.price;
   fish.quantity -= 1;
+
   if (fish.quantity === 0) {
     playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
       (f) => f.id !== fish.id
     );
   }
+
   showToastInventoryMessage(`Sold 1 ${fish.name}`, "success");
   playSellSuccessSound();
 }
@@ -919,7 +907,6 @@ function usePotion(potion) {
     playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
       (p) => p.id !== potion.id
     );
-    console.log("clear" + potion.name);
     delete potionTimers[potion.id];
   }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
 
@@ -933,7 +920,6 @@ function usePotion(potion) {
   showToastInventoryMessage(`Used ${potion.name}`, "success");
 }
 
-//======================================== Shop Page ========================================
 const showToast = ref(false);
 const selectedItem = ref({});
 let timeoutId = null;
@@ -965,16 +951,13 @@ function showToastErrorMessage() {
   }, 4000);
 }
 
-// - Coins Player
 function deductCoins(amount) {
   if (playerStore.value.coins >= amount) {
     playerStore.value.coins -= amount;
   } else {
-    console.log("Not enough coins!");
   }
 }
 
-// Buy Rods
 function addRod(rodId) {
   const rod = fishingRods.find((rod) => rod.id === rodId);
 
@@ -989,16 +972,13 @@ function addRod(rodId) {
         quantity: 1,
       });
       showToastMessage(rod);
-      console.log("ซื้อ Rod สำเร็จ:", rod);
     } else {
-      console.log("คุณมี Rod นี้แล้ว ไม่สามารถซื้อเพิ่มได้");
     }
   } else {
-    console.log("ไม่พบ Rod ที่ต้องการซื้อ");
+
   }
 }
 
-// Buy Potions
 function addPotion(potionId) {
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
@@ -1026,41 +1006,36 @@ function purchaseRods(item) {
       deductCoins(item.price);
       addRod(item.id);
       playSuccessBuySound();
-      console.log("New Rod added:", playerStore.value.ownedRods);
     } else {
-      console.log("คุณมี Rod นี้แล้ว ไม่สามารถซื้อเพิ่มได้");
     }
-    console.log(playerStore.value.ownedRods);
   } else {
     playFailBuySound();
     showToastErrorMessage();
-    console.log("Not enough coins to purchase this item!");
   }
 }
 
 function purchasePotion(item) {
   if (playerStore.value.coins >= item.price) {
+    playSuccessBuySound();
+    showToastMessage(item);
     deductCoins(item.price);
     const existingPotion = playerStore.value.potions.find(
       (p) => p.id === item.id
     );
     if (existingPotion) {
       existingPotion.quantity += 1;
-      playSuccessBuySound();
       showToastMessage(item);
     } else {
       addPotion(item.id);
-      playSuccessBuySound();
     }
   } else {
     playFailBuySound();
     showToastErrorMessage();
-    console.log("Not enough coins to purchase this item!");
   }
 }
 
 const playerCoins = computed(() => playerStore.value.coins);
-//======================================== BookMark Page ========================================
+
 const selectFish = ref("common");
 const highlightedFish = ref(new Set());
 
@@ -1078,7 +1053,6 @@ function isFishInPlayerStore(fishId) {
 </script>
 
 <template>
-  <!-- ======================================== Loading ========================================-->
   <div class="loading-screen" v-if="loading">
     <img src="/images/gif/loading.gif" />
     <p>{{ loadingMessage }}</p>
@@ -1092,7 +1066,6 @@ function isFishInPlayerStore(fishId) {
       Continue
     </button>
   </div>
-  <!-- ======================================== Home ========================================  -->
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
     :style="{
@@ -1100,7 +1073,7 @@ function isFishInPlayerStore(fishId) {
     }"
     v-if="page === 1"
   >
-    <!-- Setting Button -->
+
     <div class="absolute top-4 left-4" style="user-select: none">
       <img
         @click="openSettings"
@@ -1111,7 +1084,6 @@ function isFishInPlayerStore(fishId) {
       />
     </div>
 
-    <!-- How to play Button -->
     <div class="absolute top-4 right-4" style="user-select: none">
       <img
         @click="openHowToPlay"
@@ -1152,7 +1124,6 @@ function isFishInPlayerStore(fishId) {
     </div>
   </div>
 
-  <!-- ==================== Home.Setting -->
   <transition name="fade">
     <div
       v-if="isSettingsOpen"
@@ -1163,7 +1134,6 @@ function isFishInPlayerStore(fishId) {
       >
         <h2 class="text-2xl font-bold mb-4">Settings</h2>
 
-        <!-- Toggle Sounds -->
         <div class="mb-6">
           <label class="flex items-center mb-2">
             <div
@@ -1206,7 +1176,6 @@ function isFishInPlayerStore(fishId) {
           </label>
         </div>
 
-        <!-- Set Player Name -->
         <div class="mb-6">
           <label class="block mb-2 font-bold">Change Player Name:</label>
           <input
@@ -1218,7 +1187,6 @@ function isFishInPlayerStore(fishId) {
           />
         </div>
 
-        <!-- Buttons -->
         <div class="flex justify-end space-x-4">
           <button
             @mouseenter="playHoverSound"
@@ -1231,7 +1199,7 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
   </transition>
-  <!-- ==================== Home.Navigation ====================-->
+
   <transition name="fade">
     <div
       v-if="isHowToPlayOpen"
@@ -1240,14 +1208,13 @@ function isFishInPlayerStore(fishId) {
       <div
         class="bg-gray-900 text-white p-4 md:p-6 rounded-lg shadow-lg w-11/12 max-w-lg md:max-w-2xl lg:max-w-3xl flex flex-col items-center"
       >
-        <!-- Title Image -->
+
         <img
           src="/images/howtoplay/pageone.png"
           alt="How to Play Title"
           class="w-full max-w-xs md:max-w-sm h-auto mb-4"
         />
 
-        <!-- Image Slider -->
         <div class="relative w-full flex justify-center items-center">
           <img
             :src="imagesHowToPlay[currentImageIndex]"
@@ -1255,7 +1222,6 @@ function isFishInPlayerStore(fishId) {
             class="w-full max-w-xs md:max-w-sm h-auto object-contain rounded-lg shadow-lg"
           />
 
-          <!-- Navigation Arrows -->
           <button
             @click="prevImage"
             @mouseenter="playHoverSound"
@@ -1272,7 +1238,6 @@ function isFishInPlayerStore(fishId) {
           </button>
         </div>
 
-        <!-- Dots Navigation -->
         <div class="flex space-x-2 mt-4">
           <span
             v-for="(image, index) in imagesHowToPlay"
@@ -1287,7 +1252,6 @@ function isFishInPlayerStore(fishId) {
           ></span>
         </div>
 
-        <!-- Close Button -->
         <div class="flex justify-end mt-4 w-full">
           <button
             @mouseenter="playHoverSound"
@@ -1300,7 +1264,7 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
   </transition>
-  <!--  ======================================== Play  ======================================== -->
+
   <div
     class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
     :style="{
@@ -1308,16 +1272,12 @@ function isFishInPlayerStore(fishId) {
     }"
     v-if="page === 5"
   >
-    <!-- Hook and SVG Image Section -->
     <div class="relative flex justify-center items-center h-screen w-full">
-      <!-- SVG Image -->
       <img
         :src="seaImg"
         alt="Animated SVG"
         class="animated-svg relative z-10"
       />
-
-      <!-- Hook -->
       <div
         :class="hookAnimationClass"
         class="hook-container"
@@ -1326,7 +1286,7 @@ function isFishInPlayerStore(fishId) {
       ></div>
     </div>
 
-    <!-- Modal Get Fish -->
+
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       v-show="gottenFish"
@@ -1379,7 +1339,6 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
 
-    <!-- Modal Escaped Fish -->
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       v-show="escapedFish"
@@ -1408,7 +1367,6 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
 
-    <!-- Navigation and Bottom Image -->
     <div class="relative w-full mt-auto">
       <div class="fixed left-0 bottom-0 w-full bg-[#4E342E]">
         <img
@@ -1419,7 +1377,6 @@ function isFishInPlayerStore(fishId) {
         />
       </div>
 
-      <!-- Foreground Image -->
       <div class="fixed left-0 bottom-0 w-full bg-[#4E342E] z-10">
         <img
           @mouseenter="playHoverSound"
@@ -1429,7 +1386,6 @@ function isFishInPlayerStore(fishId) {
         />
       </div>
 
-      <!-- Navigation -->
       <div
         class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-4 z-20 bg-transparent"
       >
@@ -1470,7 +1426,7 @@ function isFishInPlayerStore(fishId) {
         />
       </div>
     </div>
-    <!-- ==================== Repairing rod ====================-->
+
     <transition name="fade">
       <div
         v-if="isRepairModalOpen"
@@ -1514,11 +1470,9 @@ function isFishInPlayerStore(fishId) {
       </div>
     </transition>
 
-    <!-- ==================== Player ====================-->
     <div
       class="absolute top-0 left-0 p-4 z-20 w-full bg-gray-900 bg-opacity-80 shadow-lg text-white flex items-center justify-between space-x-8"
     >
-      <!-- รูปโปรไฟล์ และ ชื่อ -->
       <div class="flex items-center space-x-4">
         <img
           :src="playerStore.avatar"
@@ -1531,7 +1485,6 @@ function isFishInPlayerStore(fishId) {
         </div>
       </div>
 
-      <!-- use Potion -->
       <div class="flex flex-col items-center">
         <p class="text-sm md:text-base font-semibold">Active Potions</p>
         <div class="flex space-x-2">
@@ -1544,7 +1497,6 @@ function isFishInPlayerStore(fishId) {
         </div>
       </div>
 
-      <!-- use Rods -->
       <div class="flex flex-col items-center">
         <p class="text-sm md:text-base font-semibold">Using Rod</p>
         <div class="flex items-center space-x-2">
@@ -1556,7 +1508,6 @@ function isFishInPlayerStore(fishId) {
         </div>
       </div>
 
-      <!-- HP Rods -->
       <div class="flex flex-col items-center w-1/3">
         <p class="text-sm md:text-base font-semibold">Rod HP</p>
         <div class="w-full bg-gray-800 rounded-full h-4">
@@ -1579,9 +1530,9 @@ function isFishInPlayerStore(fishId) {
       </button>
     </div>
   </div>
-  <!--  ======================================== Inventory ======================================== -->
+
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
-    <!-- Sidebar for Categories -->
+
     <div
       class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
     >
@@ -1622,7 +1573,6 @@ function isFishInPlayerStore(fishId) {
       </button>
     </div>
 
-    <!-- Toast Notification -->
     <div v-if="showToastInventory" class="toast-notification">
       <div class="toast-content">
         <div class="toast-message">
@@ -1631,12 +1581,10 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
 
-    <!-- Main Inventory Section -->
     <div class="flex-1 bg-gray-900 p-6 rounded-lg shadow-lg text-yellow-100">
       <h1 class="text-3xl font-bold mb-6">Inventory {{ nameInventory }}</h1>
       <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
 
-      <!-- Inventory Grid -->
       <div class="grid grid-cols-4 gap-4">
         <div
           v-for="(item, index) in filteredItems"
@@ -1655,9 +1603,7 @@ function isFishInPlayerStore(fishId) {
             x{{ item.quantity }}
           </span>
 
-          <!-- Sell Button -->
           <div v-if="isFish(item)" class="flex flex-col space-y-2">
-            <!-- One -->
             <button
               @mouseenter="playHoverSound"
               @click="sellFish(item)"
@@ -1666,7 +1612,6 @@ function isFishInPlayerStore(fishId) {
               Sell 1 for {{ item.price }} coins
             </button>
 
-            <!-- All -->
             <button
               @mouseenter="playHoverSound"
               @click="sellFishAll(item)"
@@ -1675,7 +1620,6 @@ function isFishInPlayerStore(fishId) {
               Sell All {{ item.price * item.quantity }} coins
             </button>
           </div>
-          <!-- use Rod -->
           <div v-else-if="isRod(item)" class="flex flex-col space-y-2">
             <button
               @mouseenter="playHoverSound"
@@ -1687,7 +1631,7 @@ function isFishInPlayerStore(fishId) {
               Equip Rod
             </button>
           </div>
-          <!-- use Potions -->
+
           <div v-else-if="isPotion(item)" class="flex flex-col space-y-2">
             <button
               @mouseenter="playHoverSound"
@@ -1701,7 +1645,7 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
   </div>
-  <!--  ========================================  Shop ======================================== -->
+
   <div
     class="p-6 bg-gray-900 min-h-screen flex flex-col items-center"
     v-if="page === 3"
@@ -1777,7 +1721,6 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
 
-    <!-- Toast Notification -->
     <div v-if="showToast" class="toast-notification">
       <div class="toast-content">
         <img :src="selectedItem.icon" class="toast-icon" alt="Item icon" />
@@ -1796,7 +1739,6 @@ function isFishInPlayerStore(fishId) {
     </div>
   </transition>
 
-  <!-- ======================================== Bookmark (Achievement) ======================================== -->
   <div v-if="page === 4">
     <div
       class="bg-gray-1000 w-screen h-screen fixed top-0 left-0 font-nonto overflow-scroll"
@@ -1812,7 +1754,7 @@ function isFishInPlayerStore(fishId) {
           >
             Back
           </button>
-          <!-- Header -->
+
           <div class="mb-6">
             <p
               class="text-3xl font-bold text-center text-yellow-100 bg-gray-900 py-4 rounded-t-lg"
@@ -1821,7 +1763,6 @@ function isFishInPlayerStore(fishId) {
             </p>
           </div>
 
-          <!-- Fish Category Selection -->
           <div
             class="bg-gray-900 flex gap-5 justify-evenly p-4 rounded-lg mb-6"
           >
@@ -1852,7 +1793,6 @@ function isFishInPlayerStore(fishId) {
             </div>
           </div>
 
-          <!-- Fish Data Grids -->
           <div
             v-show="selectFish === 'common'"
             class="grid grid-cols-2 md:grid-cols-3 gap-4"
@@ -1947,13 +1887,6 @@ function isFishInPlayerStore(fishId) {
 </template>
 
 <style scoped>
-/* @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
-
-@font-face {
-  font-family: "YourHandwrittenFont";
-  src: url("/path/to/your/font-file.woff2") format("woff2");
-} */
-
 .bg-yellow-800 {
   background-color: #7b5e57;
 }
