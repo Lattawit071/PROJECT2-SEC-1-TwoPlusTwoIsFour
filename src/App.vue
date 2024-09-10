@@ -101,6 +101,7 @@ const fishStore = [
   {
     id: 7,
     name: "Stingray",
+    quantity: 1,
     price: 500,
     icon: StingrayImg,
     type: "fish",
