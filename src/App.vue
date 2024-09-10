@@ -422,6 +422,12 @@ function toggleMusic() {
     sounds.backgroundMusic.pause();
   }
 }
+function addUsingRod(rodId) {
+  const rod = getRodById(rodId);
+  if(rod) {
+    playerStore.usingRods = rod;
+  }
+}
 
 function toggleSfx() {
   isSfxOn.value = !isSfxOn.value;
