@@ -55,7 +55,6 @@ import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-vide
 import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
 
-
 import playerImg from "/images/image/Player.png";
 const playerName = ref("Int203");
 
@@ -424,7 +423,7 @@ function toggleMusic() {
 }
 function addUsingRod(rodId) {
   const rod = getRodById(rodId);
-  if(rod) {
+  if (rod) {
     playerStore.usingRods = rod;
   }
 }
@@ -500,7 +499,6 @@ function playUsePotionSound() {
   }
 }
 
-
 const loading = ref(true);
 const loadingProgress = ref(0);
 const isLoaded = ref(false);
@@ -542,7 +540,6 @@ const openSettings = () => {
 const saveSettings = () => {
   isSettingsOpen.value = false;
 };
-
 
 const imagesHowToPlay = [pagetwo, pagethree, pagefour, pagefive, pagesix];
 
@@ -633,10 +630,15 @@ function hookFish() {
     if (chanceToGet > 20) {
       checkRod();
       gottenFish.value = true;
-      fishName.value =
-        playerStore.value.caughtFish[
-          playerStore.value.caughtFish.length - 1
-        ].name;
+      const lastCaughtFish = playerStore.value.caughtFish
+        .slice()
+        .reverse()
+        .find((f) => f.id === caughtFish.value.id);
+      if (lastCaughtFish) {
+        fishName.value = lastCaughtFish.name;
+      }
+      console.log(fishName.value);
+      console.log(playerStore.value.caughtFish);
     } else {
       playFailGetFishSound();
       escapedFish.value = true;
@@ -786,7 +788,6 @@ const repairRod = () => {
     playFailBuySound();
   }
 };
-
 
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
@@ -975,7 +976,6 @@ function addRod(rodId) {
     } else {
     }
   } else {
-
   }
 }
 
@@ -1073,7 +1073,6 @@ function isFishInPlayerStore(fishId) {
     }"
     v-if="page === 1"
   >
-
     <div class="absolute top-4 left-4" style="user-select: none">
       <img
         @click="openSettings"
@@ -1208,7 +1207,6 @@ function isFishInPlayerStore(fishId) {
       <div
         class="bg-gray-900 text-white p-4 md:p-6 rounded-lg shadow-lg w-11/12 max-w-lg md:max-w-2xl lg:max-w-3xl flex flex-col items-center"
       >
-
         <img
           src="/images/howtoplay/pageone.png"
           alt="How to Play Title"
@@ -1285,7 +1283,6 @@ function isFishInPlayerStore(fishId) {
         :style="{ backgroundImage: `url(${hookImg})` }"
       ></div>
     </div>
-
 
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -1532,7 +1529,6 @@ function isFishInPlayerStore(fishId) {
   </div>
 
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
-
     <div
       class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
     >
