@@ -1,2 +1,73 @@
-# PROJECT1-SEC-1-TwoPlusTwoIsFour-2
-Project vue ครั้งที่2 
+# Project vue ครั้งที่2 
+## Member Group:
+## 65130500035 นัทธมน ทองคำอ้น 
+### (Shop page, Navigation) 25% <br>
+#### Navigation
+- ฟังก์ชั่นการเลื่อนค่าของIndex
+
+#### Shop page
+- ฟังก์ชั่นเพิ่มเบ็ดเข้าตัว
+- ฟังก์ชั่นเพิ่มยาเข้าตัว
+- ฟังก์ชั่นลดcopins player
+- ฟังก์ชั่นซื้อเบ็ด และ ฟังก์ชั่นซื้อยา
+
+#### Ui Designer
+- ออกแบบและตกแต่งหน้าตาเกม
+
+#### Sound
+
+<hr>
+
+## 65130500072 วริทธิ์ธร สิริวัชระกุล 
+### (Play page,Game function) 25% <br>
+#### Play page
+- ฟังก์ชั่นตกปลา
+- ฟังก์ชั่นห้ามตกซ้อนกัน
+- ฟังก์ชั่นRandom ปลา
+- ฟังก์ชั่นเช็คโชค กับความเร็วในการตกปลา
+- ฟังก์ชั่นซ่อมเบ็ด
+- ฟังก์ชั่นโชว์ปลาที่ได้/ไม่ได้
+- ฟังก์ชั่นเพิ่มปลาเข้าตัว
+
+#### Ui 
+#### Sound
+
+<hr>
+
+## 65130500087 อนวัตร กรุดธูป 
+### (Inventory page,loading page,Home page) 25% <br>
+#### Inventory page
+- ฟังก์ชั่นขายปลาทีละตัว
+- ฟังก์ชั่นขายปลาทั้งหมด
+- ฟังก์ชั่นใช้เบ็ด
+- ฟังก์ชั่นใช้ยา
+- ฟังก์แยกประเภทของข้อมูล
+- ฟังก์ชั่นเปลี่ยนหมวดหมู่ตามต้องการ
+
+#### Ui assistant
+- ทำให้ออกมาตามที่ Ui design ต้องการ
+#### DataStore Design
+
+<hr>
+
+## 65130500116 ลัทธวิทย์ กทิศาสตร์ 
+### (Setting page,Bookmark page) 25% <br>
+#### Setting page 
+- ฟังก์ชั่น เปิด/ปิด เสียงเพลง,effect
+- ฟังก์ชั่น เปลี่ยนชื่อ user
+
+####  Bookmark page
+- Fish list content
+- ฟังก์ชั่นในการget ปลามาโชว์
+- ฟังก์ชั่นในการเช็คว่า ตกได้ปลาตัวไหน และนำไปเช็คในstore เพื่อ set สีให้แก่ปลา
+
+#### Ui 
+#### Sound
+
+<hr>
+
+#### Short Clip 
+: https://drive.google.com/file/d/12GZtyX5jFx71mJayo03OfJPgkxc-ZQ2V/view?usp=drive_link
+
+#### Reference
+: Chat-GPT 4o 1 month
