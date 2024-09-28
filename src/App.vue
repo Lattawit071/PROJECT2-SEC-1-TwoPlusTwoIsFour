@@ -20,7 +20,6 @@ import PearlImg from "/images/fish/Pearl.png";
 import DiamondImg from "/images/fish/Diamond.png";
 import ChestImg from "/images/fish/Chest.png";
 import DragonImg from "/images/fish/Dragon.png";
-
 import Basic_RodImg from "/images/rod/Basic_Rod.png";
 import Star_RodImg from "/images/rod/Star_Rod.png";
 import Galaxy_RodImg from "/images/rod/Galaxy_Rod.png";
@@ -56,6 +55,7 @@ import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
 
 import playerImg from "/images/image/Player.png";
+import LoadingPage from "./components/Pages/loadingPage.vue";
 const playerName = ref("Int203");
 
 const fishStore = [
@@ -1053,19 +1053,9 @@ function isFishInPlayerStore(fishId) {
 </script>
 
 <template>
-  <div class="loading-screen" v-if="loading">
-    <img src="/images/gif/loading.gif" />
-    <p>{{ loadingMessage }}</p>
-    <div class="loading-bar">
-      <div
-        class="loading-bar-inner"
-        :style="{ width: loadingProgress + '%' }"
-      ></div>
-    </div>
-    <button class="start-btn" @click="startGame" :disabled="!isLoaded">
-      Continue
-    </button>
-  </div>
+  <LoadingPage :loadingMessage="loadingMessage" :loading="loading" :isLoaded="isLoaded"
+  :loadingProgress="loadingProgress" @startGame="startGame"
+  />
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
     :style="{
@@ -2247,58 +2237,6 @@ function isFishInPlayerStore(fishId) {
 .toast-message-error {
   color: #c62828;
   font-weight: bold;
-}
-
-.loading-screen {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #25120d;
-  color: white;
-  z-index: 9999;
-  padding-bottom: 12%;
-}
-
-.loading-screen img {
-  width: 25rem;
-  height: auto;
-}
-
-.loading-bar {
-  width: 80%;
-  background-color: #ddd;
-  height: 25px;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 20px;
-}
-
-.loading-bar-inner {
-  height: 100%;
-  background-color: #ff9f05;
-  width: 0%;
-  transition: width 0.5s linear;
-}
-
-.start-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #ff9f05;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.start-btn:disabled {
-  background-color: gray;
-  cursor: not-allowed;
 }
 
 .toggle-switch {
