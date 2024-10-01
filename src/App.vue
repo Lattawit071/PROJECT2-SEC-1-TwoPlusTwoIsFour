@@ -31,13 +31,12 @@ import Speed_PotionImg from "/images/potion/Speed_5m.png";
 import Full_Luck_PotionImg from "/images/potion/Luck_1h.png";
 import Full_Speed_PotionImg from "/images/potion/Speed_1h.png";
 import Super_Full_PotionImg from "/images/potion/Full_Potion.png";
-import BackgroundImg from "/images/image/Background.png"
+import BackgroundImg from "/images/image/Background.png";
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
 import pagefour from "/images/howtoplay/pagefour.png";
 import pagefive from "/images/howtoplay/pagefive.png";
 import pagesix from "/images/howtoplay/pagesix.png";
-
 
 import bubbleSound from "/sound/EffectsBubble.mp3";
 import successBuySound from "/sound/cash-register-purchase-87313.mp3";
@@ -49,9 +48,12 @@ import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effe
 import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
 import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
-
+import playBackgroundImg from "/images/image/PLAY.png";
 import playerImg from "/images/image/Player.png";
 import LoadingPage from "./components/Pages/loadingPage.vue";
+import HookButton from "./components/Pages/HookButton.vue";
+import OutComesModal from "./components/Pages/OutComesModal.vue";
+import RepairModal from "./components/Pages/RepairModal.vue";
 const playerName = ref("Int203");
 
 const fishStore = [
@@ -525,7 +527,7 @@ const page = ref(1);
 
 const togglePage = (value) => {
   page.value = value;
-}
+};
 
 const isSettingsOpen = ref(false);
 
@@ -762,8 +764,8 @@ const closeModal = () => {
 const repairModal = ref(false);
 
 const toggleRepairModal = () => {
-  repairModal.value = !repairModal.value
-}
+  repairModal.value = !repairModal.value;
+};
 
 const repairRod = () => {
   const coinsPerHp = 25;
@@ -775,7 +777,7 @@ const repairRod = () => {
     playerStore.value.coins -= repairCost;
     rod.hp = rod.maxHp;
     playSuccessBuySound();
-    repairModal.value = false
+    repairModal.value = false;
   } else {
     playFailBuySound();
   }
@@ -1046,8 +1048,12 @@ function isFishInPlayerStore(fishId) {
 
 <template>
   <!-- loading -->
-  <LoadingPage :loadingMessage="loadingMessage" :loading="loading" :isLoaded="isLoaded"
-  :loadingProgress="loadingProgress" @startGame="startGame"
+  <LoadingPage
+    :loadingMessage="loadingMessage"
+    :loading="loading"
+    :isLoaded="isLoaded"
+    :loadingProgress="loadingProgress"
+    @startGame="startGame"
   />
 
   <div
@@ -1248,11 +1254,45 @@ function isFishInPlayerStore(fishId) {
   </transition>
 
   <!-- playPage -->
-  <playPage :page="page" :hookAniClass="hookAnimationClass" :hooking="hooking" :gottenFish="gottenFish" :fishName="fishName" :fishSrc="fishId"
-  :escapedFish="escapedFish" :repair="repairModal" :maxRodHp="playerStore.usingRods.maxHp" :rodHp="playerStore.usingRods.hp" :playerAvatar="playerStore.avatar"
-  :playerName="playerStore.name" :playerCoins="playerStore.coins" :playerPotion="playerStore.usingPotion"
-  :playerRodIcon="playerStore.usingRods.icon" :rodHpPercentage="rodHpPercentage"
-  @playHoverSound="playHoverSound" @closeModal="closeModal" @togglePage="togglePage" @hook="hook" @repairRod="repairRod" @repairToggle="toggleRepairModal"/>
+  <div
+    class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
+    :style="{
+      backgroundImage: `url(${playBackgroundImg})`,
+    }"
+    v-if="page === 5"
+  >
+    <HookButton :hookAniClass="hookAnimationClass" :hooking="hooking" />
+    <OutComesModal
+      :gottenFish="gottenFish"
+      :fishName="fishName"
+      :fishSrc="fishId"
+      :escapedFish="escapedFish"
+      @playHoverSound="playHoverSound"
+      @closeModal="closeModal"
+    />
+    <RepairModal
+      :repair="repairModal"
+      :maxRodHp="playerStore.usingRods.maxHp"
+      :rodHp="playerStore.usingRods.hp"
+      @playHoverSound="playHoverSound"
+      @repairRod="repairRod"
+      @repairToggle="toggleRepairModal"
+    />
+    <playPage
+      :playerAvatar="playerStore.avatar"
+      :playerName="playerStore.name"
+      :playerCoins="playerStore.coins"
+      :playerPotion="playerStore.usingPotion"
+      :playerRodIcon="playerStore.usingRods.icon"
+      :rodHpPercentage="rodHpPercentage"
+      :maxRodHp="playerStore.usingRods.maxHp"
+      :rodHp="playerStore.usingRods.hp"
+      @playHoverSound="playHoverSound"
+      @repairToggle="toggleRepairModal"
+      @togglePage="togglePage"
+      @hook="hook"
+    />
+  </div>
 
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
     <div
@@ -1612,7 +1652,6 @@ function isFishInPlayerStore(fishId) {
 .bg-yellow-800 {
   background-color: #7b5e57;
 }
-
 
 .text-yellow-200 {
   color: #ffecb3;
