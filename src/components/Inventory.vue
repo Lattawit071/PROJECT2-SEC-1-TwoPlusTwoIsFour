@@ -1,136 +1,3 @@
-<script setup>
-const maxCapacity = 1000;
-const selectedCategory = ref("all");
-const potionTimers = {};
-const showToastInventory = ref(false);
-const toastMessage = ref("");
-const toastClass = ref("");
-const nameInventory = ref("");
-
-function showToastInventoryMessage(message, type) {
-  toastMessage.value = message;
-  toastClass.value = type === "success" ? "bg-green-500" : "bg-red-500";
-  showToastInventory.value = true;
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(() => {
-    showToastInventory.value = false;
-  }, 4000);
-}
-
-const setCategory = (category) => {
-  selectedCategory.value = category;
-};
-
-function isFish(item) {
-  return item.type === "fish";
-}
-
-function isRod(item) {
-  return item.type === "rod";
-}
-
-function isPotion(item) {
-  return item.type === "potion";
-}
-
-const filteredItems = computed(() => {
-  switch (selectedCategory.value) {
-    case "fish":
-      return (nameInventory.value = "Fish"), playerStore.value.caughtFish;
-    case "rods":
-      return (nameInventory.value = "Rods"), playerStore.value.ownedRods;
-    case "potions":
-      return (nameInventory.value = "Potions"), playerStore.value.potions;
-    default:
-      nameInventory.value = "All";
-      return [
-        ...playerStore.value.caughtFish,
-        ...playerStore.value.ownedRods,
-        ...playerStore.value.potions,
-      ];
-  }
-});
-
-const inventoryCapacity = computed(() => {
-  return filteredItems.value.reduce((acc, item) => acc + item.quantity, 0);
-});
-
-function sellFishAll(fish) {
-  playerStore.value.coins += fish.price * fish.quantity;
-  playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
-    (f) => f.id !== fish.id
-  );
-  showToastInventoryMessage(`Sold all ${fish.name}`, "success");
-  playSellSuccessSound();
-}
-
-function sellFish(fish) {
-  playerStore.value.coins += fish.price;
-  fish.quantity -= 1;
-
-  if (fish.quantity === 0) {
-    playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
-      (f) => f.id !== fish.id
-    );
-  }
-
-  showToastInventoryMessage(`Sold 1 ${fish.name}`, "success");
-  playSellSuccessSound();
-}
-
-function equipRod(rod) {
-  playUseRodSound();
-  playerStore.value.usingRods = rod;
-  showToastInventoryMessage(`Equipped ${rod.name}`, "success");
-}
-
-function usePotion(potion) {
-  playUsePotionSound();
-  let existingPotion = playerStore.value.usingPotion.find(
-    (p) => p.id === potion.id
-  );
-
-  if (!existingPotion) {
-    playerStore.value.usingPotion.push({
-      ...potion,
-      remainingTime: potion.duration,
-      startTime: Date.now(),
-    });
-    existingPotion = playerStore.value.usingPotion.find(
-      (p) => p.id === potion.id
-    );
-  } else {
-    const elapsedTimed = (Date.now() - existingPotion.startTime) / 1000;
-    existingPotion.remainingTime = Math.max(
-      existingPotion.remainingTime - elapsedTimed + potion.duration,
-      0
-    );
-    existingPotion.setTimeout = Date.now();
-  }
-
-  if (potionTimers[potion.id]) {
-    clearTimeout(potionTimers[potion.id]);
-  }
-
-  potionTimers[potion.id] = setTimeout(() => {
-    playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
-      (p) => p.id !== potion.id
-    );
-    delete potionTimers[potion.id];
-  }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
-
-  if (potion.quantity > 1) {
-    potion.quantity -= 1;
-  } else {
-    playerStore.value.potions = playerStore.value.potions.filter(
-      (p) => p.id !== potion.id
-    );
-  }
-  showToastInventoryMessage(`Used ${potion.name}`, "success");
-}
-</script>
 <template>
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
     <div
@@ -246,6 +113,71 @@ function usePotion(potion) {
     </div>
   </div>
 </template>
-<style scoped>
 
+<script setup>
+import { inject } from "vue";
+
+const page = inject("page");
+const filteredItems = inject("filteredItems");
+const nameInventory = inject("nameInventory");
+const inventoryCapacity = inject("inventoryCapacity");
+const maxCapacity = inject("maxCapacity");
+const sellFish = inject("sellFish");
+const sellFishAll = inject("sellFishAll");
+const equipRod = inject("equipRod");
+const usePotion = inject("usePotion");
+const playHoverSound = inject("playHoverSound");
+const togglePage = inject("togglePage");
+const setCategory = inject("setCategory");
+const isFish = inject("isFish");
+const isRod = inject("isRod");
+const isPotion = inject("isPotion");
+const showToastInventory = inject("showToastInventory");
+const toastMessage = inject("toastMessage");
+</script>
+
+<style scoped>
+.bg-yellow-800 {
+  background-color: #7b5e57;
+}
+.bg-gray-900 {
+  background-color: #2b1b17;
+}
+
+.bg-gray-1000 {
+  background-color: #160a06;
+}
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #a8e6cf, #dcedc1, #f6ffed, #dcedc1, #a8e6cf);
+  background-size: 200%;
+  animation: pastel-border 3s linear infinite, slideUpFadeIn 0.5s ease;
+  z-index: 1000;
+  max-width: 250px;
+}
+
+@keyframes pastel-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>

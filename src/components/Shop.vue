@@ -1,123 +1,5 @@
-<script setup>
-
-const showToast = ref(false);
-const selectedItem = ref({});
-let timeoutId = null;
-const showToastError = ref(false);
-let errorTimeoutId = null;
-
-function showToastMessage(item) {
-  selectedItem.value = item;
-  showToast.value = true;
-
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-
-  timeoutId = setTimeout(() => {
-    showToast.value = false;
-  }, 4000);
-}
-
-function showToastErrorMessage() {
-  showToastError.value = true;
-
-  if (errorTimeoutId) {
-    clearTimeout(errorTimeoutId);
-  }
-
-  errorTimeoutId = setTimeout(() => {
-    showToastError.value = false;
-  }, 4000);
-}
-
-function deductCoins(amount) {
-  if (playerStore.value.coins >= amount) {
-    playerStore.value.coins -= amount;
-  } else {
-  }
-}
-
-function addRod(rodId) {
-  const rod = fishingRods.find((rod) => rod.id === rodId);
-
-  if (rod) {
-    const existingRod = playerStore.value.ownedRods.find(
-      (ownedRod) => ownedRod.id === rodId
-    );
-
-    if (!existingRod) {
-      playerStore.value.ownedRods.push({
-        ...rod,
-        quantity: 1,
-      });
-      showToastMessage(rod);
-    } else {
-    }
-  } else {
-  }
-}
-
-function addPotion(potionId) {
-  const selectedPotion = potion.find((p) => p.id === potionId);
-  if (selectedPotion) {
-    const existingPotion = playerStore.value.potions.find(
-      (p) => p.id === potionId
-    );
-    if (existingPotion) {
-      existingPotion.quantity += 1;
-      showToastMessage(selectedPotion);
-    } else {
-      playerStore.value.potions.push({ ...selectedPotion, quantity: 1 });
-      quantity = 1;
-      showToastMessage(selectedPotion);
-    }
-  }
-}
-
-function purchaseRods(item) {
-  if (playerStore.value.coins >= item.price) {
-    const existingRod = playerStore.value.ownedRods.find(
-      (rod) => rod.id === item.id
-    );
-
-    if (!existingRod) {
-      deductCoins(item.price);
-      addRod(item.id);
-      playSuccessBuySound();
-    } else {
-    }
-  } else {
-    playFailBuySound();
-    showToastErrorMessage();
-  }
-}
-
-function purchasePotion(item) {
-  if (playerStore.value.coins >= item.price) {
-    playSuccessBuySound();
-    showToastMessage(item);
-    deductCoins(item.price);
-    const existingPotion = playerStore.value.potions.find(
-      (p) => p.id === item.id
-    );
-    if (existingPotion) {
-      existingPotion.quantity += 1;
-      showToastMessage(item);
-    } else {
-      addPotion(item.id);
-    }
-  } else {
-    playFailBuySound();
-    showToastErrorMessage();
-  }
-}
-</script>
 <template>
-<div
-    class="p-6 bg-gray-900 min-h-screen flex flex-col items-center"
-    v-if="page === 3"
-  >
+  <div class="p-6 bg-gray-900 min-h-screen flex flex-col items-center" v-if="page === 3">
     <button
       @mouseenter="playHoverSound"
       @click="togglePage(5)"
@@ -206,8 +88,111 @@ function purchasePotion(item) {
       </div>
     </div>
   </transition>
-
 </template>
-<style scoped>
 
+<script setup>
+import { inject } from "vue";
+
+const page = inject("page");
+const playHoverSound = inject("playHoverSound");
+const togglePage = inject("togglePage");
+const fishingRods = inject("fishingRods");
+const potion = inject("potion");
+const playerStore = inject("playerStore");
+const purchaseRods = inject("purchaseRods");
+const purchasePotion = inject("purchasePotion");
+const showToast = inject("showToast");
+const showToastError = inject("showToastError");
+const selectedItem = inject("selectedItem");
+const playerCoins = inject("playerCoins");
+</script>
+
+<style scoped>
+.bg-yellow-800 {
+  background-color: #7b5e57;
+}
+.bg-gray-900 {
+  background-color: #2b1b17;
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #a8e6cf, #dcedc1, #f6ffed, #dcedc1, #a8e6cf);
+  background-size: 200%;
+  animation: pastel-border 3s linear infinite, slideUpFadeIn 0.5s ease;
+  z-index: 1000;
+  max-width: 250px;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+}
+
+.toast-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.toast-message {
+  flex-grow: 1;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.toast-notification-error {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(
+    45deg,
+    #ffcccc,
+    #ff9999,
+    #ffb3b3,
+    #ff9999,
+    #ffcccc
+  );
+  background-size: 200%;
+  z-index: 1000;
+  max-width: 250px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.toast-message-error {
+  color: #c62828;
+  font-weight: bold;
+}
+
+@keyframes pastel-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
