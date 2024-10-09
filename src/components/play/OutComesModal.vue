@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   gottenFish: {
     type: Boolean,
@@ -13,11 +15,8 @@ const props = defineProps({
     type: Boolean,
   },
 });
-defineEmits(["playHoverSound"]);
-const closeModal = () => {
-  gottenFish.value = false;
-  escapedFish.value = false;
-};
+
+defineEmits(["playHoverSound","closeModal"]);
 </script>
 
 <template>
@@ -63,7 +62,7 @@ const closeModal = () => {
       </div>
       <button
         @mouseenter="$emit('playHoverSound')"
-        @click="closeModal"
+        @click="$emit('closeModal')"
         class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
       >
         Close
@@ -90,7 +89,7 @@ const closeModal = () => {
       </div>
 
       <button
-        @click="closeModal"
+        @click="$emit('closeModal')"
         class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
       >
         Close

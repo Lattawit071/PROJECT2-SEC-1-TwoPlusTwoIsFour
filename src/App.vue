@@ -789,6 +789,11 @@ const repairRod = () => {
   }
 };
 
+const closeModal = () => {
+  escapedFish.value = false
+  gottenFish.value = false
+}
+
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
 const potionTimers = {};
@@ -1021,8 +1026,6 @@ function purchaseRods(item) {
 }
 
 function purchasePotion(item) {
-  console.log(item);
-  
   if (playerStore.value.coins >= item.price) {
     playSuccessBuySound();
     showToastMessage(item);
@@ -1031,9 +1034,13 @@ function purchasePotion(item) {
       (p) => p.id === item.id
     );
     if (existingPotion) {
+      console.log(1);
+      
       existingPotion.quantity += 1;
       showToastMessage(item);
     } else {
+      console.log(2);
+      
       addPotion(item.id);
     }
   } else {
@@ -1201,6 +1208,7 @@ const playerCoins = computed(() => playerStore.value.coins);
       :fishSrc="fishId"
       :escapedFish="escapedFish"
       @playHoverSound="playHoverSound"
+      @closeModal="closeModal"
     />
     <RepairModal
       :repair="repairModal"
