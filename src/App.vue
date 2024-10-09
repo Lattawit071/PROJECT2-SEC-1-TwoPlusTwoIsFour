@@ -37,7 +37,7 @@ import pagethree from "/images/howtoplay/pagethree.png";
 import pagefour from "/images/howtoplay/pagefour.png";
 import pagefive from "/images/howtoplay/pagefive.png";
 import pagesix from "/images/howtoplay/pagesix.png";
-
+import Navbar from "./components/play/Navbar.vue";
 import bubbleSound from "/sound/EffectsBubble.mp3";
 import successBuySound from "/sound/cash-register-purchase-87313.mp3";
 import failBuySound from "/sound/error-126627.mp3";
@@ -1279,7 +1279,12 @@ function isFishInPlayerStore(fishId) {
       @repairToggle="toggleRepairModal"
     />
     <playPage
-      :playerAvatar="playerStore.avatar"
+      @playHoverSound="playHoverSound"
+      @togglePage="togglePage"
+      @hook="hook"
+    />
+    <Navbar
+    :playerAvatar="playerStore.avatar"
       :playerName="playerStore.name"
       :playerCoins="playerStore.coins"
       :playerPotion="playerStore.usingPotion"
@@ -1289,9 +1294,7 @@ function isFishInPlayerStore(fishId) {
       :rodHp="playerStore.usingRods.hp"
       @playHoverSound="playHoverSound"
       @repairToggle="toggleRepairModal"
-      @togglePage="togglePage"
-      @hook="hook"
-    />
+    ></Navbar>
   </div>
 
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
