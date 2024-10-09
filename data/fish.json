@@ -1,0 +1,163 @@
+[
+    {
+      "id": 1,
+      "name": "Sardine",
+      "quantity": 1,
+      "price": 50,
+      "icon": "/images/fish/Sardine.png",
+      "type": "fish"
+    },
+    {
+      "id": 2,
+      "name": "Clownfish",
+      "quantity": 1,
+      "price": 150,
+      "icon": "/images/fish/Clownfish.png",
+      "type": "fish"
+    },
+    {
+      "id": 3,
+      "name": "Catfish",
+      "quantity": 1,
+      "price": 200,
+      "icon": "/images/fish/Catfish.png",
+      "type": "fish"
+    },
+    {
+      "id": 4,
+      "name": "Salmon",
+      "quantity": 1,
+      "price": 250,
+      "icon": "/images/fish/Salmon.png",
+      "type": "fish"
+    },
+    {
+      "id": 5,
+      "name": "Tuna",
+      "quantity": 1,
+      "price": 250,
+      "icon": "/images/fish/Tuna.png",
+      "type": "fish"
+    },
+    {
+      "id": 6,
+      "name": "Marlin",
+      "quantity": 1,
+      "price": 700,
+      "icon": "/images/fish/Marlin.png",
+      "type": "fish"
+    },
+    {
+      "id": 7,
+      "name": "Stingray",
+      "quantity": 1,
+      "price": 500,
+      "icon": "/images/fish/Stingray.png",
+      "type": "fish"
+    },
+    {
+      "id": 8,
+      "name": "Eel",
+      "quantity": 1,
+      "price": 300,
+      "icon": "/images/fish/Eel.png",
+      "type": "fish"
+    },
+    {
+      "id": 9,
+      "name": "White Koi",
+      "quantity": 1,
+      "price": 800,
+      "icon": "/images/fish/White_Koi.png",
+      "type": "fish"
+    },
+    {
+      "id": 10,
+      "name": "Squid",
+      "quantity": 1,
+      "price": 850,
+      "icon": "/images/fish/Squid.png",
+      "type": "fish"
+    },
+    {
+      "id": 11,
+      "name": "Shark",
+      "quantity": 1,
+      "price": 1500,
+      "icon": "/images/fish/Shark.png",
+      "type": "fish"
+    },
+    {
+      "id": 12,
+      "name": "Orca",
+      "quantity": 1,
+      "price": 2000,
+      "icon": "/images/fish/Orca.png",
+      "type": "fish"
+    },
+    {
+      "id": 13,
+      "name": "Blue Whale",
+      "quantity": 1,
+      "price": 2500,
+      "icon": "/images/fish/Blue_Whale.png",
+      "type": "fish"
+    },
+    {
+      "id": 14,
+      "name": "Giant Pacific Octopus",
+      "quantity": 1,
+      "price": 2500,
+      "icon": "/images/fish/Giant_Pacific_Octopus.png",
+      "type": "fish"
+    },
+    {
+      "id": 15,
+      "name": "Golden Fish",
+      "quantity": 1,
+      "price": 3000,
+      "icon": "/images/fish/Golden_Fish.png",
+      "type": "fish"
+    },
+    {
+      "id": 16,
+      "name": "Rainbow Fish",
+      "quantity": 1,
+      "price": 3500,
+      "icon": "/images/fish/Rainbow_Fish.png",
+      "type": "fish"
+    },
+    {
+      "id": 17,
+      "name": "Pearl",
+      "quantity": 1,
+      "price": 4500,
+      "icon": "/images/fish/Pearl.png",
+      "type": "fish"
+    },
+    {
+      "id": 18,
+      "name": "Diamond",
+      "quantity": 1,
+      "price": 5000,
+      "icon": "/images/fish/Diamond.png",
+      "type": "fish"
+    },
+    {
+      "id": 19,
+      "name": "Chest",
+      "quantity": 1,
+      "price": 8000,
+      "icon": "/images/fish/Chest.png",
+      "type": "fish"
+    },
+    {
+      "id": 20,
+      "name": "Dragon",
+      "quantity": 1,
+      "price": 100000,
+      "icon": "/images/fish/Dragon.png",
+      "type": "fish"
+    }
+  ]
+  
