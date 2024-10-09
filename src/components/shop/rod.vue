@@ -29,11 +29,11 @@ defineEmits(['playHoverSound','purchaseRods'])
           }}
         </p>
         <button
-          @mouseenter="playHoverSound"
+          @mouseenter="$emit('playHoverSound')"
           :disabled="
             ownedRod?.find((ownedRod) => ownedRod.id === rod.id)
           "
-          @click="purchaseRods(rod)"
+          @click="$emit('purchaseRods',rod)"
           class="mt-4 text-yellow-100 py-2 px-4 rounded"
           :class="{
             'bg-gray-500 cursor-not-allowed': ownedRod?.find(

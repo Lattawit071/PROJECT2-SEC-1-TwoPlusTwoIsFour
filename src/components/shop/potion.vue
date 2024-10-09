@@ -25,8 +25,8 @@ defineEmits(['playHoverSound','purchasePotion'])
         <p class="text-yellow-200">Price: {{ potionItem.price }} coins</p>
         <p class="text-yellow-300 text-sm">{{ potionItem.effect }}</p>
         <button
-          @mouseenter="playHoverSound"
-          @click="purchasePotion(potionItem)"
+          @mouseenter="$emit('playHoverSound')"
+          @click="$emit('purchasePotion',potionItem)"
           class="mt-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >
           Buy

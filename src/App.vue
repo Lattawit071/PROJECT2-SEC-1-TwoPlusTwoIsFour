@@ -980,12 +980,18 @@ function addRod(rodId) {
 }
 
 function addPotion(potionId) {
+  console.log(potionId);
+  
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
     const existingPotion = playerStore.value.potions.find(
       (p) => p.id === potionId
     );
+    console.log(existingPotion);
+    
     if (existingPotion) {
+      console.log(1);
+      
       existingPotion.quantity += 1;
       showToastMessage(selectedPotion);
     } else {
@@ -1015,6 +1021,8 @@ function purchaseRods(item) {
 }
 
 function purchasePotion(item) {
+  console.log(item);
+  
   if (playerStore.value.coins >= item.price) {
     playSuccessBuySound();
     showToastMessage(item);
@@ -1349,7 +1357,7 @@ const playerCoins = computed(() => playerStore.value.coins);
     <h1 class="text-5xl font-bold text-yellow-100 mb-6">SHOP</h1>
     <p class="text-yellow-100 mb-4">My coins : {{ playerCoins }}</p>
     <Rod :fishingRods="fishingRods" @playHoverSound="playHoverSound" @purchaseRods="purchaseRods" :ownedRod="playerStore.ownedRod"/>
-    <!-- <Potion :potion="potion" @playHoverSound="playHoverSound" @purchasePotion="purchasePotion"/> -->
+    <Potion :potion="potion" @playHoverSound="playHoverSound" @purchasePotion="purchasePotion"/>
   </div>
 
     <div v-if="showToast" class="toast-notification">
