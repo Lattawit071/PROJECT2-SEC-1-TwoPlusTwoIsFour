@@ -1001,7 +1001,7 @@ function addPotion(potionId) {
       showToastMessage(selectedPotion);
     } else {
       playerStore.value.potions.push({ ...selectedPotion, quantity: 1 });
-      quantity = 1;
+      // quantity = 1;
       showToastMessage(selectedPotion);
     }
   }
@@ -1364,7 +1364,7 @@ const playerCoins = computed(() => playerStore.value.coins);
     </button>
     <h1 class="text-5xl font-bold text-yellow-100 mb-6">SHOP</h1>
     <p class="text-yellow-100 mb-4">My coins : {{ playerCoins }}</p>
-    <Rod :fishingRods="fishingRods" @playHoverSound="playHoverSound" @purchaseRods="purchaseRods" :ownedRod="playerStore.ownedRod"/>
+    <Rod :fishingRods="fishingRods" @playHoverSound="playHoverSound" @purchaseRods="purchaseRods" :ownedRod="playerStore.ownedRods"/>
     <Potion :potion="potion" @playHoverSound="playHoverSound" @purchasePotion="purchasePotion"/>
   </div>
 

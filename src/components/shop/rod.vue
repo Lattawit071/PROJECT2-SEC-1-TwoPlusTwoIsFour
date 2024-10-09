@@ -4,7 +4,7 @@ const props = defineProps({
         type:Array
     },
     ownedRod:{
-        type:Object
+        type:Array
     }
 })
 defineEmits(['playHoverSound','purchaseRods'])
