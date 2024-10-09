@@ -4,7 +4,7 @@ const props = defineProps({
     type: Boolean,
   },
   fishName: {
-    type: Boolean,
+    type: String,
   },
   fishSrc: {
     type: String,

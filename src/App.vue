@@ -50,10 +50,17 @@ import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
 import playBackgroundImg from "/images/image/PLAY.png";
 import playerImg from "/images/image/Player.png";
+
+// play
 import LoadingPage from "./components/play/loadingPage.vue";
 import HookButton from "./components/play/HookButton.vue";
 import OutComesModal from "./components/play/OutComesModal.vue";
 import RepairModal from "./components/play/RepairModal.vue";
+
+//bookmark
+import bookmark from "./components/bookmark/bookmark.vue";
+import setting from "./components/setting/setting.vue";
+
 const playerName = ref("Int203");
 
 const fishStore = [
@@ -1029,24 +1036,17 @@ function purchasePotion(item) {
 }
 
 const playerCoins = computed(() => playerStore.value.coins);
-
-const selectFish = ref("common");
-const highlightedFish = ref(new Set());
-
-function filterFish(a, b) {
-  return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
-}
-
-function isFishInPlayerStore(fishId) {
-  if (playerStore.value.caughtFish.some((fish) => fish.id === fishId)) {
-    highlightedFish.value.add(fishId);
-    return true;
-  }
-  return highlightedFish.value.has(fishId);
-}
 </script>
 
 <template>
+  <bookmark
+    v-if="page === 4"
+    :playerName="playerStore.name"
+    @togglePage="togglePage"
+    @PlayHoverSound="playHoverSound"
+  />
+  <!-- <setting @openSettings="openSettings" /> -->
+  {{ page }}
   <!-- loading -->
   <LoadingPage
     :loadingMessage="loadingMessage"
@@ -1113,81 +1113,7 @@ function isFishInPlayerStore(fishId) {
     </div>
   </div>
 
-  <transition name="fade">
-    <div
-      v-if="isSettingsOpen"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div
-        class="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3"
-      >
-        <h2 class="text-2xl font-bold mb-4">Settings</h2>
-
-        <div class="mb-6">
-          <label class="flex items-center mb-2">
-            <div
-              @click="toggleSound"
-              class="toggle-switch relative inline-flex items-center cursor-pointer"
-              :class="{
-                'bg-green-500 is-on': isSoundOn,
-                'bg-gray-500': !isSoundOn,
-              }"
-            >
-              <span class="toggle-circle"></span>
-            </div>
-            <span class="ml-3">Sound On/Off</span>
-          </label>
-          <label class="flex items-center mb-2">
-            <div
-              @click="toggleMusic"
-              class="toggle-switch relative inline-flex items-center cursor-pointer"
-              :class="{
-                'bg-green-500 is-on': isMusicOn,
-                'bg-gray-500': !isMusicOn,
-              }"
-            >
-              <span class="toggle-circle"></span>
-            </div>
-            <span class="ml-3">Music On/Off</span>
-          </label>
-          <label class="flex items-center">
-            <div
-              @click="toggleSfx"
-              class="toggle-switch relative inline-flex items-center cursor-pointer"
-              :class="{
-                'bg-green-500 is-on': isSfxOn,
-                'bg-gray-500': !isSfxOn,
-              }"
-            >
-              <span class="toggle-circle"></span>
-            </div>
-            <span class="ml-3">SFX On/Off</span>
-          </label>
-        </div>
-
-        <div class="mb-6">
-          <label class="block mb-2 font-bold">Change Player Name:</label>
-          <input
-            v-model="playerStore.name"
-            type="text"
-            class="w-full p-2 rounded-md bg-gray-800 text-white focus:outline-none"
-            placeholder="Enter new player name"
-            maxlength="20"
-          />
-        </div>
-
-        <div class="flex justify-end space-x-4">
-          <button
-            @mouseenter="playHoverSound"
-            @click="saveSettings"
-            class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg"
-          >
-            OK
-          </button>
-        </div>
-      </div>
-    </div>
-  </transition>
+  <setting v-if="isSettingsOpen" @saveSettings="saveSettings" />
 
   <transition name="fade">
     <div
@@ -1503,152 +1429,6 @@ function isFishInPlayerStore(fishId) {
       </div>
     </div>
   </transition>
-
-  <div v-if="page === 4">
-    <div
-      class="bg-gray-1000 w-screen h-screen fixed top-0 left-0 font-nonto overflow-scroll"
-    >
-      <div class="flex justify-center w-screen mt-8">
-        <div
-          class="header fade-up bg-gradient-to-b bg-gray-900 to-yellow-900 border-black w-[90%] md:w-[60%] min-w-[300px] rounded-lg shadow-lg p-6"
-        >
-          <button
-            @mouseenter="playHoverSound"
-            @click="togglePage(5)"
-            class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
-          >
-            Back
-          </button>
-
-          <div class="mb-6">
-            <p
-              class="text-3xl font-bold text-center text-yellow-100 bg-gray-900 py-4 rounded-t-lg"
-            >
-              Achievement
-            </p>
-          </div>
-
-          <div
-            class="bg-gray-900 flex gap-5 justify-evenly p-4 rounded-lg mb-6"
-          >
-            <div class="relative inline-block w-full md:w-1/3">
-              <p class="text-center text-lg text-yellow-100 mb-2">
-                Fish Category
-              </p>
-              <select
-                v-model="selectFish"
-                class="block appearance-none w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md hover:bg-yellow-100 focus:outline-none transition duration-300 cursor-pointer"
-              >
-                <option value="common">Common</option>
-                <option value="rare">Rare</option>
-                <option value="Legendary">Legendary</option>
-                <option value="Secret">Secret</option>
-              </select>
-              <div
-                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-              >
-                <svg
-                  class="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 12l-4-4h8l-4 4z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div
-            v-show="selectFish === 'common'"
-            class="grid grid-cols-2 md:grid-cols-3 gap-4"
-          >
-            <div
-              v-for="fish in filterFish(1, 10)"
-              :key="fish.id"
-              class="green-gradient-bg border border-green-400 rounded-lg p-4 hover:border-green-300"
-            >
-              <img
-                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-0 rounded-lg mb-2"
-                :src="fish.icon"
-                :alt="fish.name"
-              />
-              <h3 class="text-green-900 text-lg font-semibold">
-                {{ fish.name }}
-              </h3>
-              <p class="text-green-900">${{ fish.price }}</p>
-            </div>
-          </div>
-
-          <div
-            v-show="selectFish === 'rare'"
-            class="grid grid-cols-2 md:grid-cols-3 gap-4"
-          >
-            <div
-              v-for="fish in filterFish(11, 14)"
-              :key="fish.id"
-              class="blue-gradient-bg border border-blue-400 rounded-lg p-4 hover:border-blue-300"
-            >
-              <img
-                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-0 rounded-lg mb-2"
-                :src="fish.icon"
-                :alt="fish.name"
-              />
-              <h3 class="text-blue-100 text-lg font-semibold">
-                {{ fish.name }}
-              </h3>
-              <p class="text-blue-200">${{ fish.price }}</p>
-            </div>
-          </div>
-
-          <div
-            v-show="selectFish === 'Legendary'"
-            class="grid grid-cols-2 md:grid-cols-3 gap-4"
-          >
-            <div
-              v-for="fish in filterFish(15, 19)"
-              :key="fish.id"
-              class="pastel-red-gradient-bg border border-yellow-400 rounded-lg p-4 hover:border-yellow-300"
-            >
-              <img
-                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-0 rounded-lg mb-2"
-                :src="fish.icon"
-                :alt="fish.name"
-              />
-              <h3 class="text-yellow-900 text-lg font-semibold">
-                {{ fish.name }}
-              </h3>
-              <p class="text-yellow-800">${{ fish.price }}</p>
-            </div>
-          </div>
-
-          <div
-            v-show="selectFish === 'Secret'"
-            class="grid grid-cols-2 md:grid-cols-3 gap-4"
-          >
-            <div
-              v-for="fish in filterFish(20, 20)"
-              :key="fish.id"
-              class="hologram-bg border border-yellow-400 rounded-lg p-4 hover:border-yellow-300"
-            >
-              <img
-                :class="{ 'brightness-100': isFishInPlayerStore(fish.id) }"
-                class="brightness-0 rounded-lg mb-2 noselect"
-                :src="fish.icon"
-                :alt="fish.name"
-              />
-              <h3 class="text-yellow-100 text-lg font-semibold">
-                {{ fish.name }}
-              </h3>
-              <p class="text-yellow-200">${{ fish.price }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
