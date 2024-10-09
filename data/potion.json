@@ -1,0 +1,53 @@
+[
+    {
+      "id": 1,
+      "name": "Luck Potion",
+      "quantity": 1,
+      "price": 2500,
+      "effect": "Luck +10% for 5 minutes",
+      "icon": "/images/potion/Luck_5m.png",
+      "type": "potion",
+      "duration": 300
+    },
+    {
+      "id": 2,
+      "name": "Speed Potion",
+      "quantity": 1,
+      "price": 2500,
+      "effect": "Speed +15% for 5 minutes",
+      "icon": "/images/potion/Speed_5m.png",
+      "type": "potion",
+      "duration": 300
+    },
+    {
+      "id": 3,
+      "name": "Full Luck Potion",
+      "quantity": 1,
+      "price": 10000,
+      "effect": "Luck +10% for 1 hour",
+      "icon": "/images/potion/Luck_1h.png",
+      "type": "potion",
+      "duration": 3600
+    },
+    {
+      "id": 4,
+      "name": "Full Speed Potion",
+      "quantity": 1,
+      "price": 10000,
+      "effect": "Speed +15% for 1 hour",
+      "icon": "/images/potion/Speed_1h.png",
+      "type": "potion",
+      "duration": 3600
+    },
+    {
+      "id": 5,
+      "name": "Super Full Potion",
+      "quantity": 1,
+      "price": 50000,
+      "effect": "Luck +20% & Speed +20% for 1 hour",
+      "icon": "/images/potion/Full_Potion.png",
+      "type": "potion",
+      "duration": 3600
+    }
+  ]
+  
