@@ -52,7 +52,7 @@ import playBackgroundImg from "/images/image/PLAY.png";
 import playerImg from "/images/image/Player.png";
 
 // play
-import LoadingPage from "./components/play/loadingPage.vue";
+import LoadingPage from "./components/loading/loadingPage.vue";
 import HookButton from "./components/play/HookButton.vue";
 import OutComesModal from "./components/play/OutComesModal.vue";
 import RepairModal from "./components/play/RepairModal.vue";
@@ -763,11 +763,6 @@ function reduceHpRods() {
   }
 }
 
-const closeModal = () => {
-  gottenFish.value = false;
-  escapedFish.value = false;
-};
-
 const repairModal = ref(false);
 
 const toggleRepairModal = () => {
@@ -1194,7 +1189,6 @@ const playerCoins = computed(() => playerStore.value.coins);
       :fishSrc="fishId"
       :escapedFish="escapedFish"
       @playHoverSound="playHoverSound"
-      @closeModal="closeModal"
     />
     <RepairModal
       :repair="repairModal"
