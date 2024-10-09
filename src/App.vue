@@ -20,23 +20,29 @@ import PearlImg from "/images/fish/Pearl.png";
 import DiamondImg from "/images/fish/Diamond.png";
 import ChestImg from "/images/fish/Chest.png";
 import DragonImg from "/images/fish/Dragon.png";
+
 import Basic_RodImg from "/images/rod/Basic_Rod.png";
 import Star_RodImg from "/images/rod/Star_Rod.png";
 import Galaxy_RodImg from "/images/rod/Galaxy_Rod.png";
 import Lover_RodImg from "/images/rod/Lover_Rod.png";
 import Thunder_RodImg from "/images/rod/Thunder_Rod.png";
-import playPage from "./components/play/playPage.vue";
+
 import Luck_PotionImg from "/images/potion/Luck_5m.png";
 import Speed_PotionImg from "/images/potion/Speed_5m.png";
 import Full_Luck_PotionImg from "/images/potion/Luck_1h.png";
 import Full_Speed_PotionImg from "/images/potion/Speed_1h.png";
 import Super_Full_PotionImg from "/images/potion/Full_Potion.png";
-import BackgroundImg from "/images/image/Background.png";
+
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
 import pagefour from "/images/howtoplay/pagefour.png";
 import pagefive from "/images/howtoplay/pagefive.png";
 import pagesix from "/images/howtoplay/pagesix.png";
+
+import backgroundImg from "/images/image/Background.png";
+import playBackgroundImg from "/images/image/PLAY.png";
+import seaImg from "/images/image/sea.png";
+import hookImg from "/images/image/Hook.png";
 
 import bubbleSound from "/sound/EffectsBubble.mp3";
 import successBuySound from "/sound/cash-register-purchase-87313.mp3";
@@ -48,12 +54,8 @@ import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effe
 import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
 import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
-import playBackgroundImg from "/images/image/PLAY.png";
+
 import playerImg from "/images/image/Player.png";
-import LoadingPage from "./components/play/loadingPage.vue";
-import HookButton from "./components/play/HookButton.vue";
-import OutComesModal from "./components/play/OutComesModal.vue";
-import RepairModal from "./components/play/RepairModal.vue";
 const playerName = ref("Int203");
 
 const fishStore = [
@@ -525,9 +527,9 @@ onMounted(() => {
 
 const page = ref(1);
 
-const togglePage = (value) => {
+function togglePage(value) {
   page.value = value;
-};
+}
 
 const isSettingsOpen = ref(false);
 
@@ -761,10 +763,14 @@ const closeModal = () => {
   escapedFish.value = false;
 };
 
-const repairModal = ref(false);
+const isRepairModalOpen = ref(false);
 
-const toggleRepairModal = () => {
-  repairModal.value = !repairModal.value;
+const openRepairModal = () => {
+  isRepairModalOpen.value = true;
+};
+
+const closeRepairModal = () => {
+  isRepairModalOpen.value = false;
 };
 
 const repairRod = () => {
@@ -777,7 +783,7 @@ const repairRod = () => {
     playerStore.value.coins -= repairCost;
     rod.hp = rod.maxHp;
     playSuccessBuySound();
-    repairModal.value = false;
+    closeRepairModal();
   } else {
     playFailBuySound();
   }
@@ -1047,19 +1053,23 @@ function isFishInPlayerStore(fishId) {
 </script>
 
 <template>
-  <!-- loading -->
-  <LoadingPage
-    :loadingMessage="loadingMessage"
-    :loading="loading"
-    :isLoaded="isLoaded"
-    :loadingProgress="loadingProgress"
-    @startGame="startGame"
-  />
-
+  <div class="loading-screen" v-if="loading">
+    <img src="/images/gif/loading.gif" />
+    <p>{{ loadingMessage }}</p>
+    <div class="loading-bar">
+      <div
+        class="loading-bar-inner"
+        :style="{ width: loadingProgress + '%' }"
+      ></div>
+    </div>
+    <button class="start-btn" @click="startGame" :disabled="!isLoaded">
+      Continue
+    </button>
+  </div>
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
     :style="{
-      backgroundImage: `url(${BackgroundImg})`,
+      backgroundImage: `url(${backgroundImg})`,
     }"
     v-if="page === 1"
   >
@@ -1253,7 +1263,6 @@ function isFishInPlayerStore(fishId) {
     </div>
   </transition>
 
-  <!-- playPage -->
   <div
     class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
     :style="{
@@ -1261,37 +1270,262 @@ function isFishInPlayerStore(fishId) {
     }"
     v-if="page === 5"
   >
-    <HookButton :hookAniClass="hookAnimationClass" :hooking="hooking" />
-    <OutComesModal
-      :gottenFish="gottenFish"
-      :fishName="fishName"
-      :fishSrc="fishId"
-      :escapedFish="escapedFish"
-      @playHoverSound="playHoverSound"
-      @closeModal="closeModal"
-    />
-    <RepairModal
-      :repair="repairModal"
-      :maxRodHp="playerStore.usingRods.maxHp"
-      :rodHp="playerStore.usingRods.hp"
-      @playHoverSound="playHoverSound"
-      @repairRod="repairRod"
-      @repairToggle="toggleRepairModal"
-    />
-    <playPage
-      :playerAvatar="playerStore.avatar"
-      :playerName="playerStore.name"
-      :playerCoins="playerStore.coins"
-      :playerPotion="playerStore.usingPotion"
-      :playerRodIcon="playerStore.usingRods.icon"
-      :rodHpPercentage="rodHpPercentage"
-      :maxRodHp="playerStore.usingRods.maxHp"
-      :rodHp="playerStore.usingRods.hp"
-      @playHoverSound="playHoverSound"
-      @repairToggle="toggleRepairModal"
-      @togglePage="togglePage"
-      @hook="hook"
-    />
+    <div class="relative flex justify-center items-center h-screen w-full">
+      <img
+        :src="seaImg"
+        alt="Animated SVG"
+        class="animated-svg relative z-10"
+      />
+      <div
+        :class="hookAnimationClass"
+        class="hook-container"
+        v-show="hooking"
+        :style="{ backgroundImage: `url(${hookImg})` }"
+      ></div>
+    </div>
+
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      v-show="gottenFish"
+    >
+      <div
+        class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center bg-gray-1000"
+        style="
+          background-image: url('/images/SeaBackground.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "
+      >
+        <div
+          class="text-xl md:text-2xl bg-gradient-to-b from-gray-900 to-yellow-900 text-yellow-100 font-sans font-bold rounded-lg mx-2 md:mx-4 lg:mx-8 p-3 md:p-4 flex items-center justify-center"
+        >
+          <span>You got a</span>
+          <div
+            class="text-xl md:text-2xl text-yellow-100 font-sans font-bold flex items-center"
+          >
+            &nbsp; "
+            <span class="text-xl md:text-2xl text-green-600 font-extrabold">
+              {{ fishName }}
+            </span>
+            "
+          </div>
+        </div>
+
+        <div
+          class="w-full h-auto md:h-1/2 flex items-center justify-center mt-8"
+        >
+          <div
+            class="bg-gray-900 border border-yellow-400 rounded-lg shadow-lg p-4 max-w-xs md:max-w-md w-full h-full flex justify-center items-center"
+          >
+            <img
+              :src="fishId"
+              alt="Fish Image"
+              class="w-full h-full object-cover rounded-lg"
+              style="max-width: 200px; max-height: 200px"
+            />
+          </div>
+        </div>
+        <button
+          @mouseenter="playHoverSound"
+          @click="closeModal"
+          class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      v-show="escapedFish"
+    >
+      <div
+        class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center bg-gray-1000"
+        style="
+          background-image: url('/images/SeaBackground.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "
+      >
+        <div
+          class="text-xl md:text-2xl bg-gradient-to-b bg-gray-900 text-yellow-100 text-yellow-100 font-sans font-bold rounded-lg mx-2 md:mx-4 lg:mx-8 p-3 md:p-4 flex items-center justify-center"
+        >
+          <span>Unfortunately, your fish &nbsp; Escaped!</span>
+        </div>
+
+        <button
+          @click="closeModal"
+          class="bg-yellow-600 text-yellow-100 border-2 rounded-lg w-full md:w-1/2 lg:w-1/3 p-3 md:p-4 text-lg font-semibold transition-transform transform hover:scale-105 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 mt-6 md:mt-8 lg:mt-10"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <div class="relative w-full mt-auto">
+      <div class="fixed left-0 bottom-0 w-full bg-[#4E342E]">
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/Back.png"
+          alt="Bottom Image"
+          class="w-full object-contain"
+        />
+      </div>
+
+      <div class="fixed left-0 bottom-0 w-full bg-[#4E342E] z-10">
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/front.png"
+          alt="Top Image"
+          class="w-full object-contain"
+        />
+      </div>
+
+      <div
+        class="fixed bottom-0 left-0 w-full flex justify-between items-center px-8 py-4 z-20 bg-transparent"
+      >
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/Home.png"
+          alt="Home"
+          @click="togglePage(1)"
+          class="w-16 md:w-20 transition-transform transform hover:scale-110 ml-10 md:ml-36 cursor-pointer"
+        />
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/BackPack.png"
+          alt="Inventory"
+          @click="togglePage(2)"
+          class="w-20 md:w-24 transition-transform transform hover:scale-110 cursor-pointer"
+        />
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/Play.png"
+          alt="Hook"
+          @click="hook"
+          class="w-24 md:w-32 transition-transform transform hover:scale-110 cursor-pointer"
+        />
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/Shop.png"
+          alt="Shop"
+          @click="togglePage(3)"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110 cursor-pointer"
+        />
+        <img
+          @mouseenter="playHoverSound"
+          src="/images/button/BookMark.png"
+          alt="Bookmark"
+          @click="togglePage(4)"
+          class="w-20 md:w-28 transition-transform transform hover:scale-110 mr-10 md:mr-36 cursor-pointer"
+        />
+      </div>
+    </div>
+
+    <transition name="fade">
+      <div
+        v-if="isRepairModalOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div
+          class="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3"
+        >
+          <h2 class="text-2xl font-bold mb-4">Repair Rod</h2>
+          <p class="mb-6">Would you like to repair your rod?</p>
+
+          <div class="flex justify-center items-center mb-4">
+            <span class="text-lg font-bold">
+              Repair
+              {{ playerStore.usingRods.maxHp - playerStore.usingRods.hp }} HP
+              for
+              {{
+                (playerStore.usingRods.maxHp - playerStore.usingRods.hp) * 25
+              }}
+              Coins
+            </span>
+          </div>
+
+          <div class="flex justify-center items-center space-x-4">
+            <button
+              @mouseenter="playHoverSound"
+              @click="repairRod"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg"
+            >
+              Repair
+            </button>
+            <button
+              @mouseenter="playHoverSound"
+              @click="closeRepairModal"
+              class="bg-gray-500 hover:bg-gray-400 text-white py-2 px-4 rounded-lg"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <div
+      class="absolute top-0 left-0 p-4 z-20 w-full bg-gray-900 bg-opacity-80 shadow-lg text-white flex items-center justify-between space-x-8"
+    >
+      <div class="flex items-center space-x-4">
+        <img
+          :src="playerStore.avatar"
+          alt="Player Avatar"
+          class="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-yellow-500"
+        />
+        <div>
+          <p class="text-lg font-semibold md:text-xl">{{ playerStore.name }}</p>
+          <p class="text-sm md:text-base">Coins: {{ playerStore.coins }}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center">
+        <p class="text-sm md:text-base font-semibold">Active Potions</p>
+        <div class="flex space-x-2">
+          <img
+            v-for="potion in playerStore.usingPotion"
+            :src="potion.icon"
+            alt="Potion"
+            class="w-10 h-10 md:w-12 md:h-12 object-contain"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center">
+        <p class="text-sm md:text-base font-semibold">Using Rod</p>
+        <div class="flex items-center space-x-2">
+          <img
+            :src="playerStore.usingRods.icon"
+            alt="Rod"
+            class="w-10 h-10 md:w-12 md:h-12 object-contain"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center w-1/3">
+        <p class="text-sm md:text-base font-semibold">Rod HP</p>
+        <div class="w-full bg-gray-800 rounded-full h-4">
+          <div
+            class="bg-green-500 h-4 rounded-full"
+            :style="{ width: rodHpPercentage + '%' }"
+          ></div>
+        </div>
+        <p class="text-xs text-right mt-1">
+          HP: {{ playerStore.usingRods.hp }}
+        </p>
+      </div>
+      <button
+        v-if="playerStore.usingRods.hp < playerStore.usingRods.maxHp"
+        @mouseenter="playHoverSound"
+        @click="openRepairModal"
+        class="fixed right-3 top-32 bg-red-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-red-500 transition-transform transform hover:scale-110"
+      >
+        Repair Rod
+      </button>
+    </div>
   </div>
 
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
@@ -1652,14 +1886,25 @@ function isFishInPlayerStore(fishId) {
 .bg-yellow-800 {
   background-color: #7b5e57;
 }
+.bg-gray-900 {
+  background-color: #2b1b17;
+}
 
+.bg-gray-1000 {
+  background-color: #160a06;
+}
+.text-yellow-100 {
+  color: #fff9c4;
+}
 .text-yellow-200 {
   color: #ffecb3;
 }
 .text-yellow-300 {
   color: #ffe082;
 }
-
+.bg-yellow-600 {
+  background-color: #ffb74d;
+}
 .hover:bg-yellow-500:hover {
   background-color: #ffa726;
 }
@@ -1671,6 +1916,47 @@ function isFishInPlayerStore(fishId) {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.hook-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 900px;
+  background-image: url("/images/image/Hook.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 5;
+}
+
+.hook-animation-down {
+  animation: hookMoveDown 2s ease forwards;
+}
+
+.hook-animation-up {
+  animation: hookMoveUp 2s ease forwards;
+}
+
+@keyframes hookMoveDown {
+  0% {
+    transform: translate(-50%, -100%);
+  }
+  100% {
+    transform: translate(-50%, 5%);
+  }
+}
+
+@keyframes hookMoveUp {
+  0% {
+    transform: translate(-50%, 5%);
+  }
+  100% {
+    transform: translate(-50%, -100%);
+  }
 }
 
 @keyframes blueGradient {
@@ -1825,6 +2111,14 @@ function isFishInPlayerStore(fishId) {
   }
 }
 
+.animated-svg {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: moveSideways 2s ease-in-out infinite;
+}
+
 @keyframes moveSideways {
   0%,
   100% {
@@ -1955,6 +2249,58 @@ function isFishInPlayerStore(fishId) {
   font-weight: bold;
 }
 
+.loading-screen {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #25120d;
+  color: white;
+  z-index: 9999;
+  padding-bottom: 12%;
+}
+
+.loading-screen img {
+  width: 25rem;
+  height: auto;
+}
+
+.loading-bar {
+  width: 80%;
+  background-color: #ddd;
+  height: 25px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.loading-bar-inner {
+  height: 100%;
+  background-color: #ff9f05;
+  width: 0%;
+  transition: width 0.5s linear;
+}
+
+.start-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff9f05;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
 .toggle-switch {
   width: 50px;
   height: 24px;
@@ -2004,21 +2350,5 @@ function isFishInPlayerStore(fishId) {
   width: 12px;
   height: 12px;
   background-color: #555;
-}
-
-.bg-gray-1000 {
-  background-color: #160a06;
-}
-
-.text-yellow-100 {
-  color: #fff9c4;
-}
-
-.bg-gray-900 {
-  background-color: #2b1b17;
-}
-
-.bg-yellow-600 {
-  background-color: #ffb74d;
 }
 </style>
