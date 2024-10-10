@@ -1214,16 +1214,6 @@ const playerCoins = computed(() => playerStore.value.coins);
   }
 }
 
-@keyframes moveSideways {
-  0%,
-  100% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, 20px);
-  }
-}
-
 .toast-notification {
   position: fixed;
   bottom: 20px;

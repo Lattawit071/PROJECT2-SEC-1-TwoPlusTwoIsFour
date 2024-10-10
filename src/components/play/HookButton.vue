@@ -72,4 +72,14 @@ const props = defineProps({
     transform: translate(-50%, -100%);
   }
 }
+
+@keyframes moveSideways {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 20px);
+  }
+}
 </style>
