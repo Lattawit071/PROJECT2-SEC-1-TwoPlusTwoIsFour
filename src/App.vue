@@ -25,7 +25,6 @@ import Star_RodImg from "/images/rod/Star_Rod.png";
 import Galaxy_RodImg from "/images/rod/Galaxy_Rod.png";
 import Lover_RodImg from "/images/rod/Lover_Rod.png";
 import Thunder_RodImg from "/images/rod/Thunder_Rod.png";
-import playPage from "./components/play/playPage.vue";
 import Luck_PotionImg from "/images/potion/Luck_5m.png";
 import Speed_PotionImg from "/images/potion/Speed_5m.png";
 import Full_Luck_PotionImg from "/images/potion/Luck_1h.png";
@@ -37,26 +36,15 @@ import pagethree from "/images/howtoplay/pagethree.png";
 import pagefour from "/images/howtoplay/pagefour.png";
 import pagefive from "/images/howtoplay/pagefive.png";
 import pagesix from "/images/howtoplay/pagesix.png";
-import Navbar from "./components/play/Navbar.vue";
 import bubbleSound from "/sound/EffectsBubble.mp3";
 import successBuySound from "/sound/cash-register-purchase-87313.mp3";
 import failBuySound from "/sound/error-126627.mp3";
-import backgroundMusic from "/sound/game-music-loop-7-145285.mp3";
-import getFishSound from "/sound/cute-level-up-2-189851.mp3";
-import failGetFishSound from "/sound/fail-234710.mp3";
-import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effect for editing.mp3";
 import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
 import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
-import playBackgroundImg from "/images/image/PLAY.png";
 import playerImg from "/images/image/Player.png";
-
-// play
+//Loading
 import LoadingPage from "./components/loading/loadingPage.vue";
-import HookButton from "./components/play/HookButton.vue";
-import OutComesModal from "./components/play/OutComesModal.vue";
-import RepairModal from "./components/play/RepairModal.vue";
-
 //bookmark
 import bookmark from "./components/bookmark/bookmark.vue";
 import setting from "./components/setting/setting.vue";
@@ -64,8 +52,39 @@ import setting from "./components/setting/setting.vue";
 //shop
 import Potion from "./components/shop/potion.vue";
 import Rod from "./components/shop/rod.vue";
-
-const playerName = ref("Int203");
+import PlayPage from "./components/play/playPage.vue";
+const playerName = ref("int203");
+const playerStore = ref({
+  id: 1,
+  name: playerName.value,
+  coins: 100000,
+  avatar: playerImg,
+  ownedRods: [
+    {
+      id: 1,
+      name: "Basic Rod",
+      quantity: 1,
+      price: 0,
+      icon: Basic_RodImg,
+      hp: 50,
+      maxHp: 50,
+      type: "rod",
+    },
+  ],
+  caughtFish: [],
+  potions: [],
+  usingRods: {
+    id: 1,
+    name: "Basic Rod",
+    quantity: 1,
+    price: 0,
+    icon: Basic_RodImg,
+    hp: 50,
+    maxHp: 50,
+    type: "rod",
+  },
+  usingPotion: [],
+});
 
 const fishStore = [
   {
@@ -336,84 +355,20 @@ const potion = [
   },
 ];
 
-const playerStore = ref({
-  id: 1,
-  name: playerName.value,
-  coins: 100000,
-  avatar: playerImg,
-  ownedRods: [
-    {
-      id: 1,
-      name: "Basic Rod",
-      quantity: 1,
-      price: 0,
-      icon: Basic_RodImg,
-      hp: 50,
-      maxHp: 50,
-      type: "rod",
-    },
-  ],
-  caughtFish: [],
-  potions: [],
-  usingRods: {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  usingPotion: [],
-});
-function getFishById(id) {
-  return fishStore.find((fish) => fish.id === id);
-}
-function getPotionById(id) {
-  return potion.find((potion) => potion.id === id);
-}
-
-function addCaughtFish(fishId) {
-  const fish = getFishById(fishId);
-  fish.quantity = 1;
-  if (fish) {
-    const existingFish = playerStore.value.caughtFish.find(
-      (f) => f.id === fishId
-    );
-
-    if (existingFish) {
-      existingFish.quantity += 1;
-    } else {
-      playerStore.value.caughtFish.push(fish);
-    }
-  }
-}
-
 const isSoundOn = ref(true);
 const isMusicOn = ref(true);
 const isSfxOn = ref(true);
 
 const sounds = {
   hover: new Audio(bubbleSound),
-  backgroundMusic: new Audio(backgroundMusic),
   successBuy: new Audio(successBuySound),
   failBuy: new Audio(failBuySound),
-  getFish: new Audio(getFishSound),
-  failGetFish: new Audio(failGetFishSound),
-  hookFish: new Audio(hookFishSound),
   sellFish: new Audio(sellFishSound),
   useRod: new Audio(useRodSound),
   usePotionSound: new Audio(usePotionSound),
 };
-
-sounds.backgroundMusic.loop = true;
-sounds.backgroundMusic.volume = 0.1;
 sounds.hover.volume = 0.09;
 sounds.successBuy.volume = 0.4;
-sounds.getFish.volume = 0.4;
-sounds.failGetFish.volume = 0.4;
-sounds.hookFish.volume = 0.5;
 sounds.useRod.volume = 0.4;
 sounds.sellFish.volume = 0.4;
 sounds.usePotionSound.volume = 0.4;
@@ -430,6 +385,7 @@ function toggleMusic() {
     sounds.backgroundMusic.pause();
   }
 }
+
 function addUsingRod(rodId) {
   const rod = getRodById(rodId);
   if (rod) {
@@ -448,12 +404,6 @@ function playHoverSound() {
   }
 }
 
-function playBackgroundMusic() {
-  if (isMusicOn.value) {
-    sounds.backgroundMusic.play();
-  }
-}
-
 function playSuccessBuySound() {
   if (isSfxOn.value) {
     sounds.successBuy.currentTime = 0;
@@ -465,25 +415,6 @@ function playFailBuySound() {
   if (isSfxOn.value) {
     sounds.failBuy.playbackRate = 1.5;
     sounds.failBuy.play();
-  }
-}
-
-function playSuccessGetFishSound() {
-  if (isSfxOn.value) {
-    sounds.getFish.play();
-  }
-}
-
-function playFailGetFishSound() {
-  if (isSfxOn.value) {
-    sounds.failGetFish.playbackRate = 1.5;
-    sounds.failGetFish.play();
-  }
-}
-
-function playHookFishSound() {
-  if (isSoundOn.value) {
-    sounds.hookFish.play();
   }
 }
 
@@ -507,32 +438,6 @@ function playUsePotionSound() {
     sounds.usePotionSound.play();
   }
 }
-
-const loading = ref(true);
-const loadingProgress = ref(0);
-const isLoaded = ref(false);
-const loadingMessage = ref("Loading... Please wait");
-
-const startGame = () => {
-  playBackgroundMusic();
-  loading.value = false;
-};
-
-const updateLoadingBar = () => {
-  const interval = setInterval(() => {
-    if (loadingProgress.value >= 100) {
-      loadingMessage.value = "Success";
-      clearInterval(interval);
-      isLoaded.value = true;
-    } else {
-      loadingProgress.value += 10;
-    }
-  }, 500);
-};
-
-onMounted(() => {
-  updateLoadingBar();
-});
 
 const page = ref(1);
 
@@ -579,220 +484,6 @@ const goToImage = (index) => {
   currentImageIndex.value = index;
 };
 
-const hooking = ref(false);
-const gottenFish = ref(false);
-const fishName = ref();
-const escapedFish = ref(false);
-const waiting = ref(false);
-const ranNumber = ref(0);
-const caughtFish = ref();
-const ranTime = ref();
-const reducesHp = ref();
-const fishId = ref();
-const rodId = ref();
-const luck = ref(0);
-const hookAnimationClass = ref("hook-animation-down");
-const rodHpPercentage = computed(() => {
-  const maxHp = playerStore.value.usingRods.maxHp;
-  return (playerStore.value.usingRods.hp / maxHp) * 100;
-});
-
-function getPotionPlayerById(id) {
-  return playerStore.value.usingPotion.find((potion) => potion.id === id);
-}
-
-const hook = () => {
-  if (hooking.value || waiting.value) {
-    playFailBuySound();
-    return;
-  }
-
-  if (playerStore.value.usingRods.hp > 0) {
-    reduceHpRods();
-
-    if (playerStore.value.usingRods.hp < reducesHp.value) {
-      playFailBuySound();
-    } else {
-      playerStore.value.usingRods.hp -= reducesHp.value;
-      rodId.value = playerStore.value.usingRods.id;
-      playHookFishSound();
-      hookAnimationClass.value = "hook-animation-down";
-      hooking.value = true;
-      waitingForFunction();
-    }
-  } else {
-    playFailBuySound();
-  }
-};
-
-function waitingForFunction(id) {
-  if (waiting.value) {
-    playFailBuySound();
-  } else {
-    hookFish(id);
-  }
-}
-
-function hookFish() {
-  const chanceToGet = Math.random() * 100;
-  doAfterTimeOut(() => {
-    if (chanceToGet > 20) {
-      checkRod();
-      gottenFish.value = true;
-      const lastCaughtFish = playerStore.value.caughtFish
-        .slice()
-        .reverse()
-        .find((f) => f.id === caughtFish.value.id);
-      if (lastCaughtFish) {
-        fishName.value = lastCaughtFish.name;
-      }
-      console.log(fishName.value);
-      console.log(playerStore.value.caughtFish);
-    } else {
-      playFailGetFishSound();
-      escapedFish.value = true;
-    }
-    hookAnimationClass.value = "hook-animation-up";
-    setTimeout(() => {
-      hooking.value = false;
-    }, 2000);
-  });
-}
-
-function doAfterTimeOut(callback) {
-  fishingTime();
-  waiting.value = true;
-  setTimeout(() => {
-    waiting.value = false;
-    callback();
-  }, ranTime.value);
-}
-
-function fishingTime() {
-  const speed = 0;
-  if (checkEqualPotion(1, 1)) {
-    luck.value + 15;
-  }
-  if (checkEqualPotion(2, 2)) {
-    speed + 10;
-  }
-  if (checkEqualPotion(3, 3)) {
-    luck.value + 15;
-  }
-  if (checkEqualPotion(4, 4)) {
-    speed + 10;
-  }
-  if (checkEqualPotion(5, 5)) {
-    speed + 20;
-    luck.value + 20;
-  }
-  ranTime.value =
-    Math.floor(Math.random() * ((18 * (100 - speed)) / 100 - 5) + 5) * 1000;
-}
-
-function checkEqualPotion(store, player) {
-  if (getPotionById(store)?.id === getPotionPlayerById(player)?.id) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function checkRod() {
-  const checkRod = playerStore.value.usingRods.id;
-  luck.value = luck.value + checkRod * 10;
-  ranFish();
-}
-
-function ranFish() {
-  const rate = Math.random() * 100;
-  if (rate >= 55 + (5 * (100 + luck.value)) / 100) {
-    random("common");
-    playSuccessGetFishSound();
-    fishId.value = caughtFish.value.icon;
-    addCaughtFish(caughtFish.value.id);
-  } else if (
-    rate >= 25 + (5 * (100 + luck.value)) / 100 &&
-    rate < 55 + (5 * (100 + luck.value)) / 100
-  ) {
-    random("rare");
-    playSuccessGetFishSound();
-    fishId.value = caughtFish.value.icon;
-    addCaughtFish(caughtFish.value.id);
-  } else if (
-    rate >= (1 * (100 + luck.value)) / 100 &&
-    rate < 25 + (5 * (100 + luck.value)) / 100
-  ) {
-    random("legendary");
-    playSuccessGetFishSound();
-    fishId.value = caughtFish.value.icon;
-    addCaughtFish(caughtFish.value.id);
-  } else {
-    random("secret");
-    playSuccessGetFishSound();
-    fishId.value = caughtFish.value.icon;
-    addCaughtFish(caughtFish.value.id);
-  }
-}
-
-function random(type) {
-  switch (type) {
-    case "common":
-      ranNumber.value = Math.floor(Math.random() * 10) + 1;
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "rare":
-      ranNumber.value = Math.floor(Math.random() * (15 - 11) + 11);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "legendary":
-      ranNumber.value = Math.floor(Math.random() * (20 - 15) + 15);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-    case "secret":
-      ranNumber.value = Math.floor(Math.random() * (20 - 20) + 20);
-      caughtFish.value = getFishById(ranNumber.value);
-      break;
-  }
-}
-
-function reduceHpRods() {
-  reducesHp.value = 0;
-  if (playerStore.value.usingRods.id === 1) {
-    reducesHp.value = 3;
-  } else if (playerStore.value.usingRods.id === 2) {
-    reducesHp.value = 2;
-  } else {
-    reducesHp.value = 1;
-  }
-}
-
-const repairModal = ref(false);
-
-const toggleRepairModal = () => {
-  repairModal.value = !repairModal.value;
-};
-
-const repairRod = () => {
-  const coinsPerHp = 25;
-  const rod = playerStore.value.usingRods;
-  const hpToRepair = rod.maxHp - rod.hp;
-  const repairCost = hpToRepair * coinsPerHp;
-
-  if (playerStore.value.coins >= repairCost) {
-    playerStore.value.coins -= repairCost;
-    rod.hp = rod.maxHp;
-    playSuccessBuySound();
-    repairModal.value = false;
-  } else {
-    playFailBuySound();
-  }
-};
-
-const closeModal = () => {
-  escapedFish.value = false
-  gottenFish.value = false
-}
 
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
@@ -986,17 +677,17 @@ function addRod(rodId) {
 
 function addPotion(potionId) {
   console.log(potionId);
-  
+
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
     const existingPotion = playerStore.value.potions.find(
       (p) => p.id === potionId
     );
     console.log(existingPotion);
-    
+
     if (existingPotion) {
       console.log(1);
-      
+
       existingPotion.quantity += 1;
       showToastMessage(selectedPotion);
     } else {
@@ -1035,12 +726,12 @@ function purchasePotion(item) {
     );
     if (existingPotion) {
       console.log(1);
-      
+
       existingPotion.quantity += 1;
       showToastMessage(item);
     } else {
       console.log(2);
-      
+
       addPotion(item.id);
     }
   } else {
@@ -1059,16 +750,8 @@ const playerCoins = computed(() => playerStore.value.coins);
     @togglePage="togglePage"
     @PlayHoverSound="playHoverSound"
   />
-  <!-- <setting @openSettings="openSettings" /> -->
-  {{ page }}
-  <!-- loading -->
-  <LoadingPage
-    :loadingMessage="loadingMessage"
-    :loading="loading"
-    :isLoaded="isLoaded"
-    :loadingProgress="loadingProgress"
-    @startGame="startGame"
-  />
+  
+  <LoadingPage :isMusicOn="isMusicOn"/>
 
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
@@ -1193,49 +876,8 @@ const playerCoins = computed(() => playerStore.value.coins);
     </div>
   </transition>
 
-  <!-- playPage -->
-  <div
-    class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
-    :style="{
-      backgroundImage: `url(${playBackgroundImg})`,
-    }"
-    v-if="page === 5"
-  >
-    <HookButton :hookAniClass="hookAnimationClass" :hooking="hooking" />
-    <OutComesModal
-      :gottenFish="gottenFish"
-      :fishName="fishName"
-      :fishSrc="fishId"
-      :escapedFish="escapedFish"
-      @playHoverSound="playHoverSound"
-      @closeModal="closeModal"
-    />
-    <RepairModal
-      :repair="repairModal"
-      :maxRodHp="playerStore.usingRods.maxHp"
-      :rodHp="playerStore.usingRods.hp"
-      @playHoverSound="playHoverSound"
-      @repairRod="repairRod"
-      @repairToggle="toggleRepairModal"
-    />
-    <playPage
-      @playHoverSound="playHoverSound"
-      @togglePage="togglePage"
-      @hook="hook"
-    />
-    <Navbar
-    :playerAvatar="playerStore.avatar"
-      :playerName="playerStore.name"
-      :playerCoins="playerStore.coins"
-      :playerPotion="playerStore.usingPotion"
-      :playerRodIcon="playerStore.usingRods.icon"
-      :rodHpPercentage="rodHpPercentage"
-      :maxRodHp="playerStore.usingRods.maxHp"
-      :rodHp="playerStore.usingRods.hp"
-      @playHoverSound="playHoverSound"
-      @repairToggle="toggleRepairModal"
-    ></Navbar>
-  </div>
+  <!--oo-->
+  <PlayPage v-if="page === 5" :isSoundOn="isSoundOn" :isSfxOn="isSfxOn" @togglePage="togglePage"/>
 
   <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
     <div
@@ -1364,18 +1006,27 @@ const playerCoins = computed(() => playerStore.value.coins);
     </button>
     <h1 class="text-5xl font-bold text-yellow-100 mb-6">SHOP</h1>
     <p class="text-yellow-100 mb-4">My coins : {{ playerCoins }}</p>
-    <Rod :fishingRods="fishingRods" @playHoverSound="playHoverSound" @purchaseRods="purchaseRods" :ownedRod="playerStore.ownedRods"/>
-    <Potion :potion="potion" @playHoverSound="playHoverSound" @purchasePotion="purchasePotion"/>
+    <Rod
+      :fishingRods="fishingRods"
+      @playHoverSound="playHoverSound"
+      @purchaseRods="purchaseRods"
+      :ownedRod="playerStore.ownedRods"
+    />
+    <Potion
+      :potion="potion"
+      @playHoverSound="playHoverSound"
+      @purchasePotion="purchasePotion"
+    />
   </div>
 
-    <div v-if="showToast" class="toast-notification">
-      <div class="toast-content">
-        <img :src="selectedItem.icon" class="toast-icon" alt="Item icon" />
-        <div class="toast-message">
-          <p>Successfully purchased {{ selectedItem.name }}</p>
-        </div>
+  <div v-if="showToast" class="toast-notification">
+    <div class="toast-content">
+      <img :src="selectedItem.icon" class="toast-icon" alt="Item icon" />
+      <div class="toast-message">
+        <p>Successfully purchased {{ selectedItem.name }}</p>
       </div>
     </div>
+  </div>
 
   <transition name="slide-fade">
     <div v-if="showToastError" class="toast-notification-error">
