@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref} from "vue";
 import SardineImg from "/images/fish/Sardine.png";
 import ClownfishImg from "/images/fish/Clownfish.png";
 import CatfishImg from "/images/fish/Catfish.png";
@@ -42,12 +42,14 @@ import failBuySound from "/sound/error-126627.mp3";
 import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
 import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
 import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
-import playerImg from "/images/image/Player.png";
+
 //Loading
 import LoadingPage from "./components/loading/loadingPage.vue";
 //bookmark
 import bookmark from "./components/bookmark/bookmark.vue";
 import setting from "./components/setting/setting.vue";
+//inventory
+import inventory from "./components/inventory/inventory.vue";
 
 //shop
 import Shop from "./components/shop/shop.vue";
@@ -55,307 +57,8 @@ import Shop from "./components/shop/shop.vue";
 //play
 import PlayPage from "./components/play/playPage.vue";
 
-const playerName = ref("int203");
-const playerStore = ref({
-  id: 1,
-  name: playerName.value,
-  coins: 100000,
-  avatar: playerImg,
-  ownedRods: [
-    {
-      id: 1,
-      name: "Basic Rod",
-      quantity: 1,
-      price: 0,
-      icon: Basic_RodImg,
-      hp: 50,
-      maxHp: 50,
-      type: "rod",
-    },
-  ],
-  caughtFish: [],
-  potions: [],
-  usingRods: {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  usingPotion: [],
-});
 
-const fishStore = [
-  {
-    id: 1,
-    name: "Sardine",
-    quantity: 1,
-    price: 50,
-    icon: SardineImg,
-    type: "fish",
-  },
-  {
-    id: 2,
-    name: "Clownfish",
-    quantity: 1,
-    price: 150,
-    icon: ClownfishImg,
-    type: "fish",
-  },
-  {
-    id: 3,
-    name: "Catfish",
-    quantity: 1,
-    price: 200,
-    icon: CatfishImg,
-    type: "fish",
-  },
-  {
-    id: 4,
-    name: "Salmon",
-    quantity: 1,
-    price: 250,
-    icon: SalmonImg,
-    type: "fish",
-  },
-  {
-    id: 5,
-    name: "Tuna",
-    quantity: 1,
-    price: 250,
-    icon: TunaImg,
-    type: "fish",
-  },
-  {
-    id: 6,
-    name: "Marlin",
-    quantity: 1,
-    price: 700,
-    icon: MarlinImg,
-    type: "fish",
-  },
-  {
-    id: 7,
-    name: "Stingray",
-    quantity: 1,
-    price: 500,
-    icon: StingrayImg,
-    type: "fish",
-  },
-  {
-    id: 8,
-    name: "Eel",
-    quantity: 1,
-    price: 300,
-    icon: EelImg,
-    type: "fish",
-  },
-  {
-    id: 9,
-    name: "White Koi",
-    quantity: 1,
-    price: 800,
-    icon: White_KoiImg,
-    type: "fish",
-  },
-  {
-    id: 10,
-    name: "Squid",
-    quantity: 1,
-    price: 850,
-    icon: SquidImg,
-    type: "fish",
-  },
-  {
-    id: 11,
-    name: "Shark",
-    quantity: 1,
-    price: 1500,
-    icon: SharkImg,
-    type: "fish",
-  },
-  {
-    id: 12,
-    name: "Orca",
-    quantity: 1,
-    price: 2000,
-    icon: OrcaImg,
-    type: "fish",
-  },
-  {
-    id: 13,
-    name: "Blue Whale",
-    quantity: 1,
-    price: 2500,
-    icon: Blue_WhaleImg,
-    type: "fish",
-  },
-  {
-    id: 14,
-    name: "Giant Pacific Octopus",
-    quantity: 1,
-    price: 2500,
-    icon: Giant_Pacific_OctopusImg,
-    type: "fish",
-  },
-  {
-    id: 15,
-    name: "Golden Fish",
-    quantity: 1,
-    price: 3000,
-    icon: Golden_FishImg,
-    type: "fish",
-  },
-  {
-    id: 16,
-    name: "Rainbow Fish",
-    quantity: 1,
-    price: 3500,
-    icon: Rainbow_FishImg,
-    type: "fish",
-  },
-  {
-    id: 17,
-    name: "Pearl",
-    quantity: 1,
-    price: 4500,
-    icon: PearlImg,
-    type: "fish",
-  },
-  {
-    id: 18,
-    name: "Diamond",
-    quantity: 1,
-    price: 5000,
-    icon: DiamondImg,
-    type: "fish",
-  },
-  {
-    id: 19,
-    name: "Chest",
-    quantity: 1,
-    price: 8000,
-    icon: ChestImg,
-    type: "fish",
-  },
-  {
-    id: 20,
-    name: "Dragon",
-    quantity: 1,
-    price: 100000,
-    icon: DragonImg,
-    type: "fish",
-  },
-];
 
-const fishingRods = [
-  {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  {
-    id: 2,
-    name: "Star Rod",
-    quantity: 1,
-    price: 50000,
-    icon: Star_RodImg,
-    hp: 75,
-    maxHp: 75,
-    type: "rod",
-  },
-  {
-    id: 3,
-    name: "Galaxy Rod",
-    quantity: 1,
-    price: 50000,
-    icon: Galaxy_RodImg,
-    hp: 100,
-    maxHp: 100,
-    type: "rod",
-  },
-  {
-    id: 4,
-    name: "Lover Rod",
-    quantity: 1,
-    price: 50000,
-    icon: Lover_RodImg,
-    hp: 200,
-    maxHp: 200,
-    type: "rod",
-  },
-  {
-    id: 5,
-    name: "Thunder Rod",
-    quantity: 1,
-    price: 100000,
-    icon: Thunder_RodImg,
-    hp: 1000,
-    maxHp: 1000,
-    type: "rod",
-  },
-];
-
-const potion = [
-  {
-    id: 1,
-    name: "Luck Potion",
-    quantity: 1,
-    price: 2500,
-    effect: "Luck +10% 5 minute",
-    icon: Luck_PotionImg,
-    type: "potion",
-    duration: 300,
-  },
-  {
-    id: 2,
-    name: "Speed Potion",
-    quantity: 1,
-    price: 2500,
-    effect: "Speed +15% 5 minute",
-    icon: Speed_PotionImg,
-    type: "potion",
-    duration: 300,
-  },
-  {
-    id: 3,
-    name: "Full Luck Potion",
-    quantity: 1,
-    price: 10000,
-    effect: "Luck +10% 1 hours",
-    icon: Full_Luck_PotionImg,
-    type: "potion",
-    duration: 3600,
-  },
-  {
-    id: 4,
-    name: "Full Speed Potion",
-    quantity: 1,
-    price: 10000,
-    effect: "Speed +15% 1 hours",
-    icon: Full_Speed_PotionImg,
-    type: "potion",
-    duration: 3600,
-  },
-  {
-    id: 5,
-    name: "Super Full Potion",
-    quantity: 1,
-    price: 100000,
-    effect: "Luck+Speed 20% 1 hours",
-    icon: Super_Full_PotionImg,
-    type: "potion",
-    duration: 3600,
-  },
-];
 
 const isSoundOn = ref(true);
 const isMusicOn = ref(true);
@@ -486,140 +189,6 @@ const goToImage = (index) => {
   currentImageIndex.value = index;
 };
 
-
-const maxCapacity = 1000;
-const selectedCategory = ref("all");
-const potionTimers = {};
-const showToastInventory = ref(false);
-const toastMessage = ref("");
-const toastClass = ref("");
-const nameInventory = ref("");
-
-function showToastInventoryMessage(message, type) {
-  toastMessage.value = message;
-  toastClass.value = type === "success" ? "bg-green-500" : "bg-red-500";
-  showToastInventory.value = true;
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(() => {
-    showToastInventory.value = false;
-  }, 4000);
-}
-
-const setCategory = (category) => {
-  selectedCategory.value = category;
-};
-
-function isFish(item) {
-  return item.type === "fish";
-}
-
-function isRod(item) {
-  return item.type === "rod";
-}
-
-function isPotion(item) {
-  return item.type === "potion";
-}
-
-const filteredItems = computed(() => {
-  switch (selectedCategory.value) {
-    case "fish":
-      return (nameInventory.value = "Fish"), playerStore.value.caughtFish;
-    case "rods":
-      return (nameInventory.value = "Rods"), playerStore.value.ownedRods;
-    case "potions":
-      return (nameInventory.value = "Potions"), playerStore.value.potions;
-    default:
-      nameInventory.value = "All";
-      return [
-        ...playerStore.value.caughtFish,
-        ...playerStore.value.ownedRods,
-        ...playerStore.value.potions,
-      ];
-  }
-});
-
-const inventoryCapacity = computed(() => {
-  return filteredItems.value.reduce((acc, item) => acc + item.quantity, 0);
-});
-
-function sellFishAll(fish) {
-  playerStore.value.coins += fish.price * fish.quantity;
-  playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
-    (f) => f.id !== fish.id
-  );
-  showToastInventoryMessage(`Sold all ${fish.name}`, "success");
-  playSellSuccessSound();
-}
-
-function sellFish(fish) {
-  playerStore.value.coins += fish.price;
-  fish.quantity -= 1;
-
-  if (fish.quantity === 0) {
-    playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
-      (f) => f.id !== fish.id
-    );
-  }
-
-  showToastInventoryMessage(`Sold 1 ${fish.name}`, "success");
-  playSellSuccessSound();
-}
-
-function equipRod(rod) {
-  playUseRodSound();
-  playerStore.value.usingRods = rod;
-  showToastInventoryMessage(`Equipped ${rod.name}`, "success");
-}
-
-function usePotion(potion) {
-  playUsePotionSound();
-  let existingPotion = playerStore.value.usingPotion.find(
-    (p) => p.id === potion.id
-  );
-
-  if (!existingPotion) {
-    playerStore.value.usingPotion.push({
-      ...potion,
-      remainingTime: potion.duration,
-      startTime: Date.now(),
-    });
-    existingPotion = playerStore.value.usingPotion.find(
-      (p) => p.id === potion.id
-    );
-  } else {
-    const elapsedTimed = (Date.now() - existingPotion.startTime) / 1000;
-    existingPotion.remainingTime = Math.max(
-      existingPotion.remainingTime - elapsedTimed + potion.duration,
-      0
-    );
-    existingPotion.setTimeout = Date.now();
-  }
-
-  if (potionTimers[potion.id]) {
-    clearTimeout(potionTimers[potion.id]);
-  }
-
-  potionTimers[potion.id] = setTimeout(() => {
-    playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
-      (p) => p.id !== potion.id
-    );
-    delete potionTimers[potion.id];
-  }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
-
-  if (potion.quantity > 1) {
-    potion.quantity -= 1;
-  } else {
-    playerStore.value.potions = playerStore.value.potions.filter(
-      (p) => p.id !== potion.id
-    );
-  }
-  showToastInventoryMessage(`Used ${potion.name}`, "success");
-}
-let timeoutId = null;
-
 </script>
 
 <template>
@@ -629,8 +198,8 @@ let timeoutId = null;
     @togglePage="togglePage"
     @PlayHoverSound="playHoverSound"
   />
-  
-  <LoadingPage :isMusicOn="isMusicOn"/>
+
+  <LoadingPage :isMusicOn="isMusicOn" />
 
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
@@ -755,124 +324,20 @@ let timeoutId = null;
     </div>
   </transition>
 
-  <!--oo-->
-  <PlayPage v-if="page === 5" :isSoundOn="isSoundOn" :isSfxOn="isSfxOn" @togglePage="togglePage"/>
+  <PlayPage
+    v-if="page === 5"
+    :isSoundOn="isSoundOn"
+    :isSfxOn="isSfxOn"
+    @togglePage="togglePage"
+  />
 
-  <div class="p-6 bg-gray-1000 min-h-screen flex" v-if="page === 2">
-    <div
-      class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
-    >
-      <button
-        @mouseenter="playHoverSound"
-        @click="togglePage(5)"
-        class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
-      >
-        Back
-      </button>
-      <button
-        @mouseenter="playHoverSound"
-        @click="setCategory('all')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-      >
-        <img src="/images/inventory/All.png" alt="All" />
-      </button>
-      <button
-        @mouseenter="playHoverSound"
-        @click="setCategory('fish')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-      >
-        <img src="/images/inventory/Fish.png" alt="Fish" />
-      </button>
-      <button
-        @mouseenter="playHoverSound"
-        @click="setCategory('rods')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-      >
-        <img src="/images/inventory/Rods.png" alt="Rods" />
-      </button>
-      <button
-        @mouseenter="playHoverSound"
-        @click="setCategory('potions')"
-        class="w-12 h-12 flex items-center justify-center hover:bg-yellow-500 rounded-full"
-      >
-        <img src="/images/inventory/Potion.png" alt="potions" />
-      </button>
-    </div>
+  <inventory
+    v-if="page === 2"
+    @playHoverSound="playHoverSound"
+    @togglePage="togglePage"
+  />
 
-    <div v-if="showToastInventory" class="toast-notification">
-      <div class="toast-content">
-        <div class="toast-message">
-          <p>{{ toastMessage }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex-1 bg-gray-900 p-6 rounded-lg shadow-lg text-yellow-100">
-      <h1 class="text-3xl font-bold mb-6">Inventory {{ nameInventory }}</h1>
-      <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
-
-      <div class="grid grid-cols-4 gap-4">
-        <div
-          v-for="(item, index) in filteredItems"
-          :key="index"
-          class="relative p-4 bg-yellow-800 border border-yellow-400 rounded-lg hover:border-yellow-300"
-        >
-          <img
-            :src="item.icon"
-            :alt="item.name"
-            class="mb-2 h-20 w-20 mx-auto"
-          />
-          <p class="text-center font-semibold">{{ item.name }}</p>
-          <span
-            class="absolute top-0 right-0 bg-red-600 text-white text-sm rounded-full px-2"
-          >
-            x{{ item.quantity }}
-          </span>
-
-          <div v-if="isFish(item)" class="flex flex-col space-y-2">
-            <button
-              @mouseenter="playHoverSound"
-              @click="sellFish(item)"
-              class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
-            >
-              Sell 1 for {{ item.price }} coins
-            </button>
-
-            <button
-              @mouseenter="playHoverSound"
-              @click="sellFishAll(item)"
-              class="bg-red-700 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
-            >
-              Sell All {{ item.price * item.quantity }} coins
-            </button>
-          </div>
-          <div v-else-if="isRod(item)" class="flex flex-col space-y-2">
-            <button
-              @mouseenter="playHoverSound"
-              :disabled="playerStore.usingRods?.id === item.id"
-              @click="equipRod(item)"
-              class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-green-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
-              :class="{ 'bg-green-500': playerStore.usingRods?.id === item.id }"
-            >
-              Equip Rod
-            </button>
-          </div>
-
-          <div v-else-if="isPotion(item)" class="flex flex-col space-y-2">
-            <button
-              @mouseenter="playHoverSound"
-              @click="usePotion(item)"
-              class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-lg w-full"
-            >
-              Use Potion
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<Shop v-if="page === 3" :isSfxOn="isSfxOn" @togglePage="togglePage" />
-
+  <Shop v-if="page === 3" :isSfxOn="isSfxOn" @togglePage="togglePage" />
 </template>
 
 <style scoped>
