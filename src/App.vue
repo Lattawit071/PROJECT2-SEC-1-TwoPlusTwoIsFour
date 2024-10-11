@@ -50,9 +50,11 @@ import bookmark from "./components/bookmark/bookmark.vue";
 import setting from "./components/setting/setting.vue";
 
 //shop
-import Potion from "./components/shop/potion.vue";
-import Rod from "./components/shop/rod.vue";
+import Shop from "./components/shop/shop.vue";
+
+//play
 import PlayPage from "./components/play/playPage.vue";
+
 const playerName = ref("int203");
 const playerStore = ref({
   id: 1,
@@ -616,131 +618,8 @@ function usePotion(potion) {
   }
   showToastInventoryMessage(`Used ${potion.name}`, "success");
 }
-
-const showToast = ref(false);
-const selectedItem = ref({});
 let timeoutId = null;
-const showToastError = ref(false);
-let errorTimeoutId = null;
 
-function showToastMessage(item) {
-  selectedItem.value = item;
-  showToast.value = true;
-
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-
-  timeoutId = setTimeout(() => {
-    showToast.value = false;
-  }, 4000);
-}
-
-function showToastErrorMessage() {
-  showToastError.value = true;
-
-  if (errorTimeoutId) {
-    clearTimeout(errorTimeoutId);
-  }
-
-  errorTimeoutId = setTimeout(() => {
-    showToastError.value = false;
-  }, 4000);
-}
-
-function deductCoins(amount) {
-  if (playerStore.value.coins >= amount) {
-    playerStore.value.coins -= amount;
-  } else {
-  }
-}
-
-function addRod(rodId) {
-  const rod = fishingRods.find((rod) => rod.id === rodId);
-
-  if (rod) {
-    const existingRod = playerStore.value.ownedRods.find(
-      (ownedRod) => ownedRod.id === rodId
-    );
-
-    if (!existingRod) {
-      playerStore.value.ownedRods.push({
-        ...rod,
-        quantity: 1,
-      });
-      showToastMessage(rod);
-    } else {
-    }
-  } else {
-  }
-}
-
-function addPotion(potionId) {
-  console.log(potionId);
-
-  const selectedPotion = potion.find((p) => p.id === potionId);
-  if (selectedPotion) {
-    const existingPotion = playerStore.value.potions.find(
-      (p) => p.id === potionId
-    );
-    console.log(existingPotion);
-
-    if (existingPotion) {
-      console.log(1);
-
-      existingPotion.quantity += 1;
-      showToastMessage(selectedPotion);
-    } else {
-      playerStore.value.potions.push({ ...selectedPotion, quantity: 1 });
-      // quantity = 1;
-      showToastMessage(selectedPotion);
-    }
-  }
-}
-
-function purchaseRods(item) {
-  if (playerStore.value.coins >= item.price) {
-    const existingRod = playerStore.value.ownedRods.find(
-      (rod) => rod.id === item.id
-    );
-
-    if (!existingRod) {
-      deductCoins(item.price);
-      addRod(item.id);
-      playSuccessBuySound();
-    } else {
-    }
-  } else {
-    playFailBuySound();
-    showToastErrorMessage();
-  }
-}
-
-function purchasePotion(item) {
-  if (playerStore.value.coins >= item.price) {
-    playSuccessBuySound();
-    showToastMessage(item);
-    deductCoins(item.price);
-    const existingPotion = playerStore.value.potions.find(
-      (p) => p.id === item.id
-    );
-    if (existingPotion) {
-      console.log(1);
-
-      existingPotion.quantity += 1;
-      showToastMessage(item);
-    } else {
-      console.log(2);
-
-      addPotion(item.id);
-    }
-  } else {
-    playFailBuySound();
-    showToastErrorMessage();
-  }
-}
-
-const playerCoins = computed(() => playerStore.value.coins);
 </script>
 
 <template>
@@ -992,49 +871,8 @@ const playerCoins = computed(() => playerStore.value.coins);
       </div>
     </div>
   </div>
+<Shop v-if="page === 3" :isSfxOn="isSfxOn" @togglePage="togglePage" />
 
-  <div
-    class="p-6 bg-gray-900 min-h-screen flex flex-col items-center"
-    v-if="page === 3"
-  >
-    <button
-      @mouseenter="playHoverSound"
-      @click="togglePage(5)"
-      class="self-start mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
-    >
-      Back
-    </button>
-    <h1 class="text-5xl font-bold text-yellow-100 mb-6">SHOP</h1>
-    <p class="text-yellow-100 mb-4">My coins : {{ playerCoins }}</p>
-    <Rod
-      :fishingRods="fishingRods"
-      @playHoverSound="playHoverSound"
-      @purchaseRods="purchaseRods"
-      :ownedRod="playerStore.ownedRods"
-    />
-    <Potion
-      :potion="potion"
-      @playHoverSound="playHoverSound"
-      @purchasePotion="purchasePotion"
-    />
-  </div>
-
-  <div v-if="showToast" class="toast-notification">
-    <div class="toast-content">
-      <img :src="selectedItem.icon" class="toast-icon" alt="Item icon" />
-      <div class="toast-message">
-        <p>Successfully purchased {{ selectedItem.name }}</p>
-      </div>
-    </div>
-  </div>
-
-  <transition name="slide-fade">
-    <div v-if="showToastError" class="toast-notification-error">
-      <div class="toast-message-error">
-        Not enough coins to purchase this item!
-      </div>
-    </div>
-  </transition>
 </template>
 
 <style scoped>
@@ -1214,53 +1052,6 @@ const playerCoins = computed(() => playerStore.value.coins);
   }
 }
 
-.toast-notification {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 8px;
-  background: linear-gradient(
-    45deg,
-    #a8e6cf,
-    #dcedc1,
-    #f6ffed,
-    #dcedc1,
-    #a8e6cf
-  ); /* สีเขียวพาสเทล */
-  background-size: 200%;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  animation: pastel-border 3s linear infinite, slideUpFadeIn 0.5s ease;
-  z-index: 1000;
-  max-width: 250px;
-  font-size: 14px;
-}
-
-.toast-content {
-  display: flex;
-  align-items: center;
-}
-
-.toast-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.toast-message {
-  flex-grow: 1;
-  color: #2e7d32;
-  font-weight: bold;
-}
-
 @keyframes pastel-border {
   0% {
     background-position: 0% 50%;
@@ -1300,38 +1091,6 @@ const playerCoins = computed(() => playerStore.value.coins);
 .slide-fade-leave-t {
   opacity: 0;
   transform: translateY(100%);
-}
-
-.toast-notification-error {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 8px;
-  background: linear-gradient(
-    45deg,
-    #ffcccc,
-    #ff9999,
-    #ffb3b3,
-    #ff9999,
-    #ffcccc
-  );
-  background-size: 200%;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  max-width: 250px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.toast-message-error {
-  color: #c62828;
-  font-weight: bold;
 }
 
 .toggle-switch {
