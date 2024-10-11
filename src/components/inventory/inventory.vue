@@ -1,17 +1,13 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePlayerStore } from '../../stores/player.js';
-const playerStore = usePlayerStore();
+import { usePlayerStore } from "../../stores/player.js";
+import { useSoundStore } from '../../stores/sounds.js';
 import ToastNoti from "./toastNoti.vue";
 import FilterItems from "./FilterItems.vue";
 import Items from "./Items.vue";
 const emit = defineEmits(["playHoverSound", "togglePage"]);
-
-console.log(playerStore)
-
-const playHoverSound = () => {
-  emit("playHoverSound");
-};
+const store = usePlayerStore();
+const soundStore = useSoundStore();
 
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
@@ -40,17 +36,17 @@ const setCategory = (category) => {
 const filteredItems = computed(() => {
   switch (selectedCategory.value) {
     case "fish":
-      return (nameInventory.value = "Fish"), playerStore.value.caughtFish;
+      return (nameInventory.value = "Fish"), store.playerStore.caughtFish;
     case "rods":
-      return (nameInventory.value = "Rods"), playerStore.value.ownedRods;
+      return (nameInventory.value = "Rods"), store.playerStore.ownedRods;
     case "potions":
-      return (nameInventory.value = "Potions"), playerStore.value.potions;
+      return (nameInventory.value = "Potions"), store.playerStore.potions;
     default:
       nameInventory.value = "All";
       return [
-        ...playerStore.value.caughtFish,
-        ...playerStore.value.ownedRods,
-        ...playerStore.value.potions,
+      store.playerStore.caughtFish,
+      store.playerStore.ownedRods,
+      store.playerStore.potions,
       ];
   }
 });
@@ -75,7 +71,7 @@ let timeoutId = null;
         Back
       </button>
       <FilterItems
-        @playHoverSound="playHoverSound"
+        @playHoverSound="soundStore.playHoverSound()"
         @setCategory="setCategory"
       />
     </div>
@@ -89,7 +85,7 @@ let timeoutId = null;
       <h1 class="text-3xl font-bold mb-6">Inventory {{ nameInventory }}</h1>
       <p class="mb-4">Capacity {{ inventoryCapacity }}/{{ maxCapacity }}</p>
 
-      <Items />
+      <Items :filteredItems="filteredItems" />
     </div>
   </div>
 </template>

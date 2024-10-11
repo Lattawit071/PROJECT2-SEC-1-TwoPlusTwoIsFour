@@ -1,47 +1,11 @@
 <script setup>
 import { ref} from "vue";
-import SardineImg from "/images/fish/Sardine.png";
-import ClownfishImg from "/images/fish/Clownfish.png";
-import CatfishImg from "/images/fish/Catfish.png";
-import SalmonImg from "/images/fish/Salmon.png";
-import TunaImg from "/images/fish/Tuna.png";
-import MarlinImg from "/images/fish/Marlin.png";
-import StingrayImg from "/images/fish/Stingray.png";
-import EelImg from "/images/fish/Eel.png";
-import White_KoiImg from "/images/fish/White_Koi.png";
-import SquidImg from "/images/fish/Squid.png";
-import SharkImg from "/images/fish/Shark.png";
-import OrcaImg from "/images/fish/Orca.png";
-import Blue_WhaleImg from "/images/fish/Blue_Whale.png";
-import Giant_Pacific_OctopusImg from "/images/fish/Giant_Pacific_Octopus.png";
-import Golden_FishImg from "/images/fish/Golden_Fish.png";
-import Rainbow_FishImg from "/images/fish/Rainbow_Fish.png";
-import PearlImg from "/images/fish/Pearl.png";
-import DiamondImg from "/images/fish/Diamond.png";
-import ChestImg from "/images/fish/Chest.png";
-import DragonImg from "/images/fish/Dragon.png";
-import Basic_RodImg from "/images/rod/Basic_Rod.png";
-import Star_RodImg from "/images/rod/Star_Rod.png";
-import Galaxy_RodImg from "/images/rod/Galaxy_Rod.png";
-import Lover_RodImg from "/images/rod/Lover_Rod.png";
-import Thunder_RodImg from "/images/rod/Thunder_Rod.png";
-import Luck_PotionImg from "/images/potion/Luck_5m.png";
-import Speed_PotionImg from "/images/potion/Speed_5m.png";
-import Full_Luck_PotionImg from "/images/potion/Luck_1h.png";
-import Full_Speed_PotionImg from "/images/potion/Speed_1h.png";
-import Super_Full_PotionImg from "/images/potion/Full_Potion.png";
 import BackgroundImg from "/images/image/Background.png";
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
 import pagefour from "/images/howtoplay/pagefour.png";
 import pagefive from "/images/howtoplay/pagefive.png";
 import pagesix from "/images/howtoplay/pagesix.png";
-import bubbleSound from "/sound/EffectsBubble.mp3";
-import successBuySound from "/sound/cash-register-purchase-87313.mp3";
-import failBuySound from "/sound/error-126627.mp3";
-import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
-import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
-import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
 
 //Loading
 import LoadingPage from "./components/loading/loadingPage.vue";
@@ -57,92 +21,6 @@ import Shop from "./components/shop/shop.vue";
 //play
 import PlayPage from "./components/play/playPage.vue";
 
-
-
-
-const isSoundOn = ref(true);
-const isMusicOn = ref(true);
-const isSfxOn = ref(true);
-
-const sounds = {
-  hover: new Audio(bubbleSound),
-  successBuy: new Audio(successBuySound),
-  failBuy: new Audio(failBuySound),
-  sellFish: new Audio(sellFishSound),
-  useRod: new Audio(useRodSound),
-  usePotionSound: new Audio(usePotionSound),
-};
-sounds.hover.volume = 0.09;
-sounds.successBuy.volume = 0.4;
-sounds.useRod.volume = 0.4;
-sounds.sellFish.volume = 0.4;
-sounds.usePotionSound.volume = 0.4;
-
-function toggleSound() {
-  isSoundOn.value = !isSoundOn.value;
-}
-
-function toggleMusic() {
-  isMusicOn.value = !isMusicOn.value;
-  if (isMusicOn.value) {
-    sounds.backgroundMusic.play();
-  } else {
-    sounds.backgroundMusic.pause();
-  }
-}
-
-function addUsingRod(rodId) {
-  const rod = getRodById(rodId);
-  if (rod) {
-    playerStore.usingRods = rod;
-  }
-}
-
-function toggleSfx() {
-  isSfxOn.value = !isSfxOn.value;
-}
-
-function playHoverSound() {
-  if (isSfxOn.value) {
-    sounds.hover.currentTime = 0;
-    sounds.hover.play();
-  }
-}
-
-function playSuccessBuySound() {
-  if (isSfxOn.value) {
-    sounds.successBuy.currentTime = 0;
-    sounds.successBuy.play();
-  }
-}
-
-function playFailBuySound() {
-  if (isSfxOn.value) {
-    sounds.failBuy.playbackRate = 1.5;
-    sounds.failBuy.play();
-  }
-}
-
-function playSellSuccessSound() {
-  if (isSoundOn.value) {
-    sounds.sellFish.currentTime = 0;
-    sounds.sellFish.play();
-  }
-}
-
-function playUseRodSound() {
-  if (isSoundOn.value) {
-    sounds.useRod.currentTime = 0;
-    sounds.useRod.play();
-  }
-}
-
-function playUsePotionSound() {
-  if (isSoundOn.value) {
-    sounds.usePotionSound.currentTime = 0;
-    sounds.usePotionSound.play();
-  }
-}
 
 const page = ref(1);
 

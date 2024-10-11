@@ -1,6 +1,9 @@
 <script setup>
-import ActionButton from './ActionButton.vue';
+import ActionButton from "./ActionButton.vue";
 
+const props = defineProps({
+  filteredItems: Array,
+});
 </script>
 
 <template>
@@ -17,8 +20,11 @@ import ActionButton from './ActionButton.vue';
       >
         x{{ item.quantity }}
       </span>
+
+      <ActionButton
+        :item="item"
+      />
     </div>
-    <ActionButton @playHoverSound="playHoverSound" @sellFish="sellFish" @sellFishAll="sellFishAll" @equipRod="equipRod" @usePotion="usePotion" />
   </div>
 </template>
 

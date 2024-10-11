@@ -1,10 +1,12 @@
 // stores/playerStore.js
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useSoundStore } from './sounds.js';
 import playerImg from "/images/image/Player.png";
 import rods from "../../data/rods.json";
 
 export const usePlayerStore = defineStore("playerStore", () => {
+  const soundStore = useSoundStore();
   const playerName = ref("int203");
   const playerStore = ref({
     id: 1,
@@ -26,7 +28,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
       (f) => f.id !== fish.id
     );
     showToastInventoryMessage(`Sold all ${fish.name}`, "success");
-    playSellSuccessSound();
+    soundStore.playSellSuccessSound();
   }
 
   function sellFish(fish) {

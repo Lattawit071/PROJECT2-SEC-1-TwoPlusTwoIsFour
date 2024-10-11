@@ -3,12 +3,16 @@ import { usePlayerStore } from '../../stores/player.js';
 const playerStore = usePlayerStore();
 const emit = defineEmits(["playHoverSound", "sellFish", "sellFishAll", "equipRod", "usePotion"]);
 
+const props = defineProps({
+  item: Object,
+});
+
 </script>
 <template>
   <div v-if="item.type === 'fish'" class="flex flex-col space-y-2">
     <button
       @mouseenter="$emit('playHoverSound')"
-      @click="playerStore.sellFishAll(fish)"
+      @click="playerStore.sellFishAll(item)"
       class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
     >
       Sell 1 for {{ item.price }} coins
