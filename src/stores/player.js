@@ -20,6 +20,10 @@ export const usePlayerStore = defineStore("playerStore", () => {
     usingPotion: [],
   });
 
+  const showToastInventory = ref(false)
+  const toastMessage = ref("");
+  const toastClass = ref("");
+  
   const potionTimers = {};
 
   function sellFishAll(fish) {
@@ -42,17 +46,17 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
 
     showToastInventoryMessage(`Sold 1 ${fish.name}`, "success");
-    playSellSuccessSound();
+    soundStore.playSellSuccessSound();
   }
 
   function equipRod(rod) {
-    playUseRodSound();
+    soundStore.playUseRodSound();
     playerStore.value.usingRods = rod;
     showToastInventoryMessage(`Equipped ${rod.name}`, "success");
   }
 
   function usePotion(potion) {
-    playUsePotionSound();
+    soundStore.playUsePotionSound();
     let existingPotion = playerStore.value.usingPotion.find(
       (p) => p.id === potion.id
     );
@@ -94,6 +98,18 @@ export const usePlayerStore = defineStore("playerStore", () => {
       );
     }
     showToastInventoryMessage(`Used ${potion.name}`, "success");
+  }
+
+  function showToastInventoryMessage(message, type) {
+    toastMessage.value = message;
+    toastClass.value = type === "success" ? "bg-green-500" : "bg-red-500";
+    showToastInventory.value = true;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      showToastInventory.value = false;
+    }, 4000);
   }
 
   return {

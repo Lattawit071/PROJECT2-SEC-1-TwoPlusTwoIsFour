@@ -3,6 +3,7 @@ import ActionButton from "./ActionButton.vue";
 
 const props = defineProps({
   filteredItems: Array,
+  nameInventory: String
 });
 </script>
 
@@ -24,6 +25,7 @@ const props = defineProps({
       <ActionButton
         :item="item"
       />
+
     </div>
   </div>
 </template>
