@@ -1,29 +1,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import backgroundMusic from "/sound/game-music-loop-7-145285.mp3";
-const props = defineProps({
-  isMusicOn: {
-    type: Boolean
-  }
-})
+import { useSoundStore } from "@/stores/sounds";
+const sound = useSoundStore();
 const loading = ref(true);
 const loadingProgress = ref(0);
 const isLoaded = ref(false);
 const loadingMessage = ref("Loading... Please wait");
-const sounds = {
-  backgroundMusic: new Audio(backgroundMusic)
-}
-sounds.backgroundMusic.loop = true;
-sounds.backgroundMusic.volume = 0.1;
 
-function playBackgroundMusic() {
-  if (props.isMusicOn) {
-    sounds.backgroundMusic.play();
-  }
-}
 
 const startGame = () => {
-  playBackgroundMusic();
+  sound.playBackgroundMusic();
   loading.value = false;
 };
 
@@ -40,7 +26,6 @@ const updateLoadingBar = () => {
 };
 
 onMounted(() => {
-  
   updateLoadingBar();
 });
 </script>

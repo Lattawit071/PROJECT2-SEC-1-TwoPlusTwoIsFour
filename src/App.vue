@@ -77,7 +77,7 @@ const goToImage = (index) => {
     @PlayHoverSound="playHoverSound"
   />
 
-  <LoadingPage :isMusicOn="isMusicOn" />
+  <LoadingPage/>
 
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
@@ -204,8 +204,6 @@ const goToImage = (index) => {
 
   <PlayPage
     v-if="page === 5"
-    :isSoundOn="isSoundOn"
-    :isSfxOn="isSfxOn"
     @togglePage="togglePage"
   />
 

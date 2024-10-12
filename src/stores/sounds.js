@@ -36,6 +36,11 @@ export const useSoundStore = defineStore("soundStore", () => {
   sounds.useRod.volume = 0.4;
   sounds.sellFish.volume = 0.4;
   sounds.usePotionSound.volume = 0.4;
+  sounds.backgroundMusic.loop = true;
+  sounds.backgroundMusic.volume = 0.1;
+  sounds.getFish.volume = 0.4;
+  sounds.failGetFish.volume = 0.4;
+  sounds.hookFish.volume = 0.5;
 
   function toggleSound() {
     isSoundOn.value = !isSoundOn.value;
@@ -96,6 +101,30 @@ export const useSoundStore = defineStore("soundStore", () => {
     }
   }
 
+  function playHookFishSound() {
+    if (isSoundOn.value) {
+      sounds.hookFish.play();
+    }
+  }
+
+  function playSuccessGetFishSound() {
+    if (isSfxOn.value) {
+      sounds.getFish.play();
+    }
+  }
+
+  function playFailGetFishSound() {
+    if (isSfxOn.value) {
+      sounds.failGetFish.playbackRate = 1.5;
+      sounds.failGetFish.play();
+    }
+  }
+  function playBackgroundMusic() {
+    if (isMusicOn.value) {
+      sounds.backgroundMusic.play();
+    }
+  }
+
   return {
     isSoundOn,
     isMusicOn,
@@ -109,5 +138,9 @@ export const useSoundStore = defineStore("soundStore", () => {
     playSellSuccessSound,
     playUseRodSound,
     playUsePotionSound,
+    playHookFishSound,
+    playFailGetFishSound,
+    playSuccessGetFishSound,
+    playBackgroundMusic,
   };
 });

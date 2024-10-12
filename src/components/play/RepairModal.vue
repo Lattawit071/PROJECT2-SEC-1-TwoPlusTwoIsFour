@@ -2,19 +2,18 @@
 const props = defineProps({
   repair: {
     type: Boolean,
-  },
-  maxRodHp: {
-    type: Number,
-  },
-  rodHp: {
-    type: Number,
-  },
-});
+  }
+})
+
 defineEmits([
-  "playHoverSound",
   "repairRod",
   "repairToggle",
 ]);
+
+import { usePlayerStore } from "@/stores/player";
+import { useSoundStore } from "@/stores/sounds";
+const sound = useSoundStore();
+const player = usePlayerStore();
 </script>
 
 <template>
@@ -32,22 +31,22 @@ defineEmits([
         <div class="flex justify-center items-center mb-4">
           <span class="text-lg font-bold">
             Repair
-            {{ maxRodHp - rodHp }} HP for
-            {{ (maxRodHp - rodHp) * 25 }}
+            {{ player.playerStore.usingRods.maxHp - player.playerStore.usingRods.hp }} HP for
+            {{ (player.playerStore.usingRods.maxHp - player.playerStore.usingRods.hp) * 25 }}
             Coins
           </span>
         </div>
 
         <div class="flex justify-center items-center space-x-4">
           <button
-            @mouseenter="$emit('playHoverSound')"
+            @mouseenter="sound.playHoverSound()"
             @click="$emit('repairRod')"
             class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg"
           >
             Repair
           </button>
           <button
-            @mouseenter="$emit('playHoverSound')"
+            @mouseenter="sound.playHoverSound()"
             @click="$emit('repairToggle')"
             class="bg-gray-500 hover:bg-gray-400 text-white py-2 px-4 rounded-lg"
           >

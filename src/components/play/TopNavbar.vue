@@ -1,31 +1,14 @@
 <script setup>
-const props = defineProps({
-  playerAvatar: {
-    type: String,
-  },
-  playerName: {
-    type: String,
-  },
-  playerCoins: {
-    type: Number,
-  },
-  playerPotion: {
-    type: Object,
-  },
-  playerRodIcon: {
-    type: String,
-  },
-  rodHpPercentage: {
-    type: Number,
-  },
-  maxRodHp: {
-    type: Number,
-  },
-  rodHp: {
-    type: Number,
-  },
+import { usePlayerStore } from "@/stores/player";
+import { useSoundStore } from "@/stores/sounds";
+import { computed } from "vue";
+const sound = useSoundStore();
+const player = usePlayerStore();
+const rodHpPercentage = computed(() => {
+  const maxHp = player.playerStore.usingRods.maxHp;
+  return (player.playerStore.usingRods.hp / maxHp) * 100;
 });
-defineEmits(["playHoverSound","repairToggle"]);
+defineEmits(["repairToggle"]);
 </script>
 <template>
 <div
@@ -33,13 +16,13 @@ defineEmits(["playHoverSound","repairToggle"]);
   >
     <div class="flex items-center space-x-4">
       <img
-        :src="playerAvatar"
+        :src="player.playerStore.avatar"
         alt="Player Avatar"
         class="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-yellow-500"
       />
       <div>
-        <p class="text-lg font-semibold md:text-xl">{{ playerName }}</p>
-        <p class="text-sm md:text-base">Coins: {{ playerCoins }}</p>
+        <p class="text-lg font-semibold md:text-xl">{{ player.playerStore.name }}</p>
+        <p class="text-sm md:text-base">Coins: {{ player.playerStore.coins }}</p>
       </div>
     </div>
 
@@ -47,7 +30,7 @@ defineEmits(["playHoverSound","repairToggle"]);
       <p class="text-sm md:text-base font-semibold">Active Potions</p>
       <div class="flex space-x-2">
         <img
-          v-for="potion in playerPotion"
+          v-for="potion in player.playerStore.potions"
           :src="potion.icon"
           alt="Potion"
           class="w-10 h-10 md:w-12 md:h-12 object-contain"
@@ -59,7 +42,7 @@ defineEmits(["playHoverSound","repairToggle"]);
       <p class="text-sm md:text-base font-semibold">Using Rod</p>
       <div class="flex items-center space-x-2">
         <img
-          :src="playerRodIcon"
+          :src="player.playerStore.usingRods.icon"
           alt="Rod"
           class="w-10 h-10 md:w-12 md:h-12 object-contain"
         />
@@ -74,11 +57,11 @@ defineEmits(["playHoverSound","repairToggle"]);
           :style="{ width: rodHpPercentage + '%' }"
         ></div>
       </div>
-      <p class="text-xs text-right mt-1">HP: {{ rodHp }}</p>
+      <p class="text-xs text-right mt-1">HP: {{ player.playerStore.usingRods.hp }}</p>
     </div>
     <button
-      v-if="rodHp < maxRodHp"
-      @mouseenter="$emit('playHoverSound')"
+      v-if="player.playerStore.usingRods.hp < player.playerStore.usingRods.maxHp"
+      @mouseenter="sound.playHoverSound()"
       @click="$emit('repairToggle')"
       class="fixed right-3 top-32 bg-red-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-red-500 transition-transform transform hover:scale-110"
     >
