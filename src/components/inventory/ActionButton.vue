@@ -1,6 +1,8 @@
 <script setup>
 import { usePlayerStore } from '../../stores/player.js';
+import { useSoundStore } from '../../stores/sounds.js';
 const playerStore = usePlayerStore();
+const soundStore = useSoundStore();
 const emit = defineEmits(["playHoverSound", "sellFish", "sellFishAll", "equipRod", "usePotion"]);
 
 const props = defineProps({
@@ -29,7 +31,7 @@ const props = defineProps({
 
   <div v-else-if="item.type === 'rod'" class="flex flex-col space-y-2">
     <button
-      @mouseenter="$emit('playHoverSound')"
+      @mouseenter="soundStore.playHoverSound()"
       :disabled="playerStore.usingRods?.id === item.id"
       @click="playerStore.equipRod(item)"
       class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-green-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
