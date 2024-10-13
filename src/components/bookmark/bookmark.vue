@@ -1,57 +1,31 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { usePlayerStore } from "../../stores/player.js";
+import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
+
 import playerImg from "/images/image/Player.png";
 import Basic_RodImg from "/images/rod/Basic_Rod.png";
 
-const playerName = ref("int203");
-const playerStore = ref({
-  id: 1,
-  name: playerName.value,
-  coins: 1000,
-  avatar: playerImg,
-  ownedRods: [
-    {
-      id: 1,
-      name: "Basic Rod",
-      quantity: 1,
-      price: 0,
-      icon: Basic_RodImg,
-      hp: 50,
-      maxHp: 50,
-      type: "rod",
-    },
-  ],
-  caughtFish: [],
-  potions: [],
-  usingRods: {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  usingPotion: [],
-});
+const useplayerStore = usePlayerStore();
+const usesoundStore = useSoundStore();
+
 const selectFish = ref("common");
-const highlightedFish = ref(new Set());
 
 function filterFish(a, b) {
   return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
 }
 
 function isFishInPlayerStore(fishId) {
-  if (playerStore.value.caughtFish.some((fish) => fish.id === fishId)) {
+  const highlightedFish = ref(new Set());
+  if (
+    useplayerStore.playerStore.caughtFish.some((fish) => fish.id === fishId)
+  ) {
     highlightedFish.value.add(fishId);
     return true;
   }
   return highlightedFish.value.has(fishId);
 }
-const props = defineProps({});
-defineEmits(["playHoverSound", "togglePage"]);
 </script>
 
 <template>
@@ -106,6 +80,7 @@ defineEmits(["playHoverSound", "togglePage"]);
           </div>
         </div>
 
+        <!-- Fish Display Based on Category -->
         <div
           v-show="selectFish === 'common'"
           class="grid grid-cols-2 md:grid-cols-3 gap-4"
@@ -143,9 +118,7 @@ defineEmits(["playHoverSound", "togglePage"]);
               :src="fish.icon"
               :alt="fish.name"
             />
-            <h3 class="text-blue-100 text-lg font-semibold">
-              {{ fish.name }}
-            </h3>
+            <h3 class="text-blue-100 text-lg font-semibold">{{ fish.name }}</h3>
             <p class="text-blue-200">${{ fish.price }}</p>
           </div>
         </div>

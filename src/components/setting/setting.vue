@@ -1,96 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import fishStore from "../../../data/fish.json";
-import playerImg from "/images/image/Player.png";
-import Basic_RodImg from "/images/rod/Basic_Rod.png";
-import bubbleSound from "/sound/EffectsBubble.mp3";
-import successBuySound from "/sound/cash-register-purchase-87313.mp3";
-import failBuySound from "/sound/error-126627.mp3";
-import backgroundMusic from "/sound/game-music-loop-7-145285.mp3";
-import getFishSound from "/sound/cute-level-up-2-189851.mp3";
-import failGetFishSound from "/sound/fail-234710.mp3";
-import hookFishSound from "/sound/Fishing Rod Cast (Fortnite Sound) - Sound Effect for editing.mp3";
-import sellFishSound from "/sound/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
-import useRodSound from "/sound/Game Menu Select Sound Effect.mp3";
-import usePotionSound from "/sound/Mini Shield Use (Fortnite Sound) - Sound Effect for editing.mp3";
-
-const isSoundOn = ref(true);
-const isMusicOn = ref(true);
-const isSfxOn = ref(true);
-
-const sounds = {
-  hover: new Audio(bubbleSound),
-  backgroundMusic: new Audio(backgroundMusic),
-  successBuy: new Audio(successBuySound),
-  failBuy: new Audio(failBuySound),
-  getFish: new Audio(getFishSound),
-  failGetFish: new Audio(failGetFishSound),
-  hookFish: new Audio(hookFishSound),
-  sellFish: new Audio(sellFishSound),
-  useRod: new Audio(useRodSound),
-  usePotionSound: new Audio(usePotionSound),
-};
-
-sounds.backgroundMusic.loop = true;
-sounds.backgroundMusic.volume = 0.1;
-sounds.hover.volume = 0.09;
-sounds.successBuy.volume = 0.4;
-sounds.getFish.volume = 0.4;
-sounds.failGetFish.volume = 0.4;
-sounds.hookFish.volume = 0.5;
-sounds.useRod.volume = 0.4;
-sounds.sellFish.volume = 0.4;
-sounds.usePotionSound.volume = 0.4;
-
-function toggleSound() {
-  isSoundOn.value = !isSoundOn.value;
-}
-
-function toggleMusic() {
-  isMusicOn.value = !isMusicOn.value;
-  if (isMusicOn.value) {
-    sounds.backgroundMusic.play();
-  } else {
-    sounds.backgroundMusic.pause();
-  }
-}
-
-function toggleSfx() {
-  isSfxOn.value = !isSfxOn.value;
-}
-
-const playerName = ref("int203");
-const playerStore = ref({
-  id: 1,
-  name: playerName.value,
-  coins: 1000,
-  avatar: playerImg,
-  ownedRods: [
-    {
-      id: 1,
-      name: "Basic Rod",
-      quantity: 1,
-      price: 0,
-      icon: Basic_RodImg,
-      hp: 50,
-      maxHp: 50,
-      type: "rod",
-    },
-  ],
-  caughtFish: [],
-  potions: [],
-  usingRods: {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  usingPotion: [],
-});
+import { usePlayerStore } from "../../stores/player.js";
+import { useSoundStore } from "../../stores/sounds.js";
+const usePlayer = usePlayerStore();
+const useSound = useSoundStore();
 const props = defineProps({});
 defineEmits([
   "playHoverSound",
@@ -114,11 +27,11 @@ defineEmits([
       <div class="mb-6">
         <label class="flex items-center mb-2">
           <div
-            @click="toggleSound"
+            @click="useSound.toggleSound"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': isSoundOn,
-              'bg-gray-500': !isSoundOn,
+              'bg-green-500 is-on': useSound.isSoundOn,
+              'bg-gray-500': !useSound.isSoundOn,
             }"
           >
             <span class="toggle-circle"></span>
@@ -127,11 +40,11 @@ defineEmits([
         </label>
         <label class="flex items-center mb-2">
           <div
-            @click="toggleMusic"
+            @click="useSound.toggleMusic"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': isMusicOn,
-              'bg-gray-500': !isMusicOn,
+              'bg-green-500 is-on': useSound.isMusicOn,
+              'bg-gray-500': !useSound.isMusicOn,
             }"
           >
             <span class="toggle-circle"></span>
@@ -140,11 +53,11 @@ defineEmits([
         </label>
         <label class="flex items-center">
           <div
-            @click="toggleSfx"
+            @click="useSound.toggleSfx"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': isSfxOn,
-              'bg-gray-500': !isSfxOn,
+              'bg-green-500 is-on': useSound.isSfxOn,
+              'bg-gray-500': !useSound.isSfxOn,
             }"
           >
             <span class="toggle-circle"></span>
@@ -156,7 +69,7 @@ defineEmits([
       <div class="mb-6">
         <label class="block mb-2 font-bold">Change Player Name:</label>
         <input
-          v-model="playerStore.name"
+          v-model="usePlayer.playerStore.name"
           type="text"
           class="w-full p-2 rounded-md bg-gray-800 text-white focus:outline-none"
           placeholder="Enter new player name"
@@ -166,7 +79,7 @@ defineEmits([
 
       <div class="flex justify-end space-x-4">
         <button
-          @mouseenter="$emit('playHoverSound')"
+          @mouseenter="useSound.playHoverSound"
           @click="$emit('saveSettings')"
           class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg"
         >

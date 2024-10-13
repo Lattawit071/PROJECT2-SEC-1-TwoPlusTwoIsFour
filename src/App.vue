@@ -1,5 +1,5 @@
 <script setup>
-import { ref} from "vue";
+import { ref } from "vue";
 import BackgroundImg from "/images/image/Background.png";
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
@@ -20,7 +20,6 @@ import Shop from "./components/shop/shop.vue";
 
 //play
 import PlayPage from "./components/play/playPage.vue";
-
 
 const page = ref(1);
 
@@ -66,18 +65,16 @@ const nextImage = () => {
 const goToImage = (index) => {
   currentImageIndex.value = index;
 };
-
 </script>
 
 <template>
   <bookmark
     v-if="page === 4"
-    :playerName="playerStore.name"
     @togglePage="togglePage"
     @PlayHoverSound="playHoverSound"
   />
 
-  <LoadingPage/>
+  <LoadingPage />
 
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
@@ -202,15 +199,9 @@ const goToImage = (index) => {
     </div>
   </transition>
 
-  <PlayPage
-    v-if="page === 5"
-    @togglePage="togglePage"
-  />
+  <PlayPage v-if="page === 5" @togglePage="togglePage" />
 
-  <inventory
-    v-if="page === 2"
-    @togglePage="togglePage"
-  />
+  <inventory v-if="page === 2" @togglePage="togglePage" />
 
   <Shop v-if="page === 3" :isSfxOn="isSfxOn" @togglePage="togglePage" />
 </template>
