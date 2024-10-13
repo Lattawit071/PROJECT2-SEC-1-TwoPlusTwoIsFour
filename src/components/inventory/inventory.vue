@@ -36,17 +36,20 @@ const setCategory = (category) => {
 const filteredItems = computed(() => {
   switch (selectedCategory.value) {
     case "fish":
-      return (nameInventory.value = "Fish"), store.playerStore.caughtFish;
+      nameInventory.value = "Fish";
+      return store.playerStore.caughtFish;
     case "rods":
-      return (nameInventory.value = "Rods"), store.playerStore.ownedRods;
+      nameInventory.value = "Rods";
+      return store.playerStore.ownedRods;
     case "potions":
-      return (nameInventory.value = "Potions"), store.playerStore.potions;
+      nameInventory.value = "Potions";
+      return store.playerStore.potions;
     default:
       nameInventory.value = "All";
       return [
-      store.playerStore.caughtFish,
-      store.playerStore.ownedRods,
-      store.playerStore.potions,
+        ...store.playerStore.caughtFish,
+        ...store.playerStore.ownedRods,
+        ...store.playerStore.potions,
       ];
   }
 });

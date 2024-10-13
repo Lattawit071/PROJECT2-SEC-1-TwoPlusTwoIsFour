@@ -1,12 +1,9 @@
 <script setup>
-const props = defineProps({
-    showToastInventory: {
-        type: Boolean   
-    },
-    toastMessage: {
-        type: String
-    }
-})
+import { useToastStore } from '../../stores/toast.js';
+import { storeToRefs } from 'pinia';
+
+const toastStore = useToastStore();
+const { showToastInventory, toastMessage } = storeToRefs(toastStore);
 </script>
  
 <template>
@@ -34,7 +31,7 @@ const props = defineProps({
     #f6ffed,
     #dcedc1,
     #a8e6cf
-  ); /* สีเขียวพาสเทล */
+  );
   background-size: 200%;
   -webkit-background-clip: border-box;
   background-clip: border-box;
@@ -50,15 +47,6 @@ const props = defineProps({
 .toast-content {
   display: flex;
   align-items: center;
-}
-
-.toast-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .toast-message {

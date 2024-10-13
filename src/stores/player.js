@@ -1,12 +1,14 @@
-// stores/playerStore.js
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useSoundStore } from './sounds.js';
+import { useToastStore } from './toast.js';
 import playerImg from "/images/image/Player.png";
 import rods from "../../data/rods.json";
 
 export const usePlayerStore = defineStore("playerStore", () => {
   const soundStore = useSoundStore();
+  const toastStore = useToastStore(); 
+
   const playerName = ref("int203");
   const playerStore = ref({
     id: 1,
@@ -27,12 +29,12 @@ export const usePlayerStore = defineStore("playerStore", () => {
     playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
       (f) => f.id !== fish.id
     );
-    showToastInventoryMessage(`Sold all ${fish.name}`, "success");
+    toastStore.showToast(`Sold all ${fish.name}`, "success");
     soundStore.playSellSuccessSound();
   }
 
   function sellFish(fish) {
-    playerStore.value.coins += fish.price;
+    soundStore.playerStore.value.coins += fish.price;
     fish.quantity -= 1;
 
     if (fish.quantity === 0) {
@@ -41,18 +43,18 @@ export const usePlayerStore = defineStore("playerStore", () => {
       );
     }
 
-    showToastInventoryMessage(`Sold 1 ${fish.name}`, "success");
-    playSellSuccessSound();
+    toastStore.showToast(`Sold 1 ${fish.name}`, "success");
+    soundStore.playSellSuccessSound();
   }
 
   function equipRod(rod) {
-    playUseRodSound();
+    soundStore.playUseRodSound();
     playerStore.value.usingRods = rod;
-    showToastInventoryMessage(`Equipped ${rod.name}`, "success");
+    toastStore.showToast(`Equipped ${rod.name}`, "success");
   }
 
   function usePotion(potion) {
-    playUsePotionSound();
+    soundStore.playUsePotionSound();
     let existingPotion = playerStore.value.usingPotion.find(
       (p) => p.id === potion.id
     );
@@ -93,7 +95,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
         (p) => p.id !== potion.id
       );
     }
-    showToastInventoryMessage(`Used ${potion.name}`, "success");
+    toastStore.showToast(`Used ${potion.name}`, "success");
   }
 
   return {

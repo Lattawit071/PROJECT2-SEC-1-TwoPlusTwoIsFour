@@ -209,7 +209,6 @@ const goToImage = (index) => {
 
   <inventory
     v-if="page === 2"
-    @playHoverSound="playHoverSound"
     @togglePage="togglePage"
   />
 
