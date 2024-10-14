@@ -5,7 +5,7 @@ import { useSoundStore } from '../../stores/sounds.js';
 import ToastNoti from "./toastNoti.vue";
 import FilterItems from "./FilterItems.vue";
 import Items from "./Items.vue";
-const emit = defineEmits(["playHoverSound", "togglePage"]);
+const emit = defineEmits(["togglePage"]);
 const store = usePlayerStore();
 const soundStore = useSoundStore();
 
@@ -67,7 +67,7 @@ let timeoutId = null;
       class="w-20 bg-gradient-to-b bg-gray-900 to-yellow-900 text-white flex flex-col items-center py-4 space-y-4 rounded-lg shadow-lg mr-3 p-3"
     >
       <button
-        @mouseenter="$emit('playHoverSound')"
+        @mouseenter="soundStore.playHoverSound()"
         @click="$emit('togglePage', 5)"
         class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
       >

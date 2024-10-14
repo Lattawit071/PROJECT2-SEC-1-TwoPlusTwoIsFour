@@ -1,59 +1,22 @@
 <script setup>
+import { ref,computed } from "vue";
+import { usePlayerStore } from "../../stores/player.js";
+import { useSoundStore } from '../../stores/sounds.js';
 import Potion from "./potion.vue";
 import Rod from "./rod.vue";
 import toastNoti from "./toastNoti.vue";
-import successBuySound from "/sound/cash-register-purchase-87313.mp3";
-import failBuySound from "/sound/error-126627.mp3";
 import potion from "../../../data/potion.json"
 import rods from "../../../data/rods.json"
-import { ref,computed } from "vue";
-import playerImg from "/images/image/Player.png";
-import Basic_RodImg from "/images/rod/Basic_Rod.png";
 
-const playerName = ref("int203");
-const playerStore = ref({
-  id: 1,
-  name: playerName.value,
-  coins: 100000,
-  avatar: playerImg,
-  ownedRods: [
-    {
-      id: 1,
-      name: "Basic Rod",
-      quantity: 1,
-      price: 0,
-      icon: Basic_RodImg,
-      hp: 50,
-      maxHp: 50,
-      type: "rod",
-    },
-  ],
-  caughtFish: [],
-  potions: [],
-  usingRods: {
-    id: 1,
-    name: "Basic Rod",
-    quantity: 1,
-    price: 0,
-    icon: Basic_RodImg,
-    hp: 50,
-    maxHp: 50,
-    type: "rod",
-  },
-  usingPotion: [],
-});
+const emit = defineEmits(['playHoverSound','togglePage'])
+const store = usePlayerStore();
+const soundStore = useSoundStore();
 
-const props = defineProps({
-  isSfxOn:{
-    type:Boolean
-  }
-})
-
-const playerCoins = computed(() => playerStore.value.coins);
+const playerCoins = computed(() => store.playerStore.coins);
 
 function deductCoins(amount) {
-  if (playerStore.value.coins >= amount) {
-    playerStore.value.coins -= amount;
+  if (store.playerStore.coins >= amount) {
+    store.playerStore.coins -= amount;
   } else {
   }
 }
@@ -62,12 +25,12 @@ function addRod(rodId) {
   const rod = rods.find((rod) => rod.id === rodId);
 
   if (rod) {
-    const existingRod = playerStore.value.ownedRods.find(
+    const existingRod = store.playerStore.ownedRods.find(
       (ownedRod) => ownedRod.id === rodId
     );
 
     if (!existingRod) {
-      playerStore.value.ownedRods.push({
+      store.playerStore.ownedRods.push({
         ...rod,
         quantity: 1,
       });
@@ -75,20 +38,6 @@ function addRod(rodId) {
     } else {
     }
   } else {
-  }
-}
-
-function playSuccessBuySound() {
-  if (props.isSfxOn) {
-    sounds.successBuy.currentTime = 0;
-    sounds.successBuy.play();
-  }
-}
-
-function playFailBuySound() {
-  if (props.isSfxOn) {
-    sounds.failBuy.playbackRate = 1.5;
-    sounds.failBuy.play();
   }
 }
 
@@ -124,19 +73,19 @@ function showToastMessage(item) {
 }
 
 function purchaseRods(item) {
-  if (playerStore.value.coins >= item.price) {
-    const existingRod = playerStore.value.ownedRods.find(
+  if (store.playerStore.coins >= item.price) {
+    const existingRod = store.playerStore.ownedRods.find(
       (rod) => rod.id === item.id
     );
 
     if (!existingRod) {
       deductCoins(item.price);
       addRod(item.id);
-      playSuccessBuySound();
+      soundStore.playSuccessBuySound();
     } else {
     }
   } else {
-    playFailBuySound();
+    soundStore.playFailBuySound();
     showToastErrorMessage();
   }
 }
@@ -145,25 +94,25 @@ function addPotion(potionId) {
 
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
-    const existingPotion = playerStore.value.potions.find(
+    const existingPotion = store.playerStore.potions.find(
       (p) => p.id === potionId
     );
     if (existingPotion) {
       existingPotion.quantity += 1;
       showToastMessage(selectedPotion);
     } else {
-      playerStore.value.potions.push({ ...selectedPotion, quantity: 1 });
+      store.playerStore.potions.push({ ...selectedPotion, quantity: 1 });
       showToastMessage(selectedPotion);
     }
   }
 }
 
 function purchasePotion(item) {
-  if (playerStore.value.coins >= item.price) {
-    playSuccessBuySound();
+  if (store.playerStore.coins >= item.price) {
+    soundStore.playSuccessBuySound();
     showToastMessage(item);
     deductCoins(item.price);
-    const existingPotion = playerStore.value.potions.find(
+    const existingPotion = store.playerStore.potions.find(
       (p) => p.id === item.id
     );
     if (existingPotion) {
@@ -173,22 +122,10 @@ function purchasePotion(item) {
       addPotion(item.id);
     }
   } else {
-    playFailBuySound();
+    soundStore.playFailBuySound();
     showToastErrorMessage();
   }
 }
-
-
-const sounds = {
-  successBuy: new Audio(successBuySound),
-  failBuy: new Audio(failBuySound)
-}
-
-const playHoverSound = () => {
-  emit('playHoverSound')
-}
-
-const emit = defineEmits(['playHoverSound','togglePage'])
 </script>
 
 <template>
@@ -204,13 +141,13 @@ const emit = defineEmits(['playHoverSound','togglePage'])
     <p class="text-yellow-100 mb-4">My coins : {{ playerCoins }}</p>
     <Rod
       :fishingRods="rods"
-      @playHoverSound="playHoverSound"
+      @playHoverSound="soundStore.playHoverSound()"
       @purchaseRods="purchaseRods"
-      :ownedRod="playerStore.ownedRods"
+      :ownedRod="store.playerStore.ownedRods"
     />
     <Potion
       :potion="potion"
-      @playHoverSound="playHoverSound"
+      @playHoverSound="soundStore.playHoverSound()"
       @purchasePotion="purchasePotion"
     />
   </div>

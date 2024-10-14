@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useSoundStore } from './stores/sounds.js';
 import BackgroundImg from "/images/image/Background.png";
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
@@ -20,6 +21,8 @@ import Shop from "./components/shop/shop.vue";
 
 //play
 import PlayPage from "./components/play/playPage.vue";
+
+const soundStore = useSoundStore();
 
 const page = ref(1);
 
@@ -71,7 +74,6 @@ const goToImage = (index) => {
   <bookmark
     v-if="page === 4"
     @togglePage="togglePage"
-    @PlayHoverSound="playHoverSound"
   />
 
   <LoadingPage />
@@ -89,7 +91,7 @@ const goToImage = (index) => {
         src="/images/button/Setting.png"
         alt="Settings"
         class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
-        @mouseenter="playHoverSound"
+        @mouseenter="soundStore.playHoverSound()"
       />
     </div>
 
@@ -99,7 +101,7 @@ const goToImage = (index) => {
         src="/images/button/Question.png"
         alt="Help"
         class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
-        @mouseenter="playHoverSound"
+        @mouseenter="soundStore.playHoverSound()"
       />
     </div>
 
@@ -116,7 +118,7 @@ const goToImage = (index) => {
         <div
           class="relative w-64 h-24 md:w-96 md:h-40 cursor-pointer transition-transform duration-300 hover:scale-110"
           @click="togglePage(5)"
-          @mouseenter="playHoverSound"
+          @mouseenter="soundStore.playHoverSound()"
         >
           <img
             src="/images/button/Button.png"
@@ -158,14 +160,14 @@ const goToImage = (index) => {
 
           <button
             @click="prevImage"
-            @mouseenter="playHoverSound"
+            @mouseenter="soundStore.playHoverSound()"
             class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full focus:outline-none transition-all duration-300"
           >
             &#8249;
           </button>
           <button
             @click="nextImage"
-            @mouseenter="playHoverSound"
+            @mouseenter="soundStore.playHoverSound()"
             class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full focus:outline-none transition-all duration-300"
           >
             &#8250;
@@ -176,7 +178,7 @@ const goToImage = (index) => {
           <span
             v-for="(image, index) in imagesHowToPlay"
             :key="index"
-            @mouseenter="playHoverSound"
+            @mouseenter="soundStore.playHoverSound()"
             @click="goToImage(index)"
             class="w-4 h-4 rounded-full cursor-pointer"
             :class="{
@@ -188,7 +190,7 @@ const goToImage = (index) => {
 
         <div class="flex justify-end mt-4 w-full">
           <button
-            @mouseenter="playHoverSound"
+            @mouseenter="soundStore.playHoverSound()"
             @click="openHowToPlay"
             class="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg"
           >
@@ -203,7 +205,7 @@ const goToImage = (index) => {
 
   <inventory v-if="page === 2" @togglePage="togglePage" />
 
-  <Shop v-if="page === 3" :isSfxOn="isSfxOn" @togglePage="togglePage" />
+  <Shop v-if="page === 3" @togglePage="togglePage" />
 </template>
 
 <style scoped>
