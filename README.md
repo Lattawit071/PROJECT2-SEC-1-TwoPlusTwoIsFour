@@ -66,7 +66,10 @@
 - inventory + use pinia
 
 ### Pinia Design
-
+- playerStore
+- soundStore
+- toastStore
+  
 ### Edit Fish
 
 <hr>
