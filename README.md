@@ -1,5 +1,6 @@
 ## Member Group:
 ## 65130500035 นัทธมน ทองคำอ้น 
+------------- ครึ่งแรก -------------
 ### (Shop page, Navigation) 25% <br>
 #### Navigation
 - ฟังก์ชั่นการเลื่อนค่าของIndex
@@ -15,9 +16,16 @@
 
 #### Sound
 
+------------- ครึ่งหลัง -------------
+### Component
+- shop and how to play + use pinia
+
+### Add Fish
+
 <hr>
 
 ## 65130500072 วริทธิ์ธร สิริวัชระกุล 
+------------- ครึ่งแรก -------------
 ### (Play page,Game function) 25% <br>
 #### Play page
 - ฟังก์ชั่นตกปลา
@@ -30,10 +38,16 @@
 
 #### Ui 
 #### Sound
+------------- ครึ่งหลัง -------------
+### Component
+- play + use pinia
+
+### Quest + Level
 
 <hr>
 
 ## 65130500087 อนวัตร กรุดธูป 
+------------- ครึ่งแรก -------------
 ### (Inventory page,loading page,Home page) 25% <br>
 #### Inventory page
 - ฟังก์ชั่นขายปลาทีละตัว
@@ -47,9 +61,18 @@
 - ทำให้ออกมาตามที่ Ui design ต้องการ
 #### DataStore Design
 
+------------- ครึ่งหลัง -------------
+### Component
+- inventory + use pinia
+
+### Pinia Design
+
+### Edit Fish
+
 <hr>
 
 ## 65130500116 ลัทธวิทย์ กทิศาสตร์ 
+------------- ครึ่งแรก -------------
 ### (Setting page,Bookmark page) 25% <br>
 #### Setting page 
 - ฟังก์ชั่น เปิด/ปิด เสียงเพลง,effect
@@ -62,6 +85,12 @@
 
 #### Ui 
 #### Sound
+
+------------- ครึ่งหลัง -------------
+### Component
+- Setting and Bookmark + use pinia
+
+### Delete Fish
 
 <hr>
 
