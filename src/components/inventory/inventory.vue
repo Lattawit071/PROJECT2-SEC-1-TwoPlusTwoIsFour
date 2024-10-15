@@ -5,7 +5,7 @@ import { useSoundStore } from '../../stores/sounds.js';
 import ToastNoti from "./toastNoti.vue";
 import FilterItems from "./FilterItems.vue";
 import Items from "./Items.vue";
-const emit = defineEmits(["togglePage"]);
+defineEmits(['togglePage']);
 const store = usePlayerStore();
 const soundStore = useSoundStore();
 
@@ -59,6 +59,7 @@ const inventoryCapacity = computed(() => {
 });
 
 let timeoutId = null;
+
 </script>
 
 <template>
@@ -74,7 +75,6 @@ let timeoutId = null;
         Back
       </button>
       <FilterItems
-        @playHoverSound="soundStore.playHoverSound()"
         @setCategory="setCategory"
       />
     </div>

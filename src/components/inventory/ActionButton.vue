@@ -3,7 +3,7 @@ import { usePlayerStore } from '../../stores/player.js';
 import { useSoundStore } from '../../stores/sounds.js';
 const playerStore = usePlayerStore();
 const soundStore = useSoundStore();
-const emit = defineEmits(["playHoverSound", "sellFish", "sellFishAll", "equipRod", "usePotion"]);
+const emit = defineEmits(["sellFish", "sellFishAll", "equipRod", "usePotion"]);
 
 const props = defineProps({
   item: Object,
@@ -43,7 +43,7 @@ const props = defineProps({
 
   <div v-else-if="item.type === 'potion'" class="flex flex-col space-y-2">
     <button
-      @mouseenter="$emit('playHoverSound')"
+      @mouseenter="soundStore.playHoverSound()"
       @click="playerStore.usePotion(item)"
       class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-lg w-full"
     >

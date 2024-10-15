@@ -8,7 +8,7 @@ import playerImg from "/images/image/Player.png";
 import Basic_RodImg from "/images/rod/Basic_Rod.png";
 
 const useplayerStore = usePlayerStore();
-const usesoundStore = useSoundStore();
+const soundStore = useSoundStore();
 
 const selectFish = ref("common");
 
@@ -37,7 +37,7 @@ function isFishInPlayerStore(fishId) {
         class="header fade-up bg-gradient-to-b bg-gray-900 to-yellow-900 border-black w-[90%] md:w-[60%] min-w-[300px] rounded-lg shadow-lg p-6"
       >
         <button
-          @mouseenter="$emit('playHoverSound')"
+          @mouseenter="soundStore.playHoverSound()"
           @click="$emit('togglePage', 5)"
           class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >

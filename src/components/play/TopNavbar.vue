@@ -30,7 +30,7 @@ defineEmits(["repairToggle"]);
       <p class="text-sm md:text-base font-semibold">Active Potions</p>
       <div class="flex space-x-2">
         <img
-          v-for="potion in player.playerStore.potions"
+          v-for="potion in player.playerStore.usingPotion"
           :src="potion.icon"
           alt="Potion"
           class="w-10 h-10 md:w-12 md:h-12 object-contain"

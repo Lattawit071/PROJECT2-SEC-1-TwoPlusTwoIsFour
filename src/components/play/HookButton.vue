@@ -38,7 +38,7 @@ const props = defineProps({
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
-  height: 1300px;
+  height: 900px;
   background-image: url("/images/image/Hook.png");
 
   background-size: contain;
