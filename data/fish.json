@@ -1,6 +1,7 @@
-[
+{
+    "fishs": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Sardine",
       "quantity": 1,
       "price": 50,
@@ -8,7 +9,7 @@
       "type": "fish"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Clownfish",
       "quantity": 1,
       "price": 150,
@@ -16,7 +17,7 @@
       "type": "fish"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Catfish",
       "quantity": 1,
       "price": 200,
@@ -24,7 +25,7 @@
       "type": "fish"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Salmon",
       "quantity": 1,
       "price": 250,
@@ -32,7 +33,7 @@
       "type": "fish"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Tuna",
       "quantity": 1,
       "price": 250,
@@ -40,7 +41,7 @@
       "type": "fish"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Marlin",
       "quantity": 1,
       "price": 700,
@@ -48,7 +49,7 @@
       "type": "fish"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Stingray",
       "quantity": 1,
       "price": 500,
@@ -56,7 +57,7 @@
       "type": "fish"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Eel",
       "quantity": 1,
       "price": 300,
@@ -64,7 +65,7 @@
       "type": "fish"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "White Koi",
       "quantity": 1,
       "price": 800,
@@ -72,7 +73,7 @@
       "type": "fish"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Squid",
       "quantity": 1,
       "price": 850,
@@ -80,7 +81,7 @@
       "type": "fish"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Shark",
       "quantity": 1,
       "price": 1500,
@@ -88,7 +89,7 @@
       "type": "fish"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Orca",
       "quantity": 1,
       "price": 2000,
@@ -96,7 +97,7 @@
       "type": "fish"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Blue Whale",
       "quantity": 1,
       "price": 2500,
@@ -104,7 +105,7 @@
       "type": "fish"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Giant Pacific Octopus",
       "quantity": 1,
       "price": 2500,
@@ -112,7 +113,7 @@
       "type": "fish"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Golden Fish",
       "quantity": 1,
       "price": 3000,
@@ -120,7 +121,7 @@
       "type": "fish"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Rainbow Fish",
       "quantity": 1,
       "price": 3500,
@@ -128,7 +129,7 @@
       "type": "fish"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Pearl",
       "quantity": 1,
       "price": 4500,
@@ -136,7 +137,7 @@
       "type": "fish"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Diamond",
       "quantity": 1,
       "price": 5000,
@@ -144,7 +145,7 @@
       "type": "fish"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Chest",
       "quantity": 1,
       "price": 8000,
@@ -152,7 +153,7 @@
       "type": "fish"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Dragon",
       "quantity": 1,
       "price": 100000,
@@ -160,4 +161,5 @@
       "type": "fish"
     }
   ]
+}
   
