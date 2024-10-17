@@ -8,7 +8,7 @@ import RepairModal from "./RepairModal.vue";
 import BottomNavBar from "./BottomNavBar.vue";
 //data
 import potion from "../../../data/potion.json";
-import fishStore from "../../../data/fish.json";
+import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
 
@@ -65,7 +65,7 @@ function addCaughtFish(fishId) {
 }
 
 function getFishById(id) {
-  return fishStore.fishs.find((fish) => fish.id == id);
+  return fish.find((fish) => fish.id === id);
 }
 
 const hook = () => {

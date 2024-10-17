@@ -4,13 +4,16 @@ import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
 
+import playerImg from "/images/image/Player.png";
+import Basic_RodImg from "/images/rod/Basic_Rod.png";
+
 const useplayerStore = usePlayerStore();
 const soundStore = useSoundStore();
 
 const selectFish = ref("common");
 
 function filterFish(a, b) {
-  return fishStore.fishs.filter((fish) => fish.id >= a && fish.id <= b);
+  return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
 }
 
 function isFishInPlayerStore(fishId) {
