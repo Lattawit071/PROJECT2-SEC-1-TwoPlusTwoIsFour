@@ -68,6 +68,9 @@ const nextImage = () => {
 const goToImage = (index) => {
   currentImageIndex.value = index;
 };
+
+import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
+
 </script>
 
 <template>
@@ -75,7 +78,7 @@ const goToImage = (index) => {
     v-if="page === 4"
     @togglePage="togglePage"
   />
-
+  <selectPlayerPage v-if="page === 6" @goBack="togglePage"/>
   <LoadingPage />
 
   <div
@@ -117,7 +120,7 @@ const goToImage = (index) => {
       <div class="relative inline-block template" style="user-select: none">
         <div
           class="relative w-64 h-24 md:w-96 md:h-40 cursor-pointer transition-transform duration-300 hover:scale-110"
-          @click="togglePage(5)"
+          @click="togglePage(6)"
           @mouseenter="soundStore.playHoverSound()"
         >
           <img

@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { useSoundStore } from './sounds.js';
-import { useToastStore } from './toast.js';
+import { useSoundStore } from "./sounds.js";
+import { useToastStore } from "./toast.js";
 import playerImg from "/images/image/Player.png";
 import rods from "../../data/rods.json";
 
 export const usePlayerStore = defineStore("playerStore", () => {
   const soundStore = useSoundStore();
-  const toastStore = useToastStore(); 
-
+  const toastStore = useToastStore();
+  const allPlayer = ref([]);
   const playerName = ref("int203");
   const playerStore = ref({
     id: 1,
@@ -20,9 +20,35 @@ export const usePlayerStore = defineStore("playerStore", () => {
     potions: [],
     usingRods: rods[0],
     usingPotion: [],
+    level: 1
   });
-
+  const selectedPlayer = ref({})
   const potionTimers = {};
+
+  async function getAllPlayer(url) {
+    try {
+      const response = await fetch(url+"/user");
+      const data = await response.json();
+      allPlayer.value = data 
+      return allPlayer.value;
+    } catch (error) {
+      console.log(`error: ${error}`);
+      throw new Error(error);
+    }
+  }
+
+  async function getPlayerById(url, id) {
+    try {
+      const response = await fetch(url+"/user"+id);
+      const data = await response.json();
+      selectedPlayer.value = data
+      playerStore.value = data.playerStore 
+      return selectedPlayer.value;
+    } catch (error) {
+      console.log(`error: ${error}`);
+      throw new Error(error);
+    }
+  }
 
   function sellFishAll(fish) {
     playerStore.value.coins += fish.price * fish.quantity;
@@ -104,5 +130,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     sellFish,
     equipRod,
     usePotion,
+    getAllPlayer,
+    getPlayerById
   };
 });
