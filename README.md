@@ -20,7 +20,7 @@
 ### Component
 - shop and how to play + use pinia
 
-### Add Fish
+### Add Player
 
 <hr>
 
@@ -42,7 +42,9 @@
 ### Component
 - play + use pinia
 
-### Quest + Level
+### GetAll GetById Player
+
+### Level+Quest
 
 <hr>
 
@@ -70,7 +72,7 @@
 - soundStore
 - toastStore
   
-### Edit Fish
+### Edit Player
 
 <hr>
 
@@ -93,7 +95,7 @@
 ### Component
 - Setting and Bookmark + use pinia
 
-### Delete Fish
+### Delete Player
 
 <hr>
 
