@@ -40,7 +40,7 @@
                 "id": 1,
                 "name": "User1",
                 "coins": 1000,
-                "avatar": "playerImg",
+                "avatar": "/images/image/Player.png",
                 "ownedRods": [{
                     "id": 1,
                     "name": "Basic Rod",
