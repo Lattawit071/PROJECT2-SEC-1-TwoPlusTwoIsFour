@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useSoundStore } from './stores/sounds.js';
+import { useSoundStore } from "./stores/sounds.js";
 import BackgroundImg from "/images/image/Background.png";
 import pagetwo from "/images/howtoplay/pagetwo.png";
 import pagethree from "/images/howtoplay/pagethree.png";
@@ -24,7 +24,7 @@ import PlayPage from "./components/play/playPage.vue";
 
 const soundStore = useSoundStore();
 
-const page = ref(1);
+const page = ref(6);
 
 const togglePage = (value) => {
   page.value = value;
@@ -70,15 +70,15 @@ const goToImage = (index) => {
 };
 
 import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
-
 </script>
 
 <template>
-  <bookmark
-    v-if="page === 4"
+  <bookmark v-if="page === 4" @togglePage="togglePage" />
+  <selectPlayerPage
+    v-if="page === 6"
+    @goBack="togglePage"
     @togglePage="togglePage"
   />
-  <selectPlayerPage v-if="page === 6" @goBack="togglePage" @togglePage="togglePage"/>
   <LoadingPage />
 
   <div
@@ -98,7 +98,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
       />
     </div>
 
-    <div class="absolute top-4 right-4" style="user-select: none">
+    <div class="absolute top-4 right-4 flex flex-1" style="user-select: none">
       <img
         @click="openHowToPlay"
         src="/images/button/Question.png"
@@ -120,7 +120,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
       <div class="relative inline-block template" style="user-select: none">
         <div
           class="relative w-64 h-24 md:w-96 md:h-40 cursor-pointer transition-transform duration-300 hover:scale-110"
-          @click="togglePage(6)"
+          @click="togglePage(5)"
           @mouseenter="soundStore.playHoverSound()"
         >
           <img
