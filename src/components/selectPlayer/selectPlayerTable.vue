@@ -1,14 +1,39 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import { usePlayerStore } from "@/stores/player";
+const playerStore = usePlayerStore();
+const playerList = ref([]);
+onMounted(async () => {
+  playerList.value = await playerStore.getAllPlayer(
+    `${import.meta.env.VITE_APP_URL}`
+  );
+});
+
 const props = defineProps({
-    playerList: {
-        type: Array
-    }
-})
-defineEmits(['select'])
+  playerList: {
+    type: Array,
+  },
+});
+defineEmits(["select"]);
+
+async function handleDeletePlayer(playerId) {
+  try {
+    const deletedId = await playerStore.deletePlayerById(
+      `${import.meta.env.VITE_APP_URL}`,
+      playerId
+    );
+    console.log(`Deleted player ID: ${deletedId}`);
+
+    playerList.value = await playerStore.getAllPlayer(
+      `${import.meta.env.VITE_APP_URL}`
+    );
+  } catch (error) {}
+}
 </script>
+
 <template>
   <div
-    class="h-28 grid grid-cols-12 font-poppins font-semibold gap-4 py-3 text-blue-900 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-500 shadow-xl"
+    class="h-28 grid grid-cols-12 font-poppins font-semibold gap-4 py-3 text-blue-900 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-500 shadow-xl overflow-hidden"
   >
     <div class="col-span-2 text-center flex justify-center items-center">
       <div
@@ -34,21 +59,27 @@ defineEmits(['select'])
       </button>
     </div>
   </div>
+
   <div
-    class="grid grid-cols-12 items-center font-poppins gap-4 py-4 bg-gradient-to-r from-cyan-100 via-cyan-200 to-cyan-400 hover:from-lime-200 hover:via-green-300 hover:to-green-400 transition-all duration-300 ease-in-out hover:shadow-lg"
-    v-for="(player, index) in playerList" :key="index"
-    @click="$emit('select',player)"
+    class="grid grid-cols-12 items-center font-poppins gap-4 py-4 bg-gradient-to-r from-cyan-100 via-cyan-200 to-cyan-400 hover:from-lime-200 hover:via-green-300 hover:to-green-400 transition-all duration-300 ease-in-out hover:shadow-lg overflow-hidden"
+    v-for="(player, index) in playerList"
+    :key="index"
+    @click="$emit('select', player)"
   >
     <div class="col-span-2 text-center flex justify-center items-center">
       <div
         class="bg-blue-500 text-white rounded-full h-12 w-12 flex items-center justify-center text-2xl shadow-md"
       >
-        {{ index+1 }}
+        {{ index + 1 }}
       </div>
     </div>
 
-    <div class="col-span-4 text-blue-900 text-xl font-bold">{{ player.playerStore.name }}</div>
-    <div class="col-span-3 text-blue-600 text-xl font-semibold">{{ player.playerStore.level }} 🌟</div>
+    <div class="col-span-4 text-blue-900 text-xl font-bold">
+      {{ player.playerStore.name }}
+    </div>
+    <div class="col-span-3 text-blue-600 text-xl font-semibold">
+      {{ player.playerStore.level }} 🌟
+    </div>
 
     <div class="col-span-3 flex justify-start space-x-4">
       <button
@@ -59,6 +90,7 @@ defineEmits(['select'])
 
       <button
         class="bg-red-500 text-white rounded-lg px-3 py-1 text-lg hover:bg-red-600 transition-colors duration-200 flex items-center"
+        @click.stop="handleDeletePlayer(player.playerStore.id)"
       >
         🗑️ Delete
       </button>

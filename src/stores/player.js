@@ -20,16 +20,16 @@ export const usePlayerStore = defineStore("playerStore", () => {
     potions: [],
     usingRods: rods[0],
     usingPotion: [],
-    level: 1
+    level: 1,
   });
-  const selectedPlayer = ref({})
+  const selectedPlayer = ref({});
   const potionTimers = {};
 
   async function getAllPlayer(url) {
     try {
-      const response = await fetch(url+"/user");
+      const response = await fetch(url + "/user");
       const data = await response.json();
-      allPlayer.value = data 
+      allPlayer.value = data;
       return allPlayer.value;
     } catch (error) {
       console.log(`error: ${error}`);
@@ -39,13 +39,31 @@ export const usePlayerStore = defineStore("playerStore", () => {
 
   async function getPlayerById(url, id) {
     try {
-      const response = await fetch(url+"/user/"+id);
+      const response = await fetch(url + "/user/" + id);
       console.log(response);
-      
+
       const data = await response.json();
-      selectedPlayer.value = data
-      playerStore.value = data.playerStore 
+      selectedPlayer.value = data;
+      playerStore.value = data.playerStore;
       return selectedPlayer.value;
+    } catch (error) {
+      console.log(`error: ${error}`);
+      throw new Error(error);
+    }
+  }
+  async function deletePlayerById(url, id) {
+    try {
+      const response = await fetch(url + "/user/" + id, {
+        method: "DELETE",
+      });
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`ไม่มี id นี้ ไอโง่`);
+      }
+
+      console.log(`Player with ID ${id} has deleted`);
+      return id;
     } catch (error) {
       console.log(`error: ${error}`);
       throw new Error(error);
@@ -133,6 +151,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     equipRod,
     usePotion,
     getAllPlayer,
-    getPlayerById
+    getPlayerById,
+    deletePlayerById,
   };
 });

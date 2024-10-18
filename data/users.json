@@ -1,72 +1,40 @@
 {
-    "user": [
-        {
-            "id": "999",
-            "playerStore": {
-                "id": 999,
-                "name": "Admin",
-                "coins": 100000,
-                "avatar": "/images/image/Player.png",
-                "ownedRods": [{
-                    "id": 1,
-                    "name": "Basic Rod",
-                    "quantity": 1,
-                    "price": 0,
-                    "icon": "/images/rod/Basic_Rod.png",
-                    "hp": 50,
-                    "maxHp": 50,
-                    "type": "rod"
-                  }],
-                "caughtFish": [],
-                "potions": [],
-                "usingRods": {
-                    "id": 1,
-                    "name": "Basic Rod",
-                    "quantity": 1,
-                    "price": 0,
-                    "icon": "/images/rod/Basic_Rod.png",
-                    "hp": 50,
-                    "maxHp": 50,
-                    "type": "rod"
-                  },
-                "usingPotion": [],
-                "level": 999
-            },
-            "Bookmarks": []
+  "user": [
+    {
+      "id": "999",
+      "playerStore": {
+        "id": 999,
+        "name": "Admin",
+        "coins": 100000,
+        "avatar": "/images/image/Player.png",
+        "ownedRods": [
+          {
+            "id": 1,
+            "name": "Basic Rod",
+            "quantity": 1,
+            "price": 0,
+            "icon": "/images/rod/Basic_Rod.png",
+            "hp": 50,
+            "maxHp": 50,
+            "type": "rod"
+          }
+        ],
+        "caughtFish": [],
+        "potions": [],
+        "usingRods": {
+          "id": 1,
+          "name": "Basic Rod",
+          "quantity": 1,
+          "price": 0,
+          "icon": "/images/rod/Basic_Rod.png",
+          "hp": 50,
+          "maxHp": 50,
+          "type": "rod"
         },
-        {
-            "id": "1",
-            "playerStore": {
-                "id": 1,
-                "name": "User1",
-                "coins": 1000,
-                "avatar": "/images/image/Player.png",
-                "ownedRods": [{
-                    "id": 1,
-                    "name": "Basic Rod",
-                    "quantity": 1,
-                    "price": 0,
-                    "icon": "/images/rod/Basic_Rod.png",
-                    "hp": 50,
-                    "maxHp": 50,
-                    "type": "rod"
-                  }],
-                "caughtFish": [],
-                "potions": [],
-                "usingRods": {
-                    "id": 1,
-                    "name": "Basic Rod",
-                    "quantity": 1,
-                    "price": 0,
-                    "icon": "/images/rod/Basic_Rod.png",
-                    "hp": 50,
-                    "maxHp": 50,
-                    "type": "rod"
-                  },
-                "usingPotion": [],
-                "level": 1
-            },
-            "Bookmarks": []
-        }
-    ]
+        "usingPotion": [],
+        "level": 999
+      },
+      "Bookmarks": []
+    }
+  ]
 }
