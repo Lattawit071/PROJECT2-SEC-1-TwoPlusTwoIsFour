@@ -4,8 +4,8 @@ const props = defineProps({
         type: Array
     }
 })
+defineEmits(['select'])
 </script>
-
 <template>
   <div
     class="h-28 grid grid-cols-12 font-poppins font-semibold gap-4 py-3 text-blue-900 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-500 shadow-xl"
@@ -37,6 +37,7 @@ const props = defineProps({
   <div
     class="grid grid-cols-12 items-center font-poppins gap-4 py-4 bg-gradient-to-r from-cyan-100 via-cyan-200 to-cyan-400 hover:from-lime-200 hover:via-green-300 hover:to-green-400 transition-all duration-300 ease-in-out hover:shadow-lg"
     v-for="(player, index) in playerList" :key="index"
+    @click="$emit('select',player)"
   >
     <div class="col-span-2 text-center flex justify-center items-center">
       <div

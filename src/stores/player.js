@@ -39,7 +39,9 @@ export const usePlayerStore = defineStore("playerStore", () => {
 
   async function getPlayerById(url, id) {
     try {
-      const response = await fetch(url+"/user"+id);
+      const response = await fetch(url+"/user/"+id);
+      console.log(response);
+      
       const data = await response.json();
       selectedPlayer.value = data
       playerStore.value = data.playerStore 

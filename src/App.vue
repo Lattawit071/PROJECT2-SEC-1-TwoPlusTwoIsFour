@@ -78,7 +78,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
     v-if="page === 4"
     @togglePage="togglePage"
   />
-  <selectPlayerPage v-if="page === 6" @goBack="togglePage"/>
+  <selectPlayerPage v-if="page === 6" @goBack="togglePage" @togglePage="togglePage"/>
   <LoadingPage />
 
   <div

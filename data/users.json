@@ -1,7 +1,7 @@
 {
     "user": [
         {
-            "id": 999,
+            "id": "999",
             "playerStore": {
                 "id": 999,
                 "name": "Admin",
@@ -35,7 +35,7 @@
             "Bookmarks": []
         },
         {
-            "id": 1,
+            "id": "1",
             "playerStore": {
                 "id": 1,
                 "name": "User1",
