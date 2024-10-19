@@ -1,20 +1,18 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { usePlayerStore } from "@/stores/player";
+
 const playerStore = usePlayerStore();
 const playerList = ref([]);
-onMounted(async () => {
-  playerList.value = await playerStore.getAllPlayer(
-    `${import.meta.env.VITE_APP_URL}`
-  );
-});
 
 const props = defineProps({
   playerList: {
     type: Array,
+    required: true,
   },
 });
-defineEmits(["select"]);
+
+defineEmits(["select", "openAddModal", "openEditModal"]);
 
 async function handleDeletePlayer(playerId) {
   try {
@@ -27,7 +25,9 @@ async function handleDeletePlayer(playerId) {
     playerList.value = await playerStore.getAllPlayer(
       `${import.meta.env.VITE_APP_URL}`
     );
-  } catch (error) {}
+  } catch (error) {
+    console.error(`Failed to delete player: ${error}`);
+  }
 }
 </script>
 
@@ -52,6 +52,7 @@ async function handleDeletePlayer(playerId) {
 
     <div class="col-span-3 flex items-center justify-center mr-16">
       <button
+        @click="$emit('openAddModal')"
         class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 flex items-center"
       >
         <span class="mr-2">➕</span>
@@ -83,14 +84,15 @@ async function handleDeletePlayer(playerId) {
 
     <div class="col-span-3 flex justify-start space-x-4">
       <button
+        @click.stop="$emit('openEditModal', player)"
         class="bg-yellow-400 text-white rounded-lg px-3 py-1 text-lg hover:bg-yellow-500 transition-colors duration-200 flex items-center"
       >
         ✏️ Edit
       </button>
 
       <button
-        class="bg-red-500 text-white rounded-lg px-3 py-1 text-lg hover:bg-red-600 transition-colors duration-200 flex items-center"
         @click.stop="handleDeletePlayer(player.playerStore.id)"
+        class="bg-red-500 text-white rounded-lg px-3 py-1 text-lg hover:bg-red-600 transition-colors duration-200 flex items-center"
       >
         🗑️ Delete
       </button>
@@ -98,4 +100,4 @@ async function handleDeletePlayer(playerId) {
   </div>
 </template>
 
-<style></style>
+<style scoped></style>
