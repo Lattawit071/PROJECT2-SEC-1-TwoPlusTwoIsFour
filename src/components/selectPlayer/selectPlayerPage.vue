@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import selectPlayerTable from "./selectPlayerTable.vue";
 // import ModalAddPlayer from "./ModalAddPlayer.vue";
 import ModalEditPlayer from "./ModalEditPlayer.vue";
@@ -10,6 +10,16 @@ const playerList = ref([]);
 const selectedPlayer = ref(null);
 const isAddModalOpen = ref(false);
 const isEditModalOpen = ref(false);
+
+onMounted(async ()=> {
+    playerList.value = await playerStore.getAllPlayer(`${import.meta.env.VITE_APP_URL}`)
+    
+})
+const emit = defineEmits(['togglePage'])
+const findPlayer = async(selectedPlayer) => {
+    await playerStore.getPlayerById(`${import.meta.env.VITE_APP_URL}`, selectedPlayer.id)
+    emit('togglePage', 1)
+}
 
 const refreshPlayerList = async () => {
   playerList.value = await playerStore.getAllPlayer(`${import.meta.env.VITE_APP_URL}`);
@@ -26,6 +36,7 @@ const openEditModal = (player) => {
 </script>
 
 <template>
+  
   <div
     class="bg-gradient-to-b min-h-screen flex justify-center py-6"
     :style="{ backgroundImage: `url('/images/image/selectPlayer.jpg')` }"
