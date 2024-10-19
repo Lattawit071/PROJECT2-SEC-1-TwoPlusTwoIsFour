@@ -51,6 +51,35 @@ export const usePlayerStore = defineStore("playerStore", () => {
       throw new Error(error);
     }
   }
+
+  async function editPlayerById(url, id, updatedPlayer) {
+    try {
+      const response = await fetch(`${url}/user/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPlayer),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to edit player with ID ${id}.`);
+      }
+  
+      const data = await response.json();
+      const index = allPlayer.value.findIndex((player) => player.id === id);
+      if (index !== -1) {
+        allPlayer.value[index] = data;
+      }
+  
+      console.log(`Player with ID ${id} has been edited successfully.`);
+      return data;
+    } catch (error) {
+      console.log(`error: ${error}`);
+      throw new Error(error);
+    }
+  }
+  
   async function deletePlayerById(url, id) {
     try {
       const response = await fetch(url + "/user/" + id, {
@@ -152,6 +181,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     usePotion,
     getAllPlayer,
     getPlayerById,
+    editPlayerById,
     deletePlayerById,
   };
 });
