@@ -12,7 +12,10 @@ const isAddModalOpen = ref(false);
 const isEditModalOpen = ref(false);
 
 onMounted(async ()=> {
+    
     playerList.value = await playerStore.getAllPlayer(`${import.meta.env.VITE_APP_URL}`)
+    console.log(playerList.value);
+    
     
 })
 const emit = defineEmits(['togglePage'])
@@ -44,16 +47,17 @@ const openEditModal = (player) => {
     <div class="bg-blue-100 bg-opacity-80 mt-3 ml-8 mr-8 rounded-2xl shadow-lg w-3/5">
       <selectPlayerTable 
         :playerList="playerList" 
-        @select="openEditModal"
+        @openEditModal="openEditModal"
+        @select="findPlayer"
         @openAddModal="openAddModal" 
       />
     </div>
 
-    <ModalAddPlayer
+    <!-- <ModalAddPlayer
       v-if="isAddModalOpen"
       @close="isAddModalOpen = false"
       @refresh="refreshPlayerList"
-    />
+    /> -->
     <ModalEditPlayer
       v-if="isEditModalOpen"
       :player="selectedPlayer"

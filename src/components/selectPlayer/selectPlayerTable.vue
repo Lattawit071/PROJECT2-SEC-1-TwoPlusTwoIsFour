@@ -63,7 +63,7 @@ async function handleDeletePlayer(playerId) {
 
   <div
     class="grid grid-cols-12 items-center font-poppins gap-4 py-4 bg-gradient-to-r from-cyan-100 via-cyan-200 to-cyan-400 hover:from-lime-200 hover:via-green-300 hover:to-green-400 transition-all duration-300 ease-in-out hover:shadow-lg overflow-hidden"
-    v-for="(player, index) in playerList"
+    v-for="(player, index) in props.playerList"
     :key="index"
     @click="$emit('select', player)"
   >
