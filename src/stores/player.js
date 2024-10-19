@@ -52,6 +52,29 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
   }
 
+async function addPlayer(url, newPlayer) {
+  try {
+    const response = await fetch(url + "/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPlayer),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add player.");
+    }
+
+    const data = await response.json();
+    allPlayer.value.push(data);
+
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
   async function editPlayerById(url, id, updatedPlayer) {
     try {
       const response = await fetch(`${url}/user/${id}`, {
@@ -183,5 +206,6 @@ export const usePlayerStore = defineStore("playerStore", () => {
     getPlayerById,
     editPlayerById,
     deletePlayerById,
+    addPlayer,
   };
 });
