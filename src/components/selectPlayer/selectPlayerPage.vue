@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import selectPlayerTable from "./selectPlayerTable.vue";
-// import ModalAddPlayer from "./ModalAddPlayer.vue";
+import ModalAddPlayer from "./ModalAddPlayer.vue";
 import ModalEditPlayer from "./ModalEditPlayer.vue";
 import { usePlayerStore } from "@/stores/player";
 
@@ -53,11 +53,11 @@ const openEditModal = (player) => {
       />
     </div>
 
-    <!-- <ModalAddPlayer
+    <ModalAddPlayer
       v-if="isAddModalOpen"
       @close="isAddModalOpen = false"
       @refresh="refreshPlayerList"
-    /> -->
+    />
     <ModalEditPlayer
       v-if="isEditModalOpen"
       :player="selectedPlayer"
