@@ -52,40 +52,28 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
   }
 
-  // ฟังก์ชันหา ID สูงสุดและเพิ่มทีละ 1
-const getNextId = () => {
-  if (allPlayer.value.length === 0) return 1; // ถ้าไม่มีผู้เล่นให้เริ่มจาก 1
-  const maxId = Math.max(...allPlayer.value.map(p => parseInt(p.id)));
-  return maxId + 1;
-};
+  async function addPlayer(url, newPlayer) {
+    try {
+      const response = await fetch(url + "/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPlayer),
+      });
 
-async function addPlayer(url, newPlayer) {
-  try {
-    const newId = getNextId(); // หาค่า ID ใหม่
-    newPlayer.id = String(newId); // กำหนด ID ใหม่เป็น string
-    newPlayer.playerStore.id = newId; // กำหนด ID ให้กับ playerStore ด้วย
+      if (!response.ok) {
+        throw new Error("Failed to add player.");
+      }
 
-    const response = await fetch(url + "/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPlayer),
-    });
+      const data = await response.json();
+      allPlayer.value.push(data);
 
-    if (!response.ok) {
-      throw new Error("Failed to add player.");
+      return data;
+    } catch (error) {
+      throw new Error(error);
     }
-
-    const data = await response.json();
-    allPlayer.value.push(data); // เพิ่มผู้เล่นใหม่ใน state
-
-    return data;
-  } catch (error) {
-    console.error("Error adding player:", error);
-    throw new Error(error);
   }
-}
 
   async function editPlayerById(url, id, updatedPlayer) {
     try {
@@ -134,42 +122,85 @@ async function addPlayer(url, newPlayer) {
     }
   }
 
+  async function updatePlayerState(url) {
+    try {
+      const playerId = playerStore.value.id;
+      const response = await fetch(`${url}/user/${playerId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ playerStore: playerStore.value }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update player with ID ${playerId}.`);
+      }
+
+      console.log(`Player with ID ${playerId} updated successfully.`);
+    } catch (error) {
+      console.error("Error updating player:", error);
+    }
+  }
+
   function sellFishAll(fish) {
-    playerStore.value.coins += fish.price * fish.quantity;
+    const targetFish = playerStore.value.caughtFish.find(
+      (f) => f.id === fish.id
+    );
+    if (!targetFish) return;
+
+    playerStore.value.coins += targetFish.price * targetFish.quantity;
     playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
       (f) => f.id !== fish.id
     );
-    toastStore.showToast(`Sold all ${fish.name}`, "success");
+
+    toastStore.showToast(`Sold all ${targetFish.name}`, "success");
     soundStore.playSellSuccessSound();
+
+    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
   }
 
   function sellFish(fish) {
-    soundStore.playerStore.value.coins += fish.price;
-    fish.quantity -= 1;
+    const targetFish = playerStore.value.caughtFish.find(
+      (f) => f.id === fish.id
+    );
+    if (!targetFish) return;
 
-    if (fish.quantity === 0) {
+    playerStore.value.coins += targetFish.price;
+    targetFish.quantity -= 1;
+
+    if (targetFish.quantity === 0) {
       playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
         (f) => f.id !== fish.id
       );
     }
 
-    toastStore.showToast(`Sold 1 ${fish.name}`, "success");
+    toastStore.showToast(`Sold 1 ${targetFish.name}`, "success");
     soundStore.playSellSuccessSound();
+
+    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
   }
 
   function equipRod(rod) {
-    soundStore.playUseRodSound();
+    if (!playerStore.value.ownedRods.find((r) => r.id === rod.id)) return;
+
     playerStore.value.usingRods = rod;
+
     toastStore.showToast(`Equipped ${rod.name}`, "success");
+    soundStore.playUseRodSound();
+
+    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
   }
 
   function usePotion(potion) {
     soundStore.playUsePotionSound();
+
     let existingPotion = playerStore.value.usingPotion.find(
       (p) => p.id === potion.id
     );
 
     if (!existingPotion) {
+      // เพิ่มยาใหม่เข้าไป
       playerStore.value.usingPotion.push({
         ...potion,
         remainingTime: potion.duration,
@@ -179,25 +210,29 @@ async function addPlayer(url, newPlayer) {
         (p) => p.id === potion.id
       );
     } else {
-      const elapsedTimed = (Date.now() - existingPotion.startTime) / 1000;
+      // อัปเดตเวลาที่เหลือสำหรับยาเดิม
+      const elapsed = (Date.now() - existingPotion.startTime) / 1000;
       existingPotion.remainingTime = Math.max(
-        existingPotion.remainingTime - elapsedTimed + potion.duration,
+        existingPotion.remainingTime - elapsed + potion.duration,
         0
       );
-      existingPotion.setTimeout = Date.now();
+      existingPotion.startTime = Date.now(); // ตั้งเวลาใหม่
     }
 
-    if (potionTimers[potion.id]) {
-      clearTimeout(potionTimers[potion.id]);
-    }
+    // ตั้งเวลาให้ยาหมดอายุ
+    if (potionTimers[potion.id]) clearTimeout(potionTimers[potion.id]);
 
     potionTimers[potion.id] = setTimeout(() => {
       playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
         (p) => p.id !== potion.id
       );
       delete potionTimers[potion.id];
-    }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
 
+      // อัปเดต Backend เมื่อยาหมดอายุ
+      updatePlayerState(import.meta.env.VITE_APP_URL);
+    }, existingPotion.remainingTime * 1000);
+
+    // ลดจำนวนยาใน Inventory
     if (potion.quantity > 1) {
       potion.quantity -= 1;
     } else {
@@ -205,7 +240,11 @@ async function addPlayer(url, newPlayer) {
         (p) => p.id !== potion.id
       );
     }
+
     toastStore.showToast(`Used ${potion.name}`, "success");
+
+    // อัปเดต Backend เมื่อมีการใช้ยา
+    updatePlayerState(import.meta.env.VITE_APP_URL);
   }
 
   return {
@@ -219,5 +258,6 @@ async function addPlayer(url, newPlayer) {
     editPlayerById,
     deletePlayerById,
     addPlayer,
+    updatePlayerState,
   };
 });

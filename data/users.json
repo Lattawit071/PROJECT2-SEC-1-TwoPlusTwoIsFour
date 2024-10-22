@@ -37,7 +37,6 @@
       "Bookmarks": []
     },
     {
-      "id": "2",
       "playerStore": {
         "id": 2,
         "name": "1",
@@ -106,7 +105,7 @@
         "usingPotion": [],
         "level": 1
       },
-      "Bookmarks": []
+      "id": "2"
     }
   ]
 }
