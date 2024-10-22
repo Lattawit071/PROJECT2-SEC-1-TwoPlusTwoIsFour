@@ -54,7 +54,56 @@
             "type": "rod"
           }
         ],
-        "caughtFish": [],
+        "caughtFish": [
+          {
+            "id": 13,
+            "name": "Blue Whale",
+            "quantity": 1,
+            "price": 2500,
+            "icon": "/images/fish/Blue_Whale.png",
+            "type": "fish"
+          },
+          {
+            "id": 16,
+            "name": "Rainbow Fish",
+            "quantity": 1,
+            "price": 3500,
+            "icon": "/images/fish/Rainbow_Fish.png",
+            "type": "fish"
+          },
+          {
+            "id": 3,
+            "name": "Catfish",
+            "quantity": 2,
+            "price": 200,
+            "icon": "/images/fish/Catfish.png",
+            "type": "fish"
+          },
+          {
+            "id": 17,
+            "name": "Pearl",
+            "quantity": 1,
+            "price": 4500,
+            "icon": "/images/fish/Pearl.png",
+            "type": "fish"
+          },
+          {
+            "id": 18,
+            "name": "Diamond",
+            "quantity": 1,
+            "price": 5000,
+            "icon": "/images/fish/Diamond.png",
+            "type": "fish"
+          },
+          {
+            "id": 19,
+            "name": "Chest",
+            "quantity": 1,
+            "price": 8000,
+            "icon": "/images/fish/Chest.png",
+            "type": "fish"
+          }
+        ],
         "potions": [],
         "usingRods": {
           "id": 1,
@@ -62,7 +111,7 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 50,
+          "hp": 20,
           "maxHp": 50,
           "type": "rod"
         },
@@ -81,7 +130,9 @@
           }
         ],
         "level": 1,
-        "Bookmarks": []
+        "Bookmarks": [
+          "Chest"
+        ]
       },
       "id": "3"
     },
