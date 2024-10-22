@@ -21,6 +21,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     usingRods: rods[0],
     usingPotion: [],
     level: 1,
+    Bookmarks: []
   });
   const selectedPlayer = ref({});
   const potionTimers = {};
@@ -52,8 +53,19 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
   }
 
+  // ฟังก์ชันหา ID สูงสุดและเพิ่มทีละ 1
+  const getNextId = () => {
+    if (allPlayer.value.length === 0) return 1; // ถ้าไม่มีผู้เล่นให้เริ่มจาก 1
+    const maxId = Math.max(...allPlayer.value.map((p) => parseInt(p.id)));
+    return maxId + 1;
+  };
+
   async function addPlayer(url, newPlayer) {
     try {
+      const newId = getNextId(); // หาค่า ID ใหม่
+      newPlayer.id = String(newId); // กำหนด ID ใหม่เป็น string
+      newPlayer.playerStore.id = newId; // กำหนด ID ให้กับ playerStore ด้วย
+
       const response = await fetch(url + "/user", {
         method: "POST",
         headers: {
@@ -67,10 +79,11 @@ export const usePlayerStore = defineStore("playerStore", () => {
       }
 
       const data = await response.json();
-      allPlayer.value.push(data);
+      allPlayer.value.push(data); // เพิ่มผู้เล่นใหม่ใน state
 
       return data;
     } catch (error) {
+      console.error("Error adding player:", error);
       throw new Error(error);
     }
   }

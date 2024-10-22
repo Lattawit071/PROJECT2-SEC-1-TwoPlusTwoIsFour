@@ -11,6 +11,7 @@ import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
+import Bookmark from "../bookmark/bookmark.vue";
 
 const player = usePlayerStore();
 const sound = useSoundStore();
@@ -60,8 +61,15 @@ function addCaughtFish(fishId) {
       existingFish.quantity += 1;
     } else {
       player.playerStore.caughtFish.push(fish);
+      const isExist = player.playerStore.Bookmarks.filter((bookmark)=> bookmark===fish.name)
+      
+      if (isExist.length===0) {
+        player.playerStore.Bookmarks.push(fish.name)
+      }
     }
+    player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`)
   }
+
 }
 
 function getFishById(id) {
