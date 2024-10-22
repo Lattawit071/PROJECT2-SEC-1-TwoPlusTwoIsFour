@@ -39,43 +39,7 @@
     {
       "playerStore": {
         "id": 2,
-        "name": "1",
-        "coins": 100000,
-        "avatar": "/images/image/Player.png",
-        "ownedRods": [
-          {
-            "id": 1,
-            "name": "Basic Rod",
-            "quantity": 1,
-            "price": 0,
-            "icon": "/images/rod/Basic_Rod.png",
-            "hp": 50,
-            "maxHp": 50,
-            "type": "rod"
-          }
-        ],
-        "caughtFish": [],
-        "potions": [],
-        "usingRods": {
-          "id": 1,
-          "name": "Basic Rod",
-          "quantity": 1,
-          "price": 0,
-          "icon": "/images/rod/Basic_Rod.png",
-          "hp": 50,
-          "maxHp": 50,
-          "type": "rod"
-        },
-        "usingPotion": [],
-        "level": 1
-      },
-      "Bookmarks": []
-    },
-    {
-      "id": "3",
-      "playerStore": {
-        "id": 3,
-        "name": "ปลาบู่ทอง",
+        "name": "aaa",
         "coins": 100000,
         "avatar": "/images/image/Player.png",
         "ownedRods": [
