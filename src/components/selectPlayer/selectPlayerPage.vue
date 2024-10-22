@@ -39,12 +39,11 @@ const openEditModal = (player) => {
 </script>
 
 <template>
-  
   <div
-    class="bg-gradient-to-b min-h-screen flex justify-center py-6"
-    :style="{ backgroundImage: `url('/images/image/selectPlayer.jpg')` }"
+   class="flex items-center justify-center min-h-screen bg-cover bg-center pb-40"
+    :style="{ backgroundImage: `url('/images/image/Background2.png')` }"
   >
-    <div class="bg-blue-100 bg-opacity-80 mt-3 ml-8 mr-8 rounded-2xl shadow-lg w-3/5">
+  <div class="mt-3 ml-8 mr-8 shadow-lg w-3/5">
       <selectPlayerTable 
         :playerList="playerList" 
         @openEditModal="openEditModal"

@@ -32,15 +32,64 @@
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 999
-      },
-      "Bookmarks": []
+        "level": 999,
+        "Bookmarks": []
+      }
     },
     {
-      "id": "2",
       "playerStore": {
-        "id": 2,
-        "name": "aaa",
+        "id": 3,
+        "name": "test2",
+        "coins": 97500,
+        "avatar": "/images/image/Player.png",
+        "ownedRods": [
+          {
+            "id": 1,
+            "name": "Basic Rod",
+            "quantity": 1,
+            "price": 0,
+            "icon": "/images/rod/Basic_Rod.png",
+            "hp": 50,
+            "maxHp": 50,
+            "type": "rod"
+          }
+        ],
+        "caughtFish": [],
+        "potions": [],
+        "usingRods": {
+          "id": 1,
+          "name": "Basic Rod",
+          "quantity": 1,
+          "price": 0,
+          "icon": "/images/rod/Basic_Rod.png",
+          "hp": 50,
+          "maxHp": 50,
+          "type": "rod"
+        },
+        "usingPotion": [
+          {
+            "id": 1,
+            "name": "Luck Potion",
+            "quantity": 1,
+            "price": 2500,
+            "effect": "Luck +10% for 5 minutes",
+            "icon": "/images/potion/Luck_5m.png",
+            "type": "potion",
+            "duration": 300,
+            "remainingTime": 300,
+            "startTime": 1729626042657
+          }
+        ],
+        "level": 1,
+        "Bookmarks": []
+      },
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "playerStore": {
+        "id": 4,
+        "name": "test3",
         "coins": 100000,
         "avatar": "/images/image/Player.png",
         "ownedRods": [
@@ -68,9 +117,9 @@
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 1
-      },
-      "Bookmarks": []
+        "level": 1,
+        "Bookmarks": []
+      }
     }
   ]
 }

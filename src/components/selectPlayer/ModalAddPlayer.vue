@@ -41,8 +41,8 @@ const handleAddPlayer = async () => {
       },
       usingPotion: [],
       level: 1,
+      Bookmarks: [],
     },
-    Bookmarks: [],
   };
 
   try {
