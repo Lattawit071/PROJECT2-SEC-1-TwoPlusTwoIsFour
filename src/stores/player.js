@@ -52,28 +52,28 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
   }
 
-  async function addPlayer(url, newPlayer) {
-    try {
-      const response = await fetch(url + "/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPlayer),
-      });
+async function addPlayer(url, newPlayer) {
+  try {
+    const response = await fetch(url + "/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPlayer),
+    });
 
-      if (!response.ok) {
-        throw new Error("Failed to add player.");
-      }
-
-      const data = await response.json();
-      allPlayer.value.push(data);
-
-      return data;
-    } catch (error) {
-      throw new Error(error);
+    if (!response.ok) {
+      throw new Error("Failed to add player.");
     }
+
+    const data = await response.json();
+    allPlayer.value.push(data);
+
+    return data;
+  } catch (error) {
+    throw new Error(error);
   }
+}
 
   async function editPlayerById(url, id, updatedPlayer) {
     try {
@@ -84,17 +84,17 @@ export const usePlayerStore = defineStore("playerStore", () => {
         },
         body: JSON.stringify(updatedPlayer),
       });
-
+  
       if (!response.ok) {
         throw new Error(`Failed to edit player with ID ${id}.`);
       }
-
+  
       const data = await response.json();
       const index = allPlayer.value.findIndex((player) => player.id === id);
       if (index !== -1) {
         allPlayer.value[index] = data;
       }
-
+  
       console.log(`Player with ID ${id} has been edited successfully.`);
       return data;
     } catch (error) {
@@ -102,7 +102,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
       throw new Error(error);
     }
   }
-
+  
   async function deletePlayerById(url, id) {
     try {
       const response = await fetch(url + "/user/" + id, {
@@ -122,85 +122,42 @@ export const usePlayerStore = defineStore("playerStore", () => {
     }
   }
 
-  async function updatePlayerState(url) {
-    try {
-      const playerId = playerStore.value.id;
-      const response = await fetch(`${url}/user/${playerId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ playerStore: playerStore.value }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to update player with ID ${playerId}.`);
-      }
-
-      console.log(`Player with ID ${playerId} updated successfully.`);
-    } catch (error) {
-      console.error("Error updating player:", error);
-    }
-  }
-
   function sellFishAll(fish) {
-    const targetFish = playerStore.value.caughtFish.find(
-      (f) => f.id === fish.id
-    );
-    if (!targetFish) return;
-
-    playerStore.value.coins += targetFish.price * targetFish.quantity;
+    playerStore.value.coins += fish.price * fish.quantity;
     playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
       (f) => f.id !== fish.id
     );
-
-    toastStore.showToast(`Sold all ${targetFish.name}`, "success");
+    toastStore.showToast(`Sold all ${fish.name}`, "success");
     soundStore.playSellSuccessSound();
-
-    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
   }
 
   function sellFish(fish) {
-    const targetFish = playerStore.value.caughtFish.find(
-      (f) => f.id === fish.id
-    );
-    if (!targetFish) return;
+    soundStore.playerStore.value.coins += fish.price;
+    fish.quantity -= 1;
 
-    playerStore.value.coins += targetFish.price;
-    targetFish.quantity -= 1;
-
-    if (targetFish.quantity === 0) {
+    if (fish.quantity === 0) {
       playerStore.value.caughtFish = playerStore.value.caughtFish.filter(
         (f) => f.id !== fish.id
       );
     }
 
-    toastStore.showToast(`Sold 1 ${targetFish.name}`, "success");
+    toastStore.showToast(`Sold 1 ${fish.name}`, "success");
     soundStore.playSellSuccessSound();
-
-    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
   }
 
   function equipRod(rod) {
-    if (!playerStore.value.ownedRods.find((r) => r.id === rod.id)) return;
-
-    playerStore.value.usingRods = rod;
-
-    toastStore.showToast(`Equipped ${rod.name}`, "success");
     soundStore.playUseRodSound();
-
-    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
+    playerStore.value.usingRods = rod;
+    toastStore.showToast(`Equipped ${rod.name}`, "success");
   }
 
   function usePotion(potion) {
     soundStore.playUsePotionSound();
-
     let existingPotion = playerStore.value.usingPotion.find(
       (p) => p.id === potion.id
     );
 
     if (!existingPotion) {
-      // เพิ่มยาใหม่เข้าไป
       playerStore.value.usingPotion.push({
         ...potion,
         remainingTime: potion.duration,
@@ -210,29 +167,25 @@ export const usePlayerStore = defineStore("playerStore", () => {
         (p) => p.id === potion.id
       );
     } else {
-      // อัปเดตเวลาที่เหลือสำหรับยาเดิม
-      const elapsed = (Date.now() - existingPotion.startTime) / 1000;
+      const elapsedTimed = (Date.now() - existingPotion.startTime) / 1000;
       existingPotion.remainingTime = Math.max(
-        existingPotion.remainingTime - elapsed + potion.duration,
+        existingPotion.remainingTime - elapsedTimed + potion.duration,
         0
       );
-      existingPotion.startTime = Date.now(); // ตั้งเวลาใหม่
+      existingPotion.setTimeout = Date.now();
     }
 
-    // ตั้งเวลาให้ยาหมดอายุ
-    if (potionTimers[potion.id]) clearTimeout(potionTimers[potion.id]);
+    if (potionTimers[potion.id]) {
+      clearTimeout(potionTimers[potion.id]);
+    }
 
     potionTimers[potion.id] = setTimeout(() => {
       playerStore.value.usingPotion = playerStore.value.usingPotion.filter(
         (p) => p.id !== potion.id
       );
       delete potionTimers[potion.id];
+    }, playerStore.value.usingPotion.find((p) => p.id === potion.id).remainingTime * 1000);
 
-      // อัปเดต Backend เมื่อยาหมดอายุ
-      updatePlayerState(import.meta.env.VITE_APP_URL);
-    }, existingPotion.remainingTime * 1000);
-
-    // ลดจำนวนยาใน Inventory
     if (potion.quantity > 1) {
       potion.quantity -= 1;
     } else {
@@ -240,11 +193,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
         (p) => p.id !== potion.id
       );
     }
-
     toastStore.showToast(`Used ${potion.name}`, "success");
-
-    // อัปเดต Backend เมื่อมีการใช้ยา
-    updatePlayerState(import.meta.env.VITE_APP_URL);
   }
 
   return {
@@ -258,6 +207,5 @@ export const usePlayerStore = defineStore("playerStore", () => {
     editPlayerById,
     deletePlayerById,
     addPlayer,
-    updatePlayerState,
   };
 });

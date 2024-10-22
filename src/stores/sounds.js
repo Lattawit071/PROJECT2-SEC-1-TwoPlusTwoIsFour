@@ -37,7 +37,7 @@ export const useSoundStore = defineStore("soundStore", () => {
   sounds.sellFish.volume = 0.4;
   sounds.usePotionSound.volume = 0.4;
   sounds.backgroundMusic.loop = true;
-  sounds.backgroundMusic.volume = 0;
+  sounds.backgroundMusic.volume = 0.1;
   sounds.getFish.volume = 0.4;
   sounds.failGetFish.volume = 0.4;
   sounds.hookFish.volume = 0.5;
