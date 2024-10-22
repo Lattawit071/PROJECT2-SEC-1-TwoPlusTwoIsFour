@@ -50,6 +50,7 @@ const openEditModal = (player) => {
         @openEditModal="openEditModal"
         @select="findPlayer"
         @openAddModal="openAddModal" 
+        @refresh="refreshPlayerList"
       />
     </div>
 

@@ -1,9 +1,9 @@
 {
   "user": [
     {
-      "id": "999",
+      "id": "1",
       "playerStore": {
-        "id": 999,
+        "id": 1,
         "name": "Admin",
         "coins": 100000,
         "avatar": "/images/image/Player.png",
@@ -33,6 +33,42 @@
         },
         "usingPotion": [],
         "level": 999
+      },
+      "Bookmarks": []
+    },
+    {
+      "id": "2",
+      "playerStore": {
+        "id": 2,
+        "name": "aaa",
+        "coins": 100000,
+        "avatar": "/images/image/Player.png",
+        "ownedRods": [
+          {
+            "id": 1,
+            "name": "Basic Rod",
+            "quantity": 1,
+            "price": 0,
+            "icon": "/images/rod/Basic_Rod.png",
+            "hp": 50,
+            "maxHp": 50,
+            "type": "rod"
+          }
+        ],
+        "caughtFish": [],
+        "potions": [],
+        "usingRods": {
+          "id": 1,
+          "name": "Basic Rod",
+          "quantity": 1,
+          "price": 0,
+          "icon": "/images/rod/Basic_Rod.png",
+          "hp": 50,
+          "maxHp": 50,
+          "type": "rod"
+        },
+        "usingPotion": [],
+        "level": 1
       },
       "Bookmarks": []
     }

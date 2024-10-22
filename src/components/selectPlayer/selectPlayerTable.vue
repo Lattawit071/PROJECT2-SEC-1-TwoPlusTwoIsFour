@@ -12,7 +12,7 @@ const props = defineProps({
   },
 });
 
-defineEmits(["select", "openAddModal", "openEditModal"]);
+const emit = defineEmits(["select", "openAddModal", "openEditModal", "refresh"]);
 
 async function handleDeletePlayer(playerId) {
   try {
@@ -25,6 +25,7 @@ async function handleDeletePlayer(playerId) {
     playerList.value = await playerStore.getAllPlayer(
       `${import.meta.env.VITE_APP_URL}`
     );
+    emit("refresh");
   } catch (error) {
     console.error(`Failed to delete player: ${error}`);
   }
