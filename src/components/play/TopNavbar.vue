@@ -23,6 +23,7 @@ defineEmits(["repairToggle"]);
       <div>
         <p class="text-lg font-semibold md:text-xl">{{ player.playerStore.name }}</p>
         <p class="text-sm md:text-base">Coins: {{ player.playerStore.coins }}</p>
+        <p class="text-sm md:text-base">Level: {{ player.playerStore.level }}</p>
       </div>
     </div>
 

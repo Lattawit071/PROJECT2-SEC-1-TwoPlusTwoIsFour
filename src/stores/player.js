@@ -21,6 +21,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     usingRods: rods[0],
     usingPotion: [],
     level: 1,
+    exp: 0,
     Bookmarks: []
   });
   const selectedPlayer = ref({});
@@ -259,6 +260,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     // อัปเดต Backend เมื่อมีการใช้ยา
     updatePlayerState(import.meta.env.VITE_APP_URL);
   }
+
 
   return {
     playerStore,

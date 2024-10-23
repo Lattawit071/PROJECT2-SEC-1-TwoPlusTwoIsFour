@@ -1,0 +1,402 @@
+[
+    {
+        "level": 1,
+        "exp_required": 10
+    },
+    {
+        "level": 2,
+        "exp_required": 20
+    },
+    {
+        "level": 3,
+        "exp_required": 30
+    },
+    {
+        "level": 4,
+        "exp_required": 40
+    },
+    {
+        "level": 5,
+        "exp_required": 50
+    },
+    {
+        "level": 6,
+        "exp_required": 60
+    },
+    {
+        "level": 7,
+        "exp_required": 70
+    },
+    {
+        "level": 8,
+        "exp_required": 80
+    },
+    {
+        "level": 9,
+        "exp_required": 90
+    },
+    {
+        "level": 10,
+        "exp_required": 100
+    },
+    {
+        "level": 11,
+        "exp_required": 110
+    },
+    {
+        "level": 12,
+        "exp_required": 120
+    },
+    {
+        "level": 13,
+        "exp_required": 130
+    },
+    {
+        "level": 14,
+        "exp_required": 140
+    },
+    {
+        "level": 15,
+        "exp_required": 150
+    },
+    {
+        "level": 16,
+        "exp_required": 160
+    },
+    {
+        "level": 17,
+        "exp_required": 170
+    },
+    {
+        "level": 18,
+        "exp_required": 180
+    },
+    {
+        "level": 19,
+        "exp_required": 190
+    },
+    {
+        "level": 20,
+        "exp_required": 200
+    },
+    {
+        "level": 21,
+        "exp_required": 210
+    },
+    {
+        "level": 22,
+        "exp_required": 220
+    },
+    {
+        "level": 23,
+        "exp_required": 230
+    },
+    {
+        "level": 24,
+        "exp_required": 240
+    },
+    {
+        "level": 25,
+        "exp_required": 250
+    },
+    {
+        "level": 26,
+        "exp_required": 260
+    },
+    {
+        "level": 27,
+        "exp_required": 270
+    },
+    {
+        "level": 28,
+        "exp_required": 280
+    },
+    {
+        "level": 29,
+        "exp_required": 290
+    },
+    {
+        "level": 30,
+        "exp_required": 300
+    },
+    {
+        "level": 31,
+        "exp_required": 310
+    },
+    {
+        "level": 32,
+        "exp_required": 320
+    },
+    {
+        "level": 33,
+        "exp_required": 330
+    },
+    {
+        "level": 34,
+        "exp_required": 340
+    },
+    {
+        "level": 35,
+        "exp_required": 350
+    },
+    {
+        "level": 36,
+        "exp_required": 360
+    },
+    {
+        "level": 37,
+        "exp_required": 370
+    },
+    {
+        "level": 38,
+        "exp_required": 380
+    },
+    {
+        "level": 39,
+        "exp_required": 390
+    },
+    {
+        "level": 40,
+        "exp_required": 400
+    },
+    {
+        "level": 41,
+        "exp_required": 410
+    },
+    {
+        "level": 42,
+        "exp_required": 420
+    },
+    {
+        "level": 43,
+        "exp_required": 430
+    },
+    {
+        "level": 44,
+        "exp_required": 440
+    },
+    {
+        "level": 45,
+        "exp_required": 450
+    },
+    {
+        "level": 46,
+        "exp_required": 460
+    },
+    {
+        "level": 47,
+        "exp_required": 470
+    },
+    {
+        "level": 48,
+        "exp_required": 480
+    },
+    {
+        "level": 49,
+        "exp_required": 490
+    },
+    {
+        "level": 50,
+        "exp_required": 500
+    },
+    {
+        "level": 51,
+        "exp_required": 510
+    },
+    {
+        "level": 52,
+        "exp_required": 520
+    },
+    {
+        "level": 53,
+        "exp_required": 530
+    },
+    {
+        "level": 54,
+        "exp_required": 540
+    },
+    {
+        "level": 55,
+        "exp_required": 550
+    },
+    {
+        "level": 56,
+        "exp_required": 560
+    },
+    {
+        "level": 57,
+        "exp_required": 570
+    },
+    {
+        "level": 58,
+        "exp_required": 580
+    },
+    {
+        "level": 59,
+        "exp_required": 590
+    },
+    {
+        "level": 60,
+        "exp_required": 600
+    },
+    {
+        "level": 61,
+        "exp_required": 610
+    },
+    {
+        "level": 62,
+        "exp_required": 620
+    },
+    {
+        "level": 63,
+        "exp_required": 630
+    },
+    {
+        "level": 64,
+        "exp_required": 640
+    },
+    {
+        "level": 65,
+        "exp_required": 650
+    },
+    {
+        "level": 66,
+        "exp_required": 660
+    },
+    {
+        "level": 67,
+        "exp_required": 670
+    },
+    {
+        "level": 68,
+        "exp_required": 680
+    },
+    {
+        "level": 69,
+        "exp_required": 690
+    },
+    {
+        "level": 70,
+        "exp_required": 700
+    },
+    {
+        "level": 71,
+        "exp_required": 710
+    },
+    {
+        "level": 72,
+        "exp_required": 720
+    },
+    {
+        "level": 73,
+        "exp_required": 730
+    },
+    {
+        "level": 74,
+        "exp_required": 740
+    },
+    {
+        "level": 75,
+        "exp_required": 750
+    },
+    {
+        "level": 76,
+        "exp_required": 760
+    },
+    {
+        "level": 77,
+        "exp_required": 770
+    },
+    {
+        "level": 78,
+        "exp_required": 780
+    },
+    {
+        "level": 79,
+        "exp_required": 790
+    },
+    {
+        "level": 80,
+        "exp_required": 800
+    },
+    {
+        "level": 81,
+        "exp_required": 810
+    },
+    {
+        "level": 82,
+        "exp_required": 820
+    },
+    {
+        "level": 83,
+        "exp_required": 830
+    },
+    {
+        "level": 84,
+        "exp_required": 840
+    },
+    {
+        "level": 85,
+        "exp_required": 850
+    },
+    {
+        "level": 86,
+        "exp_required": 860
+    },
+    {
+        "level": 87,
+        "exp_required": 870
+    },
+    {
+        "level": 88,
+        "exp_required": 880
+    },
+    {
+        "level": 89,
+        "exp_required": 890
+    },
+    {
+        "level": 90,
+        "exp_required": 900
+    },
+    {
+        "level": 91,
+        "exp_required": 910
+    },
+    {
+        "level": 92,
+        "exp_required": 920
+    },
+    {
+        "level": 93,
+        "exp_required": 930
+    },
+    {
+        "level": 94,
+        "exp_required": 940
+    },
+    {
+        "level": 95,
+        "exp_required": 950
+    },
+    {
+        "level": 96,
+        "exp_required": 960
+    },
+    {
+        "level": 97,
+        "exp_required": 970
+    },
+    {
+        "level": 98,
+        "exp_required": 980
+    },
+    {
+        "level": 99,
+        "exp_required": 990
+    },
+    {
+        "level": 100,
+        "exp_required": 1000
+    }
+]

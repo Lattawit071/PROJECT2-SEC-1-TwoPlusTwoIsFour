@@ -11,7 +11,7 @@ import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
-import Bookmark from "../bookmark/bookmark.vue";
+import level from "../../../data/level.json";
 
 const player = usePlayerStore();
 const sound = useSoundStore();
@@ -67,9 +67,23 @@ function addCaughtFish(fishId) {
         player.playerStore.Bookmarks.push(fish.name)
       }
     }
+    
+    player.playerStore.exp = player.playerStore.exp + fish.exp
+    const requireNext = getNextLevel(player.playerStore.level)
+    if (player.playerStore.exp >= requireNext.exp_required) {
+      player.playerStore.level = player.playerStore.level+1
+      
+      player.playerStore.exp = player.playerStore.exp - requireNext.exp_required
+      
+    }
     player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`)
   }
 
+}
+
+function getNextLevel(num) {
+  const nextLevel = num+1
+  return level.find((level) => level.level === nextLevel)
 }
 
 function getFishById(id) {

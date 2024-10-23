@@ -13,7 +13,7 @@ const props = defineProps({
 <template>
   <div v-if="item.type === 'fish'" class="flex flex-col space-y-2">
     <button
-      @mouseenter="$emit('playHoverSound')"
+      @mouseenter="soundStore.playHoverSound()"
       @click="playerStore.sellFishAll(item)"
       class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
     >
@@ -21,7 +21,7 @@ const props = defineProps({
     </button>
 
     <button
-      @mouseenter="$emit('playHoverSound')"
+      @mouseenter="soundStore.playHoverSound()"
       @click="playerStore.sellFishAll(item)"
       class="bg-red-700 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-300 ease-in-out transform hover:scale-105 w-full"
     >

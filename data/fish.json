@@ -5,7 +5,8 @@
       "quantity": 1,
       "price": 50,
       "icon": "/images/fish/Sardine.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 2,
@@ -13,7 +14,8 @@
       "quantity": 1,
       "price": 150,
       "icon": "/images/fish/Clownfish.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 3,
@@ -21,7 +23,8 @@
       "quantity": 1,
       "price": 200,
       "icon": "/images/fish/Catfish.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 4,
@@ -29,7 +32,8 @@
       "quantity": 1,
       "price": 250,
       "icon": "/images/fish/Salmon.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 5,
@@ -37,7 +41,8 @@
       "quantity": 1,
       "price": 250,
       "icon": "/images/fish/Tuna.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 6,
@@ -45,7 +50,8 @@
       "quantity": 1,
       "price": 700,
       "icon": "/images/fish/Marlin.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 15
     },
     {
       "id": 7,
@@ -53,7 +59,8 @@
       "quantity": 1,
       "price": 500,
       "icon": "/images/fish/Stingray.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 10
     },
     {
       "id": 8,
@@ -61,7 +68,8 @@
       "quantity": 1,
       "price": 300,
       "icon": "/images/fish/Eel.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 5
     },
     {
       "id": 9,
@@ -69,7 +77,8 @@
       "quantity": 1,
       "price": 800,
       "icon": "/images/fish/White_Koi.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 15
     },
     {
       "id": 10,
@@ -77,7 +86,8 @@
       "quantity": 1,
       "price": 850,
       "icon": "/images/fish/Squid.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 15
     },
     {
       "id": 11,
@@ -85,7 +95,8 @@
       "quantity": 1,
       "price": 1500,
       "icon": "/images/fish/Shark.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 30
     },
     {
       "id": 12,
@@ -93,7 +104,8 @@
       "quantity": 1,
       "price": 2000,
       "icon": "/images/fish/Orca.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 40
     },
     {
       "id": 13,
@@ -101,7 +113,8 @@
       "quantity": 1,
       "price": 2500,
       "icon": "/images/fish/Blue_Whale.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 50
     },
     {
       "id": 14,
@@ -109,7 +122,8 @@
       "quantity": 1,
       "price": 2500,
       "icon": "/images/fish/Giant_Pacific_Octopus.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 50
     },
     {
       "id": 15,
@@ -117,7 +131,8 @@
       "quantity": 1,
       "price": 3000,
       "icon": "/images/fish/Golden_Fish.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 60
     },
     {
       "id": 16,
@@ -125,7 +140,8 @@
       "quantity": 1,
       "price": 3500,
       "icon": "/images/fish/Rainbow_Fish.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 70
     },
     {
       "id": 17,
@@ -133,7 +149,8 @@
       "quantity": 1,
       "price": 4500,
       "icon": "/images/fish/Pearl.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 90
     },
     {
       "id": 18,
@@ -141,7 +158,8 @@
       "quantity": 1,
       "price": 5000,
       "icon": "/images/fish/Diamond.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 100
     },
     {
       "id": 19,
@@ -149,7 +167,8 @@
       "quantity": 1,
       "price": 8000,
       "icon": "/images/fish/Chest.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 160
     },
     {
       "id": 20,
@@ -157,7 +176,8 @@
       "quantity": 1,
       "price": 100000,
       "icon": "/images/fish/Dragon.png",
-      "type": "fish"
+      "type": "fish",
+      "exp": 250
     }
   ]
   
