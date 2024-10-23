@@ -18,7 +18,6 @@ const playerCoins = computed(() => store.playerStore.coins);
 function deductCoins(amount) {
   if (store.playerStore.coins >= amount) {
     store.playerStore.coins -= amount;
-  } else {
   }
 }
 
@@ -36,9 +35,7 @@ function addRod(rodId) {
         quantity: 1,
       });
       showToastMessage(rod);
-    } else {
     }
-  } else {
   }
 }
 
@@ -92,7 +89,6 @@ function purchaseRods(item) {
 }
 
 function addPotion(potionId) {
-
   const selectedPotion = potion.find((p) => p.id === potionId);
   if (selectedPotion) {
     const existingPotion = store.playerStore.potions.find(

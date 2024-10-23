@@ -5,14 +5,14 @@
         "id": 1,
         "name": "Admin",
         "coins": 2650,
-        "avatar": "/images/image/Player.png",
+        "avatar": "Player.png",
         "ownedRods": [
           {
             "id": 1,
             "name": "Basic Rod",
             "quantity": 1,
             "price": 0,
-            "icon": "/images/rod/Basic_Rod.png",
+            "icon": "rod/Basic_Rod.png",
             "hp": 50,
             "maxHp": 50,
             "type": "rod"
@@ -22,7 +22,7 @@
             "name": "Galaxy Rod",
             "quantity": 1,
             "price": 100000,
-            "icon": "/images/rod/Galaxy_Rod.png",
+            "icon": "rod/Galaxy_Rod.png",
             "hp": 100,
             "maxHp": 100,
             "type": "rod"
@@ -35,7 +35,7 @@
           "name": "Basic Rod",
           "quantity": 1,
           "price": 0,
-          "icon": "/images/rod/Basic_Rod.png",
+          "icon": "rod/Basic_Rod.png",
           "hp": 47,
           "maxHp": 50,
           "type": "rod"
@@ -49,17 +49,123 @@
     },
     {
       "playerStore": {
-        "id": 3,
-        "name": "test2",
-        "coins": 40475,
-        "avatar": "/images/image/Player.png",
+        "id": 2,
+        "name": "User 1 (035)",
+        "coins": 100000,
+        "avatar": "Player.png",
         "ownedRods": [
           {
             "id": 1,
             "name": "Basic Rod",
             "quantity": 1,
             "price": 0,
-            "icon": "/images/rod/Basic_Rod.png",
+            "icon": "rod/Basic_Rod.png",
+            "hp": 50,
+            "maxHp": 50,
+            "type": "rod"
+          }
+        ],
+        "caughtFish": [
+          {
+            "id": 11,
+            "name": "Shark",
+            "quantity": 1,
+            "price": 1500,
+            "icon": "fish/Shark.png",
+            "type": "fish",
+            "exp": 30
+          },
+          {
+            "id": 19,
+            "name": "Chest",
+            "quantity": 1,
+            "price": 8000,
+            "icon": "fish/Chest.png",
+            "type": "fish",
+            "exp": 160
+          },
+          {
+            "id": 2,
+            "name": "Clownfish",
+            "quantity": 1,
+            "price": 150,
+            "icon": "fish/Clownfish.png",
+            "type": "fish",
+            "exp": 5
+          }
+        ],
+        "potions": [],
+        "usingRods": {
+          "id": 1,
+          "name": "Basic Rod",
+          "quantity": 1,
+          "price": 0,
+          "icon": "rod/Basic_Rod.png",
+          "hp": 41,
+          "maxHp": 50,
+          "type": "rod"
+        },
+        "usingPotion": [],
+        "level": 5,
+        "exp": 25,
+        "Bookmarks": [
+          "Shark",
+          "Chest",
+          "Clownfish"
+        ]
+      },
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "playerStore": {
+        "id": 3,
+        "name": "User 2 (072)",
+        "coins": 100000,
+        "avatar": "Player.png",
+        "ownedRods": [
+          {
+            "id": 1,
+            "name": "Basic Rod",
+            "quantity": 1,
+            "price": 0,
+            "icon": "rod/Basic_Rod.png",
+            "hp": 50,
+            "maxHp": 50,
+            "type": "rod"
+          }
+        ],
+        "caughtFish": [],
+        "potions": [],
+        "usingRods": {
+          "id": 1,
+          "name": "Basic Rod",
+          "quantity": 1,
+          "price": 0,
+          "icon": "rod/Basic_Rod.png",
+          "hp": 50,
+          "maxHp": 50,
+          "type": "rod"
+        },
+        "usingPotion": [],
+        "level": 1,
+        "exp": 0,
+        "Bookmarks": []
+      }
+    },
+    {
+      "playerStore": {
+        "id": 4,
+        "name": "User 3 (087)",
+        "coins": 52800,
+        "avatar": "Player.png",
+        "ownedRods": [
+          {
+            "id": 1,
+            "name": "Basic Rod",
+            "quantity": 1,
+            "price": 0,
+            "icon": "rod/Basic_Rod.png",
             "hp": 50,
             "maxHp": 50,
             "type": "rod"
@@ -69,120 +175,39 @@
             "name": "Star Rod",
             "quantity": 1,
             "price": 50000,
-            "icon": "/images/rod/Star_Rod.png",
-            "hp": 75,
+            "icon": "rod/Star_Rod.png",
+            "hp": 73,
             "maxHp": 75,
             "type": "rod"
           }
         ],
         "caughtFish": [
           {
-            "id": 3,
-            "name": "Catfish",
-            "quantity": 2,
-            "price": 200,
-            "icon": "/images/fish/Catfish.png",
-            "type": "fish",
-            "exp": 5
-          },
-          {
             "id": 4,
             "name": "Salmon",
-            "quantity": 3,
+            "quantity": 1,
             "price": 250,
-            "icon": "/images/fish/Salmon.png",
+            "icon": "fish/Salmon.png",
             "type": "fish",
             "exp": 5
           },
           {
-            "id": 10,
-            "name": "Squid",
+            "id": 15,
+            "name": "Golden Fish",
             "quantity": 1,
-            "price": 850,
-            "icon": "/images/fish/Squid.png",
+            "price": 3000,
+            "icon": "fish/Golden_Fish.png",
             "type": "fish",
-            "exp": 15
+            "exp": 60
           },
           {
-            "id": 2,
-            "name": "Clownfish",
+            "id": 5,
+            "name": "Tuna",
             "quantity": 1,
-            "price": 150,
-            "icon": "/images/fish/Clownfish.png",
+            "price": 250,
+            "icon": "fish/Tuna.png",
             "type": "fish",
             "exp": 5
-          },
-          {
-            "id": 16,
-            "name": "Rainbow Fish",
-            "quantity": 2,
-            "price": 3500,
-            "icon": "/images/fish/Rainbow_Fish.png",
-            "type": "fish",
-            "exp": 70
-          },
-          {
-            "id": 12,
-            "name": "Orca",
-            "quantity": 2,
-            "price": 2000,
-            "icon": "/images/fish/Orca.png",
-            "type": "fish",
-            "exp": 40
-          },
-          {
-            "id": 19,
-            "name": "Chest",
-            "quantity": 1,
-            "price": 8000,
-            "icon": "/images/fish/Chest.png",
-            "type": "fish",
-            "exp": 160
-          },
-          {
-            "id": 9,
-            "name": "White Koi",
-            "quantity": 2,
-            "price": 800,
-            "icon": "/images/fish/White_Koi.png",
-            "type": "fish",
-            "exp": 15
-          },
-          {
-            "id": 17,
-            "name": "Pearl",
-            "quantity": 2,
-            "price": 4500,
-            "icon": "/images/fish/Pearl.png",
-            "type": "fish",
-            "exp": 90
-          },
-          {
-            "id": 11,
-            "name": "Shark",
-            "quantity": 2,
-            "price": 1500,
-            "icon": "/images/fish/Shark.png",
-            "type": "fish",
-            "exp": 30
-          },
-          {
-            "id": 14,
-            "name": "Giant Pacific Octopus",
-            "quantity": 2,
-            "price": 2500,
-            "icon": "/images/fish/Giant_Pacific_Octopus.png",
-            "type": "fish",
-            "exp": 50
-          },
-          {
-            "id": 6,
-            "name": "Marlin",
-            "quantity": 1,
-            "price": 700,
-            "icon": "/images/fish/Marlin.png",
-            "type": "fish",
-            "exp": 15
           }
         ],
         "potions": [
@@ -192,130 +217,82 @@
             "quantity": 1,
             "price": 2500,
             "effect": "Luck +10% for 5 minutes",
-            "icon": "/images/potion/Luck_5m.png",
+            "icon": "potion/Luck_5m.png",
             "type": "potion",
             "duration": 300
           }
         ],
         "usingRods": {
-          "id": 1,
-          "name": "Basic Rod",
+          "id": 2,
+          "name": "Star Rod",
           "quantity": 1,
-          "price": 0,
-          "icon": "/images/rod/Basic_Rod.png",
-          "hp": 23,
-          "maxHp": 50,
+          "price": 50000,
+          "icon": "rod/Star_Rod.png",
+          "hp": 73,
+          "maxHp": 75,
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 11,
+        "level": 5,
         "exp": 25,
         "Bookmarks": [
-          "Catfish",
-          "Salmon",
-          "Squid",
-          "Clownfish",
-          "Rainbow Fish",
-          "Orca",
-          "Chest",
-          "White Koi",
           "Pearl",
-          "Shark",
-          "Giant Pacific Octopus",
-          "Marlin"
+          "White Koi",
+          "Salmon",
+          "Golden Fish",
+          "Tuna"
         ]
       },
-      "id": "3"
+      "id": "4"
     },
     {
       "playerStore": {
-        "id": 4,
-        "name": "aaa",
-        "coins": 30000,
-        "avatar": "/images/image/Player.png",
+        "id": 5,
+        "name": "User 4 (116)",
+        "coins": 100000,
+        "avatar": "Player.png",
         "ownedRods": [
           {
             "id": 1,
             "name": "Basic Rod",
             "quantity": 1,
             "price": 0,
-            "icon": "/images/rod/Basic_Rod.png",
+            "icon": "rod/Basic_Rod.png",
             "hp": 50,
             "maxHp": 50,
-            "type": "rod"
-          },
-          {
-            "id": 2,
-            "name": "Star Rod",
-            "quantity": 1,
-            "price": 50000,
-            "icon": "/images/rod/Star_Rod.png",
-            "hp": 75,
-            "maxHp": 75,
             "type": "rod"
           }
         ],
         "caughtFish": [
           {
-            "id": 14,
-            "name": "Giant Pacific Octopus",
+            "id": 20,
+            "name": "Dragon",
             "quantity": 1,
-            "price": 2500,
-            "icon": "/images/fish/Giant_Pacific_Octopus.png",
+            "price": 100000,
+            "icon": "fish/Dragon.png",
             "type": "fish",
-            "exp": 50
-          },
-          {
-            "id": 9,
-            "name": "White Koi",
-            "quantity": 1,
-            "price": 800,
-            "icon": "/images/fish/White_Koi.png",
-            "type": "fish",
-            "exp": 15
-          },
-          {
-            "id": 3,
-            "name": "Catfish",
-            "quantity": 1,
-            "price": 200,
-            "icon": "/images/fish/Catfish.png",
-            "type": "fish",
-            "exp": 5
+            "exp": 250
           }
         ],
-        "potions": [
-          {
-            "id": 3,
-            "name": "Full Luck Potion",
-            "quantity": 2,
-            "price": 10000,
-            "effect": "Luck +10% for 1 hour",
-            "icon": "/images/potion/Luck_1h.png",
-            "type": "potion",
-            "duration": 3600
-          }
-        ],
+        "potions": [],
         "usingRods": {
           "id": 1,
           "name": "Basic Rod",
           "quantity": 1,
           "price": 0,
-          "icon": "/images/rod/Basic_Rod.png",
-          "hp": 41,
+          "icon": "rod/Basic_Rod.png",
+          "hp": 47,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 3,
-        "exp": 20,
+        "level": 5,
+        "exp": 50,
         "Bookmarks": [
-          "Giant Pacific Octopus",
-          "White Koi",
-          "Catfish"
+          "Dragon"
         ]
       },
-      "id": "4"
+      "id": "5"
     }
   ]
 }

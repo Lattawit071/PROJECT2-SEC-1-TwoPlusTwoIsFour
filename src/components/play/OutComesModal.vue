@@ -1,6 +1,6 @@
 <script setup>
 import { useSoundStore } from "@/stores/sounds";
-// import { computed } from "vue";
+
 const sound = useSoundStore();
 const props = defineProps({
   gottenFish: {
@@ -28,7 +28,7 @@ defineEmits(["playHoverSound", "closeModal"]);
     <div
       class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center bg-gray-1000"
       style="
-        background-image: url('/images/image/SeaBackground.png');
+        background-image: url('/background/SeaBackground.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -77,7 +77,7 @@ defineEmits(["playHoverSound", "closeModal"]);
     <div
       class="p-4 md:p-6 rounded-xl shadow-lg w-11/12 md:w-1/2 lg:w-1/3 max-w-lg text-center flex flex-col items-center bg-gray-1000"
       style="
-        background-image: url('/images/image/SeaBackground.png');
+        background-image: url('/background/SeaBackground.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

@@ -32,7 +32,7 @@ onMounted(() => {
  
 <template>
   <div class="loading-screen" v-if="loading">
-    <img src="/images/gif/loading.gif" />
+    <img src="/gif/loading.gif" />
     <p>{{ loadingMessage }}</p>
     <div class="loading-bar">
       <div

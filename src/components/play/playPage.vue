@@ -7,16 +7,16 @@ import RepairModal from "./RepairModal.vue";
 import BottomNavBar from "./BottomNavBar.vue";
 import MapSelection from "./MapSelection.vue";
 import mapData from "../../../data/map.json";
-//data
 import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
+import { useMapStore } from '@/stores/mapStore';
 import level from "../../../data/level.json";
 import LevelUp from "./LevelUp.vue";
 const player = usePlayerStore();
 const sound = useSoundStore();
-
+const mapStore = useMapStore();
 const props = defineProps({
   isSoundOn: {
     type: Boolean,
@@ -49,8 +49,7 @@ const toggleMapModal = () => {
 };
 
 const handleSelectMap = (selectedMap) => {
-  currentMap.value = selectedMap;
-  console.log(`Map changed to: ${selectedMap}`);
+  mapStore.setCurrentMap(selectedMap);
 };
 
 const LvlModal = ref(false);
@@ -94,8 +93,7 @@ function addCaughtFish(fishId) {
 
           if (player.playerStore.exp >= requireNext.exp_required) {
             player.playerStore.level = player.playerStore.level + 1;
-            player.playerStore.exp =
-              player.playerStore.exp - requireNext.exp_required;
+            player.playerStore.exp = player.playerStore.exp - requireNext.exp_required;
           }
           const requireNext2 = getNextLevel(
             player.playerStore.level + 1 + index
@@ -325,21 +323,25 @@ const changePage = (value) => {
 
 <template>
   <div
-    class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
-    :style="{ backgroundImage: `url(${currentMap.icon})` }"
+    class="play-container flex flex-col items-center justify-center min-h-screen relative"
+    :style="{
+      backgroundImage: `url(${mapStore.currentMap.icon})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }"
   >
-    <!-- ปุ่มสำหรับเปิด Modal -->
-    <button
-      class="bg-green-500 text-white px-4 py-2 rounded fixed right-4 top-1/2 transform -translate-y-1/2 z-50"
+    <img
+      src="/button/Map.png"
+      alt="Change Map"
+      class="w-16 h-16 fixed right-4 top-1/2 transform -translate-y-1/2 z-50 cursor-pointer"
       @click="toggleMapModal"
-    > change map
-    </button>
+    />
 
     <p class="text-black text-xl font-bold mt-32">
- Map: {{ currentMap.name }}
-</p>
+      Map: {{ mapStore.currentMap.name }}
+    </p>
 
-    <!-- เรียกใช้ Map Selection Modal -->
     <MapSelection
       v-if="isMapModalOpen"
       @close="toggleMapModal"
@@ -361,10 +363,22 @@ const changePage = (value) => {
     />
 
     <LevelUp v-if="LvlModal" @closeLvlModal="closeLvlModal" />
-
     <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
-    <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
+    <BottomNavBar @togglePage="changePage" @hook="hook"></BottomNavBar>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.play-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+</style>
+

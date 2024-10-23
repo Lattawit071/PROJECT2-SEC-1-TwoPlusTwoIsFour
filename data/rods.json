@@ -4,7 +4,7 @@
     "name": "Basic Rod",
     "quantity": 1,
     "price": 0,
-    "icon": "/images/rod/Basic_Rod.png",
+    "icon": "rod/Basic_Rod.png",
     "hp": 50,
     "maxHp": 50,
     "type": "rod"
@@ -14,7 +14,7 @@
     "name": "Star Rod",
     "quantity": 1,
     "price": 50000,
-    "icon": "/images/rod/Star_Rod.png",
+    "icon": "rod/Star_Rod.png",
     "hp": 75,
     "maxHp": 75,
     "type": "rod"
@@ -24,7 +24,7 @@
     "name": "Galaxy Rod",
     "quantity": 1,
     "price": 100000,
-    "icon": "/images/rod/Galaxy_Rod.png",
+    "icon": "rod/Galaxy_Rod.png",
     "hp": 100,
     "maxHp": 100,
     "type": "rod"
@@ -34,7 +34,7 @@
     "name": "Lover Rod",
     "quantity": 1,
     "price": 200000,
-    "icon": "/images/rod/Lover_Rod.png",
+    "icon": "rod/Lover_Rod.png",
     "hp": 200,
     "maxHp": 200,
     "type": "rod"
@@ -44,7 +44,7 @@
     "name": "Thunder Rod",
     "quantity": 1,
     "price": 500000,
-    "icon": "/images/rod/Thunder_Rod.png",
+    "icon": "rod/Thunder_Rod.png",
     "hp": 1000,
     "maxHp": 1000,
     "type": "rod"

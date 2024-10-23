@@ -4,6 +4,7 @@ import selectPlayerTable from "./selectPlayerTable.vue";
 import ModalAddPlayer from "./ModalAddPlayer.vue";
 import ModalEditPlayer from "./ModalEditPlayer.vue";
 import { usePlayerStore } from "@/stores/player";
+import BackgroundImg from "/background/Background2.png";
 
 const playerStore = usePlayerStore();
 const playerList = ref([]);
@@ -11,11 +12,11 @@ const selectedPlayer = ref(null);
 const isAddModalOpen = ref(false);
 const isEditModalOpen = ref(false);
 
+
 onMounted(async () => {
   playerList.value = await playerStore.getAllPlayer(
     `${import.meta.env.VITE_APP_URL}`
   );
-  console.log(playerList.value);
 });
 const emit = defineEmits(["togglePage"]);
 const findPlayer = async (selectedPlayer) => {
@@ -40,13 +41,15 @@ const openEditModal = (player) => {
   selectedPlayer.value = player;
   isEditModalOpen.value = true;
 };
-console.log();
+
 </script>
 
 <template>
   <div
     class="flex items-center justify-center min-h-screen bg-cover bg-center pb-40"
-    :style="{ backgroundImage: `url('/images/image/Background2.png')` }"
+    :style="{
+      backgroundImage: `url(${BackgroundImg})`,
+    }"
   >
     <div class="mt-3 ml-8 mr-8 shadow-lg w-3/5">
       <selectPlayerTable

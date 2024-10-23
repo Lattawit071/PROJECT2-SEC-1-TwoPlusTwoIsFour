@@ -1,25 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import { useSoundStore } from "./stores/sounds.js";
-import BackgroundImg from "/images/image/Background.png";
-import pagetwo from "/images/howtoplay/pagetwo.png";
-import pagethree from "/images/howtoplay/pagethree.png";
-import pagefour from "/images/howtoplay/pagefour.png";
-import pagefive from "/images/howtoplay/pagefive.png";
-import pagesix from "/images/howtoplay/pagesix.png";
+import BackgroundImg from "/background/Background.png";
+import pagetwo from "/howtoplay/pagetwo.png";
+import pagethree from "/howtoplay/pagethree.png";
+import pagefour from "/howtoplay/pagefour.png";
+import pagefive from "/howtoplay/pagefive.png";
+import pagesix from "/howtoplay/pagesix.png";
 
-//Loading
 import LoadingPage from "./components/loading/loadingPage.vue";
-//bookmark,setting
 import bookmark from "./components/bookmark/bookmark.vue";
 import setting from "./components/setting/setting.vue";
-//inventory
 import inventory from "./components/inventory/inventory.vue";
 
-//shop
 import Shop from "./components/shop/shop.vue";
 
-//play
 import PlayPage from "./components/play/playPage.vue";
 
 const soundStore = useSoundStore();
@@ -91,7 +86,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
     <div class="absolute top-4 left-4" style="user-select: none">
       <img
         @click="openSettings"
-        src="/images/button/Setting.png"
+        src="/button/Setting.png"
         alt="Settings"
         class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
         @mouseenter="soundStore.playHoverSound()"
@@ -101,7 +96,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
     <div class="absolute top-4 right-4 flex flex-1" style="user-select: none">
       <img
         @click="openHowToPlay"
-        src="/images/button/Question.png"
+        src="/button/Question.png"
         alt="Help"
         class="w-24 h-24 md:w-40 md:h-40 cursor-pointer object-contain transition-transform duration-300 hover:scale-110"
         @mouseenter="soundStore.playHoverSound()"
@@ -124,13 +119,14 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
           @mouseenter="soundStore.playHoverSound()"
         >
           <img
-            src="/images/button/Button.png"
+            src="/button/Button.png"
             alt="Play"
             class="w-full h-full object-contain"
           />
           <span
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-6xl text-white font-handwritten transition-colors duration-300 hover:text-black"
-          >
+           style="font-family: 'Pacifico', cursive"
+            >
             PLAY
           </span>
         </div>
@@ -154,7 +150,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
         class="bg-gray-900 text-white p-4 md:p-6 rounded-lg shadow-lg w-11/12 max-w-lg md:max-w-2xl lg:max-w-3xl flex flex-col items-center"
       >
         <img
-          src="/images/howtoplay/pageone.png"
+          src="/howtoplay/pageone.png"
           alt="How to Play Title"
           class="w-full max-w-xs md:max-w-sm h-auto mb-4"
         />
@@ -239,167 +235,6 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-
-@keyframes blueGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.blue-gradient-bg {
-  background: linear-gradient(
-    270deg,
-    #89cff0,
-    #a0d8f1,
-    #c9ebf6,
-    #a0d8f1,
-    #89cff0
-  );
-  background-size: 600% 600%;
-  animation: blueGradient 10s ease infinite;
-}
-
-@keyframes greenGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.green-gradient-bg {
-  background: linear-gradient(
-    270deg,
-    #a8e6cf,
-    #dcedc1,
-    #f6ffed,
-    #dcedc1,
-    #a8e6cf
-  );
-  background-size: 600% 600%;
-  animation: greenGradient 10s ease infinite;
-}
-
-@keyframes pastelRedGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.pastel-red-gradient-bg {
-  background: linear-gradient(
-    270deg,
-    #ffc1c1,
-    #ffb6c1,
-    #ffd1dc,
-    #ffaaaa,
-    #ffc1c1
-  );
-  background-size: 400% 400%;
-  animation: pastelRedGradient 10s ease infinite;
-  border-radius: 15px;
-  border: 4px solid transparent;
-
-  padding: 10px;
-  transition: transform 0.3s ease;
-}
-
-@keyframes hologramBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.hologram-bg {
-  background: linear-gradient(
-    270deg,
-    #ffb3ff,
-    #b3ffff,
-    #b3ffb3,
-    #ffb3b3,
-    #b3b3ff
-  );
-  background-size: 400% 400%;
-  animation: hologramBackground 15s ease infinite;
-  border-radius: 15px;
-  padding: 10px;
-  border: 4px solid transparent;
-  border-image: linear-gradient(
-      45deg,
-      #ffb3ff,
-      #b3ffff,
-      #b3ffb3,
-      #ffb3b3,
-      #b3b3ff
-    )
-    1;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(255, 179, 255, 0.5), 0 0 30px rgba(179, 255, 255, 0.5),
-    0 0 40px rgba(179, 255, 179, 0.5), 0 0 50px rgba(255, 179, 179, 0.5),
-    0 0 60px rgba(179, 179, 255, 0.5);
-}
-
-.wave-animation span {
-  display: inline-block;
-  animation: wave 1.5s infinite ease-in-out;
-}
-
-.wave-animation span:nth-child(1) {
-  animation-delay: 0s;
-}
-.wave-animation span:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.wave-animation span:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.wave-animation span:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.wave-animation span:nth-child(5) {
-  animation-delay: 0.4s;
-}
-
-@keyframes wave {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pastel-border {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
 }
 
 @keyframes slideUpFadeIn {

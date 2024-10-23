@@ -11,23 +11,9 @@ const soundStore = useSoundStore();
 
 const maxCapacity = 1000;
 const selectedCategory = ref("all");
-const potionTimers = {};
 const showToastInventory = ref(false);
 const toastMessage = ref("");
-const toastClass = ref("");
 const nameInventory = ref("");
-
-function showToastInventoryMessage(message, type) {
-  toastMessage.value = message;
-  toastClass.value = type === "success" ? "bg-green-500" : "bg-red-500";
-  showToastInventory.value = true;
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(() => {
-    showToastInventory.value = false;
-  }, 4000);
-}
 
 const setCategory = (category) => {
   selectedCategory.value = category;

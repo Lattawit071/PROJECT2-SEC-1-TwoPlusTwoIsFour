@@ -1,6 +1,7 @@
 <script setup>
-import seaImg from "/images/image/sea.png";
-import hookImg from "/images/image/Hook.png";
+import seaImg from "/play/sea.png";
+import hookImg from "/play/Hook.png";
+
 const props = defineProps({
   hookAniClass: {
     type: String,
@@ -12,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="relative flex justify-center items-center h-screen w-full">
+  <div class="relative flex justify-center items-center">
     <img :src="seaImg" alt="Animated SVG" class="animated-svg relative z-10" />
     <div
       :class="hookAniClass"
@@ -24,6 +25,8 @@ const props = defineProps({
 </template>
 
 <style scoped>
+
+
 .animated-svg {
   position: fixed;
   bottom: 32px;
@@ -33,14 +36,13 @@ const props = defineProps({
 }
 
 .hook-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
-  height: 900px;
-  background-image: url("/images/image/Hook.png");
-
+  width: 600px;
+  height: 1000px;
+  background-image: url("/play/Hook.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -60,13 +62,13 @@ const props = defineProps({
     transform: translate(-50%, -100%);
   }
   100% {
-    transform: translate(-50%, 5%);
+    transform: translate(-50%, 0);
   }
 }
 
 @keyframes hookMoveUp {
   0% {
-    transform: translate(-50%, 5%);
+    transform: translate(-50%, 0%);
   }
   100% {
     transform: translate(-50%, -100%);
@@ -74,8 +76,7 @@ const props = defineProps({
 }
 
 @keyframes moveSideways {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(-50%, 0);
   }
   50% {

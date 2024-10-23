@@ -1,4 +1,3 @@
-// stores/soundStore.js
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import bubbleSound from "/sound/EffectsBubble.mp3";
@@ -30,7 +29,6 @@ export const useSoundStore = defineStore("soundStore", () => {
     usePotionSound: new Audio(usePotionSound),
   };
 
-  // ตั้งค่า volume
   sounds.hover.volume = 0.09;
   sounds.successBuy.volume = 0.4;
   sounds.useRod.volume = 0.4;

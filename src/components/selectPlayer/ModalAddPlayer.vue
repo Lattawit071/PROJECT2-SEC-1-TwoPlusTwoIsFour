@@ -13,15 +13,15 @@ const handleAddPlayer = async () => {
     playerStore: {
       id: "",
       name: newPlayerName.value,
-      coins: 100000,
-      avatar: "/images/image/Player.png",
+      coins: 1000,
+      avatar: "Player.png",
       ownedRods: [
         {
           id: 1,
           name: "Basic Rod",
           quantity: 1,
           price: 0,
-          icon: "/images/rod/Basic_Rod.png",
+          icon: "rod/Basic_Rod.png",
           hp: 50,
           maxHp: 50,
           type: "rod",
@@ -34,7 +34,7 @@ const handleAddPlayer = async () => {
         name: "Basic Rod",
         quantity: 1,
         price: 0,
-        icon: "/images/rod/Basic_Rod.png",
+        icon: "rod/Basic_Rod.png",
         hp: 50,
         maxHp: 50,
         type: "rod",
@@ -52,7 +52,7 @@ const handleAddPlayer = async () => {
     newPlayerName.value = "";
     emit("close");
   } catch (error) {
-    console.error("Failed to add player:", error);
+    throw new Error(error)
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref} from "vue";
 import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
@@ -9,7 +9,7 @@ const sound = useSoundStore();
 const selectFish = ref("common");
 
 function filterFish(minId, maxId) {
-  return fishStore.filter((fish) => fish.id >= minId && fish.id <= maxId); // เอาปลาไอดีที่ min - ไอดี ที่ max
+  return fishStore.filter((fish) => fish.id >= minId && fish.id <= maxId);
 }
 
 function isFishInPlayerStore(fishId) {

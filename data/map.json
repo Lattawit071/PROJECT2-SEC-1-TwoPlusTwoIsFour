@@ -2,67 +2,67 @@
     {
       "level": 1,
       "name": "world 1",
-      "icon": "/map/world1.png",
+      "icon": "map/world1.png",
       "type": "map"
     },
     {
       "level": 10,
       "name": "world 2",
-      "icon": "/map/world2.png",
+      "icon": "map/world2.png",
       "type": "map"
     },
     {
       "level": 20,
       "name": "world 3",
-      "icon": "/map/world3.png",
+      "icon": "map/world3.png",
       "type": "map"
     },
     {
       "level": 30,
       "name": "world 4",
-      "icon": "/map/world4.png",
+      "icon": "map/world4.png",
       "type": "map"
     },
     {
       "level": 40,
       "name": "world 5",
-     "icon": "/map/world5.png",
+     "icon": "map/world5.png",
       "type": "map"
     },
     {
       "level": 50,
       "name": "world 6",
-     "icon": "/map/world6.png",
+     "icon": "map/world6.png",
       "type": "map"
     },
     {
       "level": 60,
       "name": "world 7",
-      "icon": "/map/world7.png",
+      "icon": "map/world7.png",
       "type": "fish"
     },
     {
       "level": 70,
       "name": "world 8",
-      "icon": "/map/world8.png",
+      "icon": "map/world8.png",
       "type": "map"
     },
     {
       "level": 80,
       "name": "world 9",
-      "icon": "/map/world9.png",
+      "icon": "map/world9.png",
       "type": "map"
     },
     {
       "level": 90,
       "name": "world 10",
-      "icon": "/map/world10.png",
+      "icon": "map/world10.png",
       "type": "map"
     },
     {
       "level": 100,
       "name": "world 11",
-      "icon": "/map/world11.png",
+      "icon": "map/world11.png",
       "type": "map"
     }
 ]

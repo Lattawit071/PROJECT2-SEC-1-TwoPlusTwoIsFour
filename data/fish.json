@@ -4,7 +4,7 @@
       "name": "Sardine",
       "quantity": 1,
       "price": 50,
-      "icon": "/images/fish/Sardine.png",
+      "icon": "fish/Sardine.png",
       "type": "fish",
       "exp": 5
     },
@@ -13,7 +13,7 @@
       "name": "Clownfish",
       "quantity": 1,
       "price": 150,
-      "icon": "/images/fish/Clownfish.png",
+      "icon": "fish/Clownfish.png",
       "type": "fish",
       "exp": 5
     },
@@ -22,7 +22,7 @@
       "name": "Catfish",
       "quantity": 1,
       "price": 200,
-      "icon": "/images/fish/Catfish.png",
+      "icon": "fish/Catfish.png",
       "type": "fish",
       "exp": 5
     },
@@ -31,7 +31,7 @@
       "name": "Salmon",
       "quantity": 1,
       "price": 250,
-      "icon": "/images/fish/Salmon.png",
+      "icon": "fish/Salmon.png",
       "type": "fish",
       "exp": 5
     },
@@ -40,7 +40,7 @@
       "name": "Tuna",
       "quantity": 1,
       "price": 250,
-      "icon": "/images/fish/Tuna.png",
+      "icon": "fish/Tuna.png",
       "type": "fish",
       "exp": 5
     },
@@ -49,7 +49,7 @@
       "name": "Marlin",
       "quantity": 1,
       "price": 700,
-      "icon": "/images/fish/Marlin.png",
+      "icon": "fish/Marlin.png",
       "type": "fish",
       "exp": 15
     },
@@ -58,7 +58,7 @@
       "name": "Stingray",
       "quantity": 1,
       "price": 500,
-      "icon": "/images/fish/Stingray.png",
+      "icon": "fish/Stingray.png",
       "type": "fish",
       "exp": 10
     },
@@ -67,7 +67,7 @@
       "name": "Eel",
       "quantity": 1,
       "price": 300,
-      "icon": "/images/fish/Eel.png",
+      "icon": "fish/Eel.png",
       "type": "fish",
       "exp": 5
     },
@@ -76,7 +76,7 @@
       "name": "White Koi",
       "quantity": 1,
       "price": 800,
-      "icon": "/images/fish/White_Koi.png",
+      "icon": "fish/White_Koi.png",
       "type": "fish",
       "exp": 15
     },
@@ -85,7 +85,7 @@
       "name": "Squid",
       "quantity": 1,
       "price": 850,
-      "icon": "/images/fish/Squid.png",
+      "icon": "fish/Squid.png",
       "type": "fish",
       "exp": 15
     },
@@ -94,7 +94,7 @@
       "name": "Shark",
       "quantity": 1,
       "price": 1500,
-      "icon": "/images/fish/Shark.png",
+      "icon": "fish/Shark.png",
       "type": "fish",
       "exp": 30
     },
@@ -103,7 +103,7 @@
       "name": "Orca",
       "quantity": 1,
       "price": 2000,
-      "icon": "/images/fish/Orca.png",
+      "icon": "fish/Orca.png",
       "type": "fish",
       "exp": 40
     },
@@ -112,7 +112,7 @@
       "name": "Blue Whale",
       "quantity": 1,
       "price": 2500,
-      "icon": "/images/fish/Blue_Whale.png",
+      "icon": "fish/Blue_Whale.png",
       "type": "fish",
       "exp": 50
     },
@@ -121,7 +121,7 @@
       "name": "Giant Pacific Octopus",
       "quantity": 1,
       "price": 2500,
-      "icon": "/images/fish/Giant_Pacific_Octopus.png",
+      "icon": "fish/Giant_Pacific_Octopus.png",
       "type": "fish",
       "exp": 50
     },
@@ -130,7 +130,7 @@
       "name": "Golden Fish",
       "quantity": 1,
       "price": 3000,
-      "icon": "/images/fish/Golden_Fish.png",
+      "icon": "fish/Golden_Fish.png",
       "type": "fish",
       "exp": 60
     },
@@ -139,7 +139,7 @@
       "name": "Rainbow Fish",
       "quantity": 1,
       "price": 3500,
-      "icon": "/images/fish/Rainbow_Fish.png",
+      "icon": "fish/Rainbow_Fish.png",
       "type": "fish",
       "exp": 70
     },
@@ -148,7 +148,7 @@
       "name": "Pearl",
       "quantity": 1,
       "price": 4500,
-      "icon": "/images/fish/Pearl.png",
+      "icon": "fish/Pearl.png",
       "type": "fish",
       "exp": 90
     },
@@ -157,7 +157,7 @@
       "name": "Diamond",
       "quantity": 1,
       "price": 5000,
-      "icon": "/images/fish/Diamond.png",
+      "icon": "fish/Diamond.png",
       "type": "fish",
       "exp": 100
     },
@@ -166,7 +166,7 @@
       "name": "Chest",
       "quantity": 1,
       "price": 8000,
-      "icon": "/images/fish/Chest.png",
+      "icon": "fish/Chest.png",
       "type": "fish",
       "exp": 160
     },
@@ -175,7 +175,7 @@
       "name": "Dragon",
       "quantity": 1,
       "price": 100000,
-      "icon": "/images/fish/Dragon.png",
+      "icon": "fish/Dragon.png",
       "type": "fish",
       "exp": 250
     }

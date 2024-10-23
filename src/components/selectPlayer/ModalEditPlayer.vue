@@ -35,7 +35,7 @@ const handleEditPlayer = async () => {
     emit("refresh");
     emit("close");
   } catch (error) {
-    console.error("Failed to edit player:", error);
+   throw new Error(error)
   }
 };
 </script>

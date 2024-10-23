@@ -20,14 +20,13 @@ async function handleDeletePlayer(playerId) {
       `${import.meta.env.VITE_APP_URL}`,
       playerId
     );
-    console.log(`Deleted player ID: ${deletedId}`);
 
     playerList.value = await playerStore.getAllPlayer(
       `${import.meta.env.VITE_APP_URL}`
     );
     emit("refresh");
   } catch (error) {
-    console.error(`Failed to delete player: ${error}`);
+    throw new Error(error)
   }
 }
 </script>

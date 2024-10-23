@@ -2,18 +2,24 @@
 import { ref } from "vue";
 import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
+import { useMapStore } from "../../stores/mapStore.js";
 
 const Player = usePlayerStore();
 const Sound = useSoundStore();
 const showLogoutModal = ref(false);
+const MapStore = useMapStore();
 
 const emit = defineEmits();
 
+
 const confirmLogout = () => {
+  MapStore.resetMap();
   showLogoutModal.value = false;
-  emit("logout"); //อันนี้จะปิด setting modal(ถ้าไม่ใช้อันนี้ setting มันจะทับ)
-  emit("togglePage", 6); // เปลี่ยนกลับไปหน้า เลือก player
+  emit("logout");
+  emit("togglePage", 6);
+  Player.playerStore = [];
 };
+
 </script>
 <template>
   <div
@@ -66,7 +72,7 @@ const confirmLogout = () => {
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3 text-sm sm:text-base">Sound On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">Sound</span>
         </label>
         <label class="flex items-center mb-2">
           <div
@@ -79,7 +85,7 @@ const confirmLogout = () => {
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3 text-sm sm:text-base">Music On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">Music</span>
         </label>
         <label class="flex items-center">
           <div
@@ -92,7 +98,7 @@ const confirmLogout = () => {
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3 text-sm sm:text-base">SFX On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">SFX</span>
         </label>
       </div>
 
