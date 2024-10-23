@@ -12,7 +12,7 @@ import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
 import level from "../../../data/level.json";
-
+import LevelUp from "./LevelUp.vue";
 const player = usePlayerStore();
 const sound = useSoundStore();
 
@@ -37,7 +37,7 @@ const reducesHp = ref();
 const fishId = ref();
 const rodId = ref();
 const luck = ref(0);
-
+const LvlModal = ref(false)
 const hookAnimationClass = ref("hook-animation-down");
 
 function getPotionPlayerById(id) {
@@ -84,6 +84,7 @@ function addCaughtFish(fishId) {
         
         if (player.playerStore.exp <= requireNext2.exp_required) {
           stop = true
+          LvlModal.value = true
         }
       }
     }
@@ -291,6 +292,10 @@ const closeModal = () => {
   gottenFish.value = false;
 };
 
+const closeLvlModal = () => {
+  LvlModal.value = false
+}
+
 const emit = defineEmits(["togglePage"]);
 
 const changePage = (value) => {
@@ -318,6 +323,7 @@ const changePage = (value) => {
       @repairRod="repairRod"
       @repairToggle="toggleRepairModal"
     />
+    <LevelUp v-if="LvlModal" @closeLvlModal="closeLvlModal"/>
     <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
     <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
   </div>

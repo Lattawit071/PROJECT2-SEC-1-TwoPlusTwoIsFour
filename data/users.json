@@ -171,7 +171,7 @@
           {
             "id": 13,
             "name": "Blue Whale",
-            "quantity": 2,
+            "quantity": 3,
             "price": 2500,
             "icon": "/images/fish/Blue_Whale.png",
             "type": "fish",
@@ -198,7 +198,7 @@
           {
             "id": 14,
             "name": "Giant Pacific Octopus",
-            "quantity": 1,
+            "quantity": 3,
             "price": 2500,
             "icon": "/images/fish/Giant_Pacific_Octopus.png",
             "type": "fish",
@@ -239,12 +239,12 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 14,
+          "hp": 5,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 3,
+        "level": 10,
         "exp": 40,
         "Bookmarks": [
           "Blue Whale",
