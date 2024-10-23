@@ -12,8 +12,8 @@ import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
 import { usePlayerStore } from "@/stores/player";
 import { useSoundStore } from "@/stores/sounds";
-import Bookmark from "../bookmark/bookmark.vue";
-
+import level from "../../../data/level.json";
+import LevelUp from "./LevelUp.vue";
 const player = usePlayerStore();
 const sound = useSoundStore();
 
@@ -53,6 +53,8 @@ const handleSelectMap = (selectedMap) => {
   console.log(`Map changed to: ${selectedMap}`);
 };
 
+const LvlModal = ref(false);
+
 function getPotionPlayerById(id) {
   return player.playerStore.usingPotion.find((potion) => potion.id === id);
 }
@@ -73,15 +75,46 @@ function addCaughtFish(fishId) {
       existingFish.quantity += 1;
     } else {
       player.playerStore.caughtFish.push(fish);
-      const isExist = player.playerStore.Bookmarks.filter((bookmark)=> bookmark===fish.name)
-      
-      if (isExist.length===0) {
-        player.playerStore.Bookmarks.push(fish.name)
+      const isExist = player.playerStore.Bookmarks.filter(
+        (bookmark) => bookmark === fish.name
+      );
+
+      if (isExist.length === 0) {
+        player.playerStore.Bookmarks.push(fish.name);
       }
     }
-    player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`)
-  }
 
+    player.playerStore.exp = player.playerStore.exp + fish.exp;
+    let stop = false;
+    const requireNextCheck = getNextLevel(player.playerStore.level);
+    if (player.playerStore.exp >= requireNextCheck.exp_required) {
+      for (let index = 0; index < 100; index++) {
+        if (!stop) {
+          const requireNext = getNextLevel(player.playerStore.level + index);
+
+          if (player.playerStore.exp >= requireNext.exp_required) {
+            player.playerStore.level = player.playerStore.level + 1;
+            player.playerStore.exp =
+              player.playerStore.exp - requireNext.exp_required;
+          }
+          const requireNext2 = getNextLevel(
+            player.playerStore.level + 1 + index
+          );
+
+          if (player.playerStore.exp <= requireNext2.exp_required) {
+            stop = true;
+            LvlModal.value = true;
+          }
+        }
+      }
+    }
+    player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`);
+  }
+}
+
+function getNextLevel(num) {
+  const nextLevel = num + 1;
+  return level.find((level) => level.level === nextLevel);
 }
 
 function getFishById(id) {
@@ -279,6 +312,10 @@ const closeModal = () => {
   gottenFish.value = false;
 };
 
+const closeLvlModal = () => {
+  LvlModal.value = false;
+};
+
 const emit = defineEmits(["togglePage"]);
 
 const changePage = (value) => {
@@ -323,6 +360,9 @@ const changePage = (value) => {
       @repairRod="repairRod"
       @repairToggle="toggleRepairModal"
     />
+
+    <LevelUp v-if="LvlModal" @closeLvlModal="closeLvlModal" />
+
     <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
     <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
   </div>

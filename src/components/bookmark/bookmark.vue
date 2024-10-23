@@ -4,27 +4,24 @@ import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
 
-import playerImg from "/images/image/Player.png";
-import Basic_RodImg from "/images/rod/Basic_Rod.png";
-
-const useplayerStore = usePlayerStore();
-const soundStore = useSoundStore();
-
+const player = usePlayerStore();
+const sound = useSoundStore();
 const selectFish = ref("common");
 
-function filterFish(a, b) {
-  return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
+function filterFish(minId, maxId) {
+  return fishStore.filter((fish) => fish.id >= minId && fish.id <= maxId); // เอาปลาไอดีที่ min - ไอดี ที่ max
 }
 
 function isFishInPlayerStore(fishId) {
-  const highlightedFish = ref(new Set());
-  if (
-    useplayerStore.playerStore.caughtFish.some((fish) => fish.id === fishId)
-  ) {
-    highlightedFish.value.add(fishId);
-    return true;
-  }
-  return highlightedFish.value.has(fishId);
+  const isCaught = player.playerStore.caughtFish.some(
+    (fish) => fish.id === fishId
+  );
+
+  const fishInStore = fishStore.find((fish) => fish.id === fishId);
+  const isBookmarked =
+    fishInStore && player.playerStore.Bookmarks.includes(fishInStore.name);
+
+  return isCaught || isBookmarked;
 }
 </script>
 
@@ -37,7 +34,7 @@ function isFishInPlayerStore(fishId) {
         class="header fade-up bg-gradient-to-b bg-gray-900 to-yellow-900 border-black w-[90%] md:w-[60%] min-w-[300px] rounded-lg shadow-lg p-6"
       >
         <button
-          @mouseenter="soundStore.playHoverSound()"
+          @mouseenter="sound.playHoverSound()"
           @click="$emit('togglePage', 5)"
           class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >
@@ -80,7 +77,6 @@ function isFishInPlayerStore(fishId) {
           </div>
         </div>
 
-        <!-- Fish Display Based on Category -->
         <div
           v-show="selectFish === 'common'"
           class="grid grid-cols-2 md:grid-cols-3 gap-4"
@@ -172,52 +168,145 @@ function isFishInPlayerStore(fishId) {
 </template>
 
 <style scoped>
-.animated-svg {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: moveSideways 2s ease-in-out infinite;
+.bg-yellow-800 {
+  background-color: #7b5e57;
 }
 
-.hook-container {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 900px;
-  background-image: url("/images/image/Hook.png");
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 5;
+.text-yellow-200 {
+  color: #ffecb3;
 }
 
-.hook-animation-down {
-  animation: hookMoveDown 2s ease forwards;
+.text-yellow-300 {
+  color: #ffe082;
 }
 
-.hook-animation-up {
-  animation: hookMoveUp 2s ease forwards;
+.hover\:bg-yellow-500:hover {
+  background-color: #ffa726;
 }
 
-@keyframes hookMoveDown {
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.blue-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #89cff0,
+    #a0d8f1,
+    #c9ebf6,
+    #a0d8f1,
+    #89cff0
+  );
+  background-size: 600% 600%;
+  animation: blueGradient 10s ease infinite;
+}
+
+.green-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #a8e6cf,
+    #dcedc1,
+    #f6ffed,
+    #dcedc1,
+    #a8e6cf
+  );
+  background-size: 600% 600%;
+  animation: greenGradient 10s ease infinite;
+}
+
+.pastel-red-gradient-bg {
+  background: linear-gradient(
+    270deg,
+    #ffc1c1,
+    #ffb6c1,
+    #ffd1dc,
+    #ffaaaa,
+    #ffc1c1
+  );
+  background-size: 400% 400%;
+  animation: pastelRedGradient 10s ease infinite;
+  border-radius: 15px;
+  border: 4px solid transparent;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.hologram-bg {
+  background: linear-gradient(
+    270deg,
+    #ffb3ff,
+    #b3ffff,
+    #b3ffb3,
+    #ffb3b3,
+    #b3b3ff
+  );
+  background-size: 400% 400%;
+  animation: hologramBackground 15s ease infinite;
+  border-radius: 15px;
+  padding: 10px;
+  border: 4px solid transparent;
+  border-image: linear-gradient(
+      45deg,
+      #ffb3ff,
+      #b3ffff,
+      #b3ffb3,
+      #ffb3b3,
+      #b3b3ff
+    )
+    1;
+}
+
+@keyframes blueGradient {
   0% {
-    transform: translate(-50%, -100%);
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    transform: translate(-50%, 5%);
+    background-position: 0% 50%;
   }
 }
 
-@keyframes hookMoveUp {
+@keyframes greenGradient {
   0% {
-    transform: translate(-50%, 5%);
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    transform: translate(-50%, -100%);
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pastelRedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes hologramBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 </style>

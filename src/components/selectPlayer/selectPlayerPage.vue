@@ -11,21 +11,25 @@ const selectedPlayer = ref(null);
 const isAddModalOpen = ref(false);
 const isEditModalOpen = ref(false);
 
-onMounted(async ()=> {
-    
-    playerList.value = await playerStore.getAllPlayer(`${import.meta.env.VITE_APP_URL}`)
-    console.log(playerList.value);
-    
-    
-})
-const emit = defineEmits(['togglePage'])
-const findPlayer = async(selectedPlayer) => {
-    await playerStore.getPlayerById(`${import.meta.env.VITE_APP_URL}`, selectedPlayer.id)
-    emit('togglePage', 1)
-}
+onMounted(async () => {
+  playerList.value = await playerStore.getAllPlayer(
+    `${import.meta.env.VITE_APP_URL}`
+  );
+  console.log(playerList.value);
+});
+const emit = defineEmits(["togglePage"]);
+const findPlayer = async (selectedPlayer) => {
+  await playerStore.getPlayerById(
+    `${import.meta.env.VITE_APP_URL}`,
+    selectedPlayer.id
+  );
+  emit("togglePage", 1);
+};
 
 const refreshPlayerList = async () => {
-  playerList.value = await playerStore.getAllPlayer(`${import.meta.env.VITE_APP_URL}`);
+  playerList.value = await playerStore.getAllPlayer(
+    `${import.meta.env.VITE_APP_URL}`
+  );
 };
 
 const openAddModal = () => {
@@ -36,19 +40,20 @@ const openEditModal = (player) => {
   selectedPlayer.value = player;
   isEditModalOpen.value = true;
 };
+console.log();
 </script>
 
 <template>
   <div
-   class="flex items-center justify-center min-h-screen bg-cover bg-center pb-40"
+    class="flex items-center justify-center min-h-screen bg-cover bg-center pb-40"
     :style="{ backgroundImage: `url('/images/image/Background2.png')` }"
   >
-  <div class="mt-3 ml-8 mr-8 shadow-lg w-3/5">
-      <selectPlayerTable 
-        :playerList="playerList" 
+    <div class="mt-3 ml-8 mr-8 shadow-lg w-3/5">
+      <selectPlayerTable
+        :playerList="playerList"
         @openEditModal="openEditModal"
         @select="findPlayer"
-        @openAddModal="openAddModal" 
+        @openAddModal="openAddModal"
         @refresh="refreshPlayerList"
       />
     </div>

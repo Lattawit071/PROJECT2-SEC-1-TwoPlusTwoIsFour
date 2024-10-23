@@ -10,7 +10,7 @@ import pagesix from "/images/howtoplay/pagesix.png";
 
 //Loading
 import LoadingPage from "./components/loading/loadingPage.vue";
-//bookmark
+//bookmark,setting
 import bookmark from "./components/bookmark/bookmark.vue";
 import setting from "./components/setting/setting.vue";
 //inventory
@@ -138,7 +138,12 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
     </div>
   </div>
 
-  <setting v-if="isSettingsOpen" @saveSettings="saveSettings" />
+  <setting
+    v-if="isSettingsOpen"
+    @saveSettings="saveSettings"
+    @logout="isSettingsOpen = false"
+    @togglePage="togglePage"
+  />
 
   <transition name="fade">
     <div
