@@ -6,6 +6,7 @@ import HookButton from "./HookButton.vue";
 import OutComesModal from "./OutComesModal.vue";
 import RepairModal from "./RepairModal.vue";
 import BottomNavBar from "./BottomNavBar.vue";
+import MapSelection from "./MapSelection.vue";
 //data
 import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
@@ -37,8 +38,19 @@ const fishId = ref();
 const rodId = ref();
 const luck = ref(0);
 
+const isMapModalOpen = ref(false);
+const currentMap = ref("world 1");
+
 const hookAnimationClass = ref("hook-animation-down");
 
+const toggleMapModal = () => {
+  isMapModalOpen.value = !isMapModalOpen.value;
+};
+
+const handleSelectMap = (selectedMap) => {
+  currentMap.value = selectedMap;
+  console.log(`Map changed to: ${selectedMap}`);
+};
 
 function getPotionPlayerById(id) {
   return player.playerStore.usingPotion.find((potion) => potion.id === id);
@@ -78,14 +90,13 @@ const hook = () => {
 
     if (player.playerStore.usingRods.hp < reducesHp.value) {
       sound.playFailBuySound();
-      
     } else {
       player.playerStore.usingRods.hp -= reducesHp.value;
       rodId.value = player.playerStore.usingRods.id;
       sound.playHookFishSound();
       hookAnimationClass.value = "hook-animation-down";
       hooking.value = true;
-      
+
       waitingForFunction();
     }
   } else {
@@ -260,20 +271,37 @@ const closeModal = () => {
   gottenFish.value = false;
 };
 
-const emit = defineEmits(['togglePage']);
+const emit = defineEmits(["togglePage"]);
 
 const changePage = (value) => {
-  emit('togglePage', value);
+  emit("togglePage", value);
 };
 </script>
 
 <template>
   <div
     class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
-    :style="{
-      backgroundImage: `url(${playBackgroundImg})`,
-    }"
+    :style="{ backgroundImage: `url('/images/image/PLAY.png')` }"
   >
+    <!-- ปุ่มสำหรับเปิด Modal -->
+    <button
+      class="bg-green-500 text-white px-4 py-2 rounded fixed right-4 top-1/2 transform -translate-y-1/2 z-50"
+      @click="toggleMapModal"
+    >
+      Change Map
+    </button>
+
+    <p class="text-white text-xl font-bold mt-4">
+      Current Map: {{ currentMap }}
+    </p>
+
+    <!-- เรียกใช้ Map Selection Modal -->
+    <MapSelection
+      v-if="isMapModalOpen"
+      @close="toggleMapModal"
+      @selectMap="handleSelectMap"
+    />
+
     <HookButton :hookAniClass="hookAnimationClass" :hooking="hooking" />
     <OutComesModal
       :gottenFish="gottenFish"
@@ -287,17 +315,9 @@ const changePage = (value) => {
       @repairRod="repairRod"
       @repairToggle="toggleRepairModal"
     />
-    <TopNavbar
-      @repairToggle="toggleRepairModal"
-    ></TopNavbar>
-    <BottomNavBar
-      @togglePage="changePage"
-      @hook="hook"
-    >
-    </BottomNavBar>
+    <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
+    <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
