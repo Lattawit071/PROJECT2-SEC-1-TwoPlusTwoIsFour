@@ -11,6 +11,7 @@ import rods from "../../../data/rods.json"
 const emit = defineEmits(['playHoverSound','togglePage'])
 const store = usePlayerStore();
 const soundStore = useSoundStore();
+const url = import.meta.env.VITE_APP_URL
 
 const playerCoins = computed(() => store.playerStore.coins);
 
@@ -82,7 +83,7 @@ function purchaseRods(item) {
       deductCoins(item.price);
       addRod(item.id);
       soundStore.playSuccessBuySound();
-    } else {
+      store.updatePlayerState(url)
     }
   } else {
     soundStore.playFailBuySound();
@@ -118,8 +119,10 @@ function purchasePotion(item) {
     if (existingPotion) {
       existingPotion.quantity += 1;
       showToastMessage(item);
+      store.updatePlayerState(url)
     } else {
       addPotion(item.id);
+      store.updatePlayerState(url)
     }
   } else {
     soundStore.playFailBuySound();

@@ -1,11 +1,10 @@
 {
   "user": [
     {
-      "id": "1",
       "playerStore": {
         "id": 1,
         "name": "Admin",
-        "coins": 102800,
+        "coins": 2650,
         "avatar": "/images/image/Player.png",
         "ownedRods": [
           {
@@ -17,6 +16,16 @@
             "hp": 50,
             "maxHp": 50,
             "type": "rod"
+          },
+          {
+            "id": 3,
+            "name": "Galaxy Rod",
+            "quantity": 1,
+            "price": 100000,
+            "icon": "/images/rod/Galaxy_Rod.png",
+            "hp": 100,
+            "maxHp": 100,
+            "type": "rod"
           }
         ],
         "caughtFish": [],
@@ -27,7 +36,7 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 44,
+          "hp": 47,
           "maxHp": 50,
           "type": "rod"
         },
@@ -35,13 +44,14 @@
         "level": 100,
         "exp": 99999,
         "Bookmarks": []
-      }
+      },
+      "id": "1"
     },
     {
       "playerStore": {
         "id": 3,
         "name": "test2",
-        "coins": 95475,
+        "coins": 40475,
         "avatar": "/images/image/Player.png",
         "ownedRods": [
           {
@@ -52,6 +62,16 @@
             "icon": "/images/rod/Basic_Rod.png",
             "hp": 50,
             "maxHp": 50,
+            "type": "rod"
+          },
+          {
+            "id": 2,
+            "name": "Star Rod",
+            "quantity": 1,
+            "price": 50000,
+            "icon": "/images/rod/Star_Rod.png",
+            "hp": 75,
+            "maxHp": 75,
             "type": "rod"
           }
         ],
@@ -165,7 +185,18 @@
             "exp": 15
           }
         ],
-        "potions": [],
+        "potions": [
+          {
+            "id": 1,
+            "name": "Luck Potion",
+            "quantity": 1,
+            "price": 2500,
+            "effect": "Luck +10% for 5 minutes",
+            "icon": "/images/potion/Luck_5m.png",
+            "type": "potion",
+            "duration": 300
+          }
+        ],
         "usingRods": {
           "id": 1,
           "name": "Basic Rod",
@@ -176,20 +207,7 @@
           "maxHp": 50,
           "type": "rod"
         },
-        "usingPotion": [
-          {
-            "id": 1,
-            "name": "Luck Potion",
-            "quantity": 1,
-            "price": 2500,
-            "effect": "Luck +10% for 5 minutes",
-            "icon": "/images/potion/Luck_5m.png",
-            "type": "potion",
-            "duration": 300,
-            "remainingTime": 300,
-            "startTime": 1729626042657
-          }
-        ],
+        "usingPotion": [],
         "level": 11,
         "exp": 25,
         "Bookmarks": [
@@ -210,11 +228,10 @@
       "id": "3"
     },
     {
-      "id": "4",
       "playerStore": {
         "id": 4,
         "name": "aaa",
-        "coins": 100000,
+        "coins": 30000,
         "avatar": "/images/image/Player.png",
         "ownedRods": [
           {
@@ -226,25 +243,79 @@
             "hp": 50,
             "maxHp": 50,
             "type": "rod"
+          },
+          {
+            "id": 2,
+            "name": "Star Rod",
+            "quantity": 1,
+            "price": 50000,
+            "icon": "/images/rod/Star_Rod.png",
+            "hp": 75,
+            "maxHp": 75,
+            "type": "rod"
           }
         ],
-        "caughtFish": [],
-        "potions": [],
+        "caughtFish": [
+          {
+            "id": 14,
+            "name": "Giant Pacific Octopus",
+            "quantity": 1,
+            "price": 2500,
+            "icon": "/images/fish/Giant_Pacific_Octopus.png",
+            "type": "fish",
+            "exp": 50
+          },
+          {
+            "id": 9,
+            "name": "White Koi",
+            "quantity": 1,
+            "price": 800,
+            "icon": "/images/fish/White_Koi.png",
+            "type": "fish",
+            "exp": 15
+          },
+          {
+            "id": 3,
+            "name": "Catfish",
+            "quantity": 1,
+            "price": 200,
+            "icon": "/images/fish/Catfish.png",
+            "type": "fish",
+            "exp": 5
+          }
+        ],
+        "potions": [
+          {
+            "id": 3,
+            "name": "Full Luck Potion",
+            "quantity": 2,
+            "price": 10000,
+            "effect": "Luck +10% for 1 hour",
+            "icon": "/images/potion/Luck_1h.png",
+            "type": "potion",
+            "duration": 3600
+          }
+        ],
         "usingRods": {
           "id": 1,
           "name": "Basic Rod",
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 50,
+          "hp": 41,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 1,
-        "exp": 0,
-        "Bookmarks": []
-      }
+        "level": 3,
+        "exp": 20,
+        "Bookmarks": [
+          "Giant Pacific Octopus",
+          "White Koi",
+          "Catfish"
+        ]
+      },
+      "id": "4"
     }
   ]
 }

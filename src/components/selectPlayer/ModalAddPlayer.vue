@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { usePlayerStore } from "@/stores/player";
 
 const playerStore = usePlayerStore();
-const newPlayerName = ref(""); // รับเฉพาะชื่อจากผู้ใช้
+const newPlayerName = ref("");
 
 const emit = defineEmits(["close", "refresh"]);
 
@@ -48,8 +48,8 @@ const handleAddPlayer = async () => {
 
   try {
     await playerStore.addPlayer(`${import.meta.env.VITE_APP_URL}`, newPlayer);
-    emit("refresh"); // อัปเดตข้อมูลผู้เล่นใหม่
-    newPlayerName.value = ""; // ล้างค่าอินพุต
+    emit("refresh");
+    newPlayerName.value = "";
     emit("close");
   } catch (error) {
     console.error("Failed to add player:", error);

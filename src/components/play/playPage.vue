@@ -332,8 +332,7 @@ const changePage = (value) => {
     <button
       class="bg-green-500 text-white px-4 py-2 rounded fixed right-4 top-1/2 transform -translate-y-1/2 z-50"
       @click="toggleMapModal"
-    >
-      Change Map
+    > change map
     </button>
 
     <p class="text-black text-xl font-bold mt-32">

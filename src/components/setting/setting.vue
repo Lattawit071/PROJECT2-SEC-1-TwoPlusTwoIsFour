@@ -46,7 +46,7 @@ const confirmLogout = () => {
             {{ Player.playerStore.coins }}
           </p>
           <button
-            class="bg-gray-800 text-white border border-gray-600 rounded-lg px-3 py-1 sm:px-4 sm:py-2 hover:bg-gray-700 transition-colors duration-200 text-sm sm:text-base"
+            class="bg-[#8aabd5] text-white border border-gray-600 rounded-lg px-3 py-1 sm:px-4 sm:py-2 hover:bg-[#456185] transition-colors duration-200 text-sm sm:text-base"
             @click="showLogoutModal = true"
           >
             Logout
@@ -111,21 +111,21 @@ const confirmLogout = () => {
         class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-60"
       >
         <div
-          class="bg-gray-800 text-white p-4 rounded-lg shadow-lg w-4/5 md:w-1/3"
+          class="bg-[#8aabd5] text-white p-4 rounded-lg shadow-lg w-4/5 md:w-1/3 items-center justify-center"
         >
-          <h3 class="text-lg font-bold mb-4">
+          <h3 class="text-lg font-bold mb-4 items-center justify-center">
             Are you sure you want to log out?
           </h3>
           <div class="flex justify-end space-x-2">
             <button
               @click="confirmLogout"
-              class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
+              class="bg-[#3871bd] hover:bg-[#1b3250] text-white py-2 px-4 rounded-lg"
             >
               Yes, Logout
             </button>
             <button
               @click="showLogoutModal = false"
-              class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg"
+              class="bg-[#5f6367] hover:bg-gray-700 text-white py-2 px-4 rounded-lg"
             >
               Cancel
             </button>

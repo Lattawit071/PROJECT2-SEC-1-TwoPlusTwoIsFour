@@ -171,7 +171,7 @@ export const usePlayerStore = defineStore("playerStore", () => {
     toastStore.showToast(`Sold all ${targetFish.name}`, "success");
     soundStore.playSellSuccessSound();
 
-    updatePlayerState(import.meta.env.VITE_APP_URL); // อัปเดต Backend
+    updatePlayerState(import.meta.env.VITE_APP_URL);
   }
 
   function sellFish(fish) {
