@@ -40,7 +40,6 @@ const luck = ref(0);
 
 const hookAnimationClass = ref("hook-animation-down");
 
-
 function getPotionPlayerById(id) {
   return player.playerStore.usingPotion.find((potion) => potion.id === id);
 }
@@ -61,29 +60,40 @@ function addCaughtFish(fishId) {
       existingFish.quantity += 1;
     } else {
       player.playerStore.caughtFish.push(fish);
-      const isExist = player.playerStore.Bookmarks.filter((bookmark)=> bookmark===fish.name)
-      
-      if (isExist.length===0) {
-        player.playerStore.Bookmarks.push(fish.name)
+      const isExist = player.playerStore.Bookmarks.filter(
+        (bookmark) => bookmark === fish.name
+      );
+
+      if (isExist.length === 0) {
+        player.playerStore.Bookmarks.push(fish.name);
       }
     }
-    
-    player.playerStore.exp = player.playerStore.exp + fish.exp
-    const requireNext = getNextLevel(player.playerStore.level)
-    if (player.playerStore.exp >= requireNext.exp_required) {
-      player.playerStore.level = player.playerStore.level+1
-      
-      player.playerStore.exp = player.playerStore.exp - requireNext.exp_required
-      
-    }
-    player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`)
-  }
 
+    player.playerStore.exp = player.playerStore.exp + fish.exp;
+    let stop = false;
+    for (let index = 0; index < 100; index++) {
+      if (!stop) {
+        const requireNext = getNextLevel(player.playerStore.level+index);
+        
+        if (player.playerStore.exp >= requireNext.exp_required) {
+          player.playerStore.level = player.playerStore.level + 1;
+          player.playerStore.exp = player.playerStore.exp - requireNext.exp_required;
+
+        }
+        const requireNext2 = getNextLevel(player.playerStore.level+1+index);
+        
+        if (player.playerStore.exp <= requireNext2.exp_required) {
+          stop = true
+        }
+      }
+    }
+    player.updatePlayerState(`${import.meta.env.VITE_APP_URL}`);
+  }
 }
 
 function getNextLevel(num) {
-  const nextLevel = num+1
-  return level.find((level) => level.level === nextLevel)
+  const nextLevel = num + 1;
+  return level.find((level) => level.level === nextLevel);
 }
 
 function getFishById(id) {
@@ -100,14 +110,13 @@ const hook = () => {
 
     if (player.playerStore.usingRods.hp < reducesHp.value) {
       sound.playFailBuySound();
-      
     } else {
       player.playerStore.usingRods.hp -= reducesHp.value;
       rodId.value = player.playerStore.usingRods.id;
       sound.playHookFishSound();
       hookAnimationClass.value = "hook-animation-down";
       hooking.value = true;
-      
+
       waitingForFunction();
     }
   } else {
@@ -282,10 +291,10 @@ const closeModal = () => {
   gottenFish.value = false;
 };
 
-const emit = defineEmits(['togglePage']);
+const emit = defineEmits(["togglePage"]);
 
 const changePage = (value) => {
-  emit('togglePage', value);
+  emit("togglePage", value);
 };
 </script>
 
@@ -309,17 +318,9 @@ const changePage = (value) => {
       @repairRod="repairRod"
       @repairToggle="toggleRepairModal"
     />
-    <TopNavbar
-      @repairToggle="toggleRepairModal"
-    ></TopNavbar>
-    <BottomNavBar
-      @togglePage="changePage"
-      @hook="hook"
-    >
-    </BottomNavBar>
+    <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
+    <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

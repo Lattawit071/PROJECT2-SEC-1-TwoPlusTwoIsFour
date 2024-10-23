@@ -167,7 +167,71 @@
             "type": "rod"
           }
         ],
-        "caughtFish": [],
+        "caughtFish": [
+          {
+            "id": 13,
+            "name": "Blue Whale",
+            "quantity": 2,
+            "price": 2500,
+            "icon": "/images/fish/Blue_Whale.png",
+            "type": "fish",
+            "exp": 50
+          },
+          {
+            "id": 1,
+            "name": "Sardine",
+            "quantity": 1,
+            "price": 50,
+            "icon": "/images/fish/Sardine.png",
+            "type": "fish",
+            "exp": 5
+          },
+          {
+            "id": 2,
+            "name": "Clownfish",
+            "quantity": 1,
+            "price": 150,
+            "icon": "/images/fish/Clownfish.png",
+            "type": "fish",
+            "exp": 5
+          },
+          {
+            "id": 14,
+            "name": "Giant Pacific Octopus",
+            "quantity": 1,
+            "price": 2500,
+            "icon": "/images/fish/Giant_Pacific_Octopus.png",
+            "type": "fish",
+            "exp": 50
+          },
+          {
+            "id": 3,
+            "name": "Catfish",
+            "quantity": 1,
+            "price": 200,
+            "icon": "/images/fish/Catfish.png",
+            "type": "fish",
+            "exp": 5
+          },
+          {
+            "id": 16,
+            "name": "Rainbow Fish",
+            "quantity": 1,
+            "price": 3500,
+            "icon": "/images/fish/Rainbow_Fish.png",
+            "type": "fish",
+            "exp": 70
+          },
+          {
+            "id": 18,
+            "name": "Diamond",
+            "quantity": 1,
+            "price": 5000,
+            "icon": "/images/fish/Diamond.png",
+            "type": "fish",
+            "exp": 100
+          }
+        ],
         "potions": [],
         "usingRods": {
           "id": 1,
@@ -175,14 +239,22 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 47,
+          "hp": 14,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
-        "level": 1,
-        "exp": 0,
-        "Bookmarks": []
+        "level": 3,
+        "exp": 40,
+        "Bookmarks": [
+          "Blue Whale",
+          "Sardine",
+          "Clownfish",
+          "Giant Pacific Octopus",
+          "Catfish",
+          "Rainbow Fish",
+          "Diamond"
+        ]
       },
       "id": "4"
     }
