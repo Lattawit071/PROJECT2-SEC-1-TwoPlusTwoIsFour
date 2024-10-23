@@ -17,7 +17,7 @@ const props = defineProps({
   },
 });
 
-defineEmits(["playHoverSound", "closeModal"]);
+defineEmits(["closeModal"]);
 </script>
 
 <template>
