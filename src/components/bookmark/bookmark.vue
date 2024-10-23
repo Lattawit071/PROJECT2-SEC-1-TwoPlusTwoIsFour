@@ -4,24 +4,24 @@ import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
 
-const useplayerStore = usePlayerStore();
-const soundStore = useSoundStore();
-
+const player = usePlayerStore();
+const sound = useSoundStore();
 const selectFish = ref("common");
 
-function filterFish(a, b) {
-  return fishStore.filter((fish) => fish.id >= a && fish.id <= b);
+function filterFish(minId, maxId) {
+  return fishStore.filter((fish) => fish.id >= minId && fish.id <= maxId); // เอาปลาไอดีที่ min - ไอดี ที่ max
 }
 
 function isFishInPlayerStore(fishId) {
-  const highlightedFish = ref(new Set());
-  if (
-    useplayerStore.playerStore.caughtFish.some((fish) => fish.id === fishId)
-  ) {
-    highlightedFish.value.add(fishId);
-    return true;
-  }
-  return highlightedFish.value.has(fishId);
+  const isCaught = player.playerStore.caughtFish.some(
+    (fish) => fish.id === fishId
+  );
+
+  const fishInStore = fishStore.find((fish) => fish.id === fishId);
+  const isBookmarked =
+    fishInStore && player.playerStore.Bookmarks.includes(fishInStore.name);
+
+  return isCaught || isBookmarked;
 }
 </script>
 
@@ -34,7 +34,7 @@ function isFishInPlayerStore(fishId) {
         class="header fade-up bg-gradient-to-b bg-gray-900 to-yellow-900 border-black w-[90%] md:w-[60%] min-w-[300px] rounded-lg shadow-lg p-6"
       >
         <button
-          @mouseenter="soundStore.playHoverSound()"
+          @mouseenter="sound.playHoverSound()"
           @click="$emit('togglePage', 5)"
           class="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded hover:bg-yellow-500"
         >
@@ -77,7 +77,6 @@ function isFishInPlayerStore(fishId) {
           </div>
         </div>
 
-        <!-- Fish Display Based on Category -->
         <div
           v-show="selectFish === 'common'"
           class="grid grid-cols-2 md:grid-cols-3 gap-4"
@@ -261,26 +260,6 @@ function isFishInPlayerStore(fishId) {
       #b3b3ff
     )
     1;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(255, 179, 255, 0.5), 0 0 30px rgba(179, 255, 255, 0.5),
-    0 0 40px rgba(179, 255, 179, 0.5), 0 0 50px rgba(255, 179, 179, 0.5),
-    0 0 60px rgba(179, 179, 255, 0.5);
-}
-
-.bg-gray-1000 {
-  background-color: #160a06;
-}
-
-.text-yellow-100 {
-  color: #fff9c4;
-}
-
-.bg-gray-900 {
-  background-color: #2b1b17;
-}
-
-.bg-yellow-600 {
-  background-color: #ffb74d;
 }
 
 @keyframes blueGradient {
