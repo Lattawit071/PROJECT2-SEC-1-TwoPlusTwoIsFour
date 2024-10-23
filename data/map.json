@@ -54,7 +54,7 @@
       "type": "map"
     },
     {
-      "lvl": 90,
+      "level": 90,
       "name": "world 10",
       "icon": "/map/world10.png",
       "type": "map"

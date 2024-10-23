@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import playBackgroundImg from "/images/image/PLAY.png";
 import TopNavbar from "./TopNavbar.vue";
 import HookButton from "./HookButton.vue";
 import OutComesModal from "./OutComesModal.vue";
 import RepairModal from "./RepairModal.vue";
 import BottomNavBar from "./BottomNavBar.vue";
 import MapSelection from "./MapSelection.vue";
+import mapData from "../../../data/map.json";
 //data
 import potion from "../../../data/potion.json";
 import fish from "../../../data/fish.json";
@@ -40,7 +40,7 @@ const rodId = ref();
 const luck = ref(0);
 
 const isMapModalOpen = ref(false);
-const currentMap = ref("world 1");
+const currentMap = ref(mapData.find((map) => map.name === "world 1") || mapData[0]);
 
 const hookAnimationClass = ref("hook-animation-down");
 
@@ -326,7 +326,7 @@ const changePage = (value) => {
 <template>
   <div
     class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative"
-    :style="{ backgroundImage: `url('/images/image/PLAY.png')` }"
+    :style="{ backgroundImage: `url(${currentMap.icon})` }"
   >
     <!-- ปุ่มสำหรับเปิด Modal -->
     <button
@@ -336,9 +336,9 @@ const changePage = (value) => {
       Change Map
     </button>
 
-    <p class="text-white text-xl font-bold mt-4">
-      Current Map: {{ currentMap }}
-    </p>
+    <p class="text-black text-xl font-bold mt-32">
+ Map: {{ currentMap.name }}
+</p>
 
     <!-- เรียกใช้ Map Selection Modal -->
     <MapSelection
