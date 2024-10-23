@@ -1,5 +1,5 @@
 <script setup>
-import { ref} from "vue";
+import { ref } from "vue";
 import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
 import fishStore from "../../../data/fish.json";
@@ -56,7 +56,11 @@ function isFishInPlayerStore(fishId) {
             </p>
             <select
               v-model="selectFish"
-              class="block appearance-none w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md hover:bg-yellow-100 focus:outline-none transition duration-300 cursor-pointer"
+              :class="[
+                'block w-full bg-yellow-100 border border-yellow-300 text-gray-700 py-2 px-4 pr-8 rounded-lg shadow-md',
+                'appearance-none',
+                'hover:bg-yellow-500',
+              ]"
             >
               <option value="common">Common</option>
               <option value="rare">Rare</option>
