@@ -230,6 +230,15 @@
             "icon": "/images/fish/Diamond.png",
             "type": "fish",
             "exp": 100
+          },
+          {
+            "id": 12,
+            "name": "Orca",
+            "quantity": 1,
+            "price": 2000,
+            "icon": "/images/fish/Orca.png",
+            "type": "fish",
+            "exp": 40
           }
         ],
         "potions": [],
@@ -239,13 +248,13 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 5,
+          "hp": 2,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
         "level": 10,
-        "exp": 40,
+        "exp": 80,
         "Bookmarks": [
           "Blue Whale",
           "Sardine",
@@ -253,7 +262,8 @@
           "Giant Pacific Octopus",
           "Catfish",
           "Rainbow Fish",
-          "Diamond"
+          "Diamond",
+          "Orca"
         ]
       },
       "id": "4"

@@ -37,7 +37,7 @@ const reducesHp = ref();
 const fishId = ref();
 const rodId = ref();
 const luck = ref(0);
-const LvlModal = ref(false)
+const LvlModal = ref(false);
 const hookAnimationClass = ref("hook-animation-down");
 
 function getPotionPlayerById(id) {
@@ -71,20 +71,25 @@ function addCaughtFish(fishId) {
 
     player.playerStore.exp = player.playerStore.exp + fish.exp;
     let stop = false;
-    for (let index = 0; index < 100; index++) {
-      if (!stop) {
-        const requireNext = getNextLevel(player.playerStore.level+index);
-        
-        if (player.playerStore.exp >= requireNext.exp_required) {
-          player.playerStore.level = player.playerStore.level + 1;
-          player.playerStore.exp = player.playerStore.exp - requireNext.exp_required;
+    const requireNextCheck = getNextLevel(player.playerStore.level);
+    if (player.playerStore.exp >= requireNextCheck.exp_required) {
+      for (let index = 0; index < 100; index++) {
+        if (!stop) {
+          const requireNext = getNextLevel(player.playerStore.level + index);
 
-        }
-        const requireNext2 = getNextLevel(player.playerStore.level+1+index);
-        
-        if (player.playerStore.exp <= requireNext2.exp_required) {
-          stop = true
-          LvlModal.value = true
+          if (player.playerStore.exp >= requireNext.exp_required) {
+            player.playerStore.level = player.playerStore.level + 1;
+            player.playerStore.exp =
+              player.playerStore.exp - requireNext.exp_required;
+          }
+          const requireNext2 = getNextLevel(
+            player.playerStore.level + 1 + index
+          );
+
+          if (player.playerStore.exp <= requireNext2.exp_required) {
+            stop = true;
+            LvlModal.value = true;
+          }
         }
       }
     }
@@ -293,8 +298,8 @@ const closeModal = () => {
 };
 
 const closeLvlModal = () => {
-  LvlModal.value = false
-}
+  LvlModal.value = false;
+};
 
 const emit = defineEmits(["togglePage"]);
 
@@ -323,7 +328,7 @@ const changePage = (value) => {
       @repairRod="repairRod"
       @repairToggle="toggleRepairModal"
     />
-    <LevelUp v-if="LvlModal" @closeLvlModal="closeLvlModal"/>
+    <LevelUp v-if="LvlModal" @closeLvlModal="closeLvlModal" />
     <TopNavbar @repairToggle="toggleRepairModal"></TopNavbar>
     <BottomNavBar @togglePage="changePage" @hook="hook"> </BottomNavBar>
   </div>
