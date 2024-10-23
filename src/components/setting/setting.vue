@@ -2,100 +2,141 @@
 import { ref } from "vue";
 import { usePlayerStore } from "../../stores/player.js";
 import { useSoundStore } from "../../stores/sounds.js";
-const usePlayer = usePlayerStore();
-const useSound = useSoundStore();
-const props = defineProps({});
-defineEmits([
-  "playHoverSound",
-  "togglePage",
-  "hook",
-  "repairToggle",
-  "page",
-  "saveSettings",
-]);
-</script>
 
+const Player = usePlayerStore();
+const Sound = useSoundStore();
+const showLogoutModal = ref(false);
+
+const emit = defineEmits();
+
+const confirmLogout = () => {
+  showLogoutModal.value = false;
+  emit("logout"); //อันนี้จะปิด setting modal(ถ้าไม่ใช้อันนี้ setting มันจะทับ)
+  emit("togglePage", 6); // เปลี่ยนกลับไปหน้า เลือก player
+};
+</script>
 <template>
   <div
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   >
     <div
-      class="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3"
+      class="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/5 xl:w-2/5"
     >
       <h2 class="text-2xl font-bold mb-4">Settings</h2>
+      <div
+        class="flex flex-col md:flex-row justify-between items-center mb-6 border-b border-gray-700 pb-4 space-y-4 md:space-y-0 md:flex-wrap"
+      >
+        <div class="flex items-center space-x-2">
+          <p class="text-lg font-medium">User:</p>
+          <p class="text-lg font-bold text-yellow-500">
+            {{ Player.playerStore.name }}
+          </p>
+        </div>
 
-      <div class="mb-6">
+        <div class="flex items-center space-x-2">
+          <p class="text-lg">Level:</p>
+          <p class="text-lg font-semibold text-yellow-500">
+            {{ Player.playerStore.level }}
+          </p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-lg">Coins:</p>
+          <p class="text-lg font-bold text-yellow-500">
+            {{ Player.playerStore.coins }}
+          </p>
+          <button
+            class="bg-gray-800 text-white border border-gray-600 rounded-lg px-3 py-1 sm:px-4 sm:py-2 hover:bg-gray-700 transition-colors duration-200 text-sm sm:text-base"
+            @click="showLogoutModal = true"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-6 mt-5">
         <label class="flex items-center mb-2">
           <div
-            @click="useSound.toggleSound"
+            @click="Sound.toggleSound"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': useSound.isSoundOn,
-              'bg-gray-500': !useSound.isSoundOn,
+              'bg-green-500 is-on': Sound.isSoundOn,
+              'bg-gray-500': !Sound.isSoundOn,
             }"
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3">Sound On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">Sound On/Off</span>
         </label>
         <label class="flex items-center mb-2">
           <div
-            @click="useSound.toggleMusic"
+            @click="Sound.toggleMusic"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': useSound.isMusicOn,
-              'bg-gray-500': !useSound.isMusicOn,
+              'bg-green-500 is-on': Sound.isMusicOn,
+              'bg-gray-500': !Sound.isMusicOn,
             }"
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3">Music On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">Music On/Off</span>
         </label>
         <label class="flex items-center">
           <div
-            @click="useSound.toggleSfx"
+            @click="Sound.toggleSfx"
             class="toggle-switch relative inline-flex items-center cursor-pointer"
             :class="{
-              'bg-green-500 is-on': useSound.isSfxOn,
-              'bg-gray-500': !useSound.isSfxOn,
+              'bg-green-500 is-on': Sound.isSfxOn,
+              'bg-gray-500': !Sound.isSfxOn,
             }"
           >
             <span class="toggle-circle"></span>
           </div>
-          <span class="ml-3">SFX On/Off</span>
+          <span class="ml-3 text-sm sm:text-base">SFX On/Off</span>
         </label>
-      </div>
-
-      <div class="mb-6">
-        <label class="block mb-2 font-bold">Change Player Name:</label>
-        <input
-          v-model="usePlayer.playerStore.name"
-          type="text"
-          class="w-full p-2 rounded-md bg-gray-800 text-white focus:outline-none"
-          placeholder="Enter new player name"
-          maxlength="20"
-        />
       </div>
 
       <div class="flex justify-end space-x-4">
         <button
-          @mouseenter="useSound.playHoverSound"
+          @mouseenter="Sound.playHoverSound"
           @click="$emit('saveSettings')"
-          class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-3 sm:px-4 rounded-lg text-sm sm:text-base"
         >
           OK
         </button>
+      </div>
+
+      <div
+        v-show="showLogoutModal"
+        class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-60"
+      >
+        <div
+          class="bg-gray-800 text-white p-4 rounded-lg shadow-lg w-4/5 md:w-1/3"
+        >
+          <h3 class="text-lg font-bold mb-4">
+            Are you sure you want to log out?
+          </h3>
+          <div class="flex justify-end space-x-2">
+            <button
+              @click="confirmLogout"
+              class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
+            >
+              Yes, Logout
+            </button>
+            <button
+              @click="showLogoutModal = false"
+              class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.toast-message-error {
-  color: #c62828;
-  font-weight: bold;
-}
-
 .toggle-switch {
   width: 50px;
   height: 24px;

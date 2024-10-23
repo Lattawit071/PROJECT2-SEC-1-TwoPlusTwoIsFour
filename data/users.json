@@ -1,7 +1,6 @@
 {
   "user": [
     {
-      "id": "1",
       "playerStore": {
         "id": 1,
         "name": "Admin",
@@ -19,7 +18,24 @@
             "type": "rod"
           }
         ],
-        "caughtFish": [],
+        "caughtFish": [
+          {
+            "id": 14,
+            "name": "Giant Pacific Octopus",
+            "quantity": 1,
+            "price": 2500,
+            "icon": "/images/fish/Giant_Pacific_Octopus.png",
+            "type": "fish"
+          },
+          {
+            "id": 8,
+            "name": "Eel",
+            "quantity": 1,
+            "price": 300,
+            "icon": "/images/fish/Eel.png",
+            "type": "fish"
+          }
+        ],
         "potions": [],
         "usingRods": {
           "id": 1,
@@ -27,14 +43,18 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 50,
+          "hp": 44,
           "maxHp": 50,
           "type": "rod"
         },
         "usingPotion": [],
         "level": 999,
-        "Bookmarks": []
-      }
+        "Bookmarks": [
+          "Giant Pacific Octopus",
+          "Eel"
+        ]
+      },
+      "id": "1"
     },
     {
       "playerStore": {
@@ -58,7 +78,7 @@
           {
             "id": 13,
             "name": "Blue Whale",
-            "quantity": 1,
+            "quantity": 2,
             "price": 2500,
             "icon": "/images/fish/Blue_Whale.png",
             "type": "fish"
@@ -111,7 +131,7 @@
           "quantity": 1,
           "price": 0,
           "icon": "/images/rod/Basic_Rod.png",
-          "hp": 20,
+          "hp": 17,
           "maxHp": 50,
           "type": "rod"
         },
