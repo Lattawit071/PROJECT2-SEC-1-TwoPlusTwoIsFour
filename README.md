@@ -22,6 +22,8 @@
 
 ### Add Player
 
+### store value in database from shop page
+
 <hr>
 
 ## 65130500072 วริทธิ์ธร สิริวัชระกุล 
@@ -44,7 +46,9 @@
 
 ### GetAll GetById Player
 
-### Level+Quest
+### Level
+
+### store value in database from playpage
 
 <hr>
 
@@ -71,8 +75,13 @@
 - playerStore
 - soundStore
 - toastStore
+- mapStore
   
 ### Edit Player
+
+### Map
+
+### store value in database from inventory
 
 <hr>
 
@@ -96,6 +105,11 @@
 - Setting and Bookmark + use pinia
 
 ### Delete Player
+
+### Logout
+
+### adjust Bookmark
+- to show when close and open again from database
 
 <hr>
 
