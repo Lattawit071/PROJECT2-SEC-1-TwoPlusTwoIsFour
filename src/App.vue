@@ -69,11 +69,7 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
 
 <template>
   <bookmark v-if="page === 4" @togglePage="togglePage" />
-  <selectPlayerPage
-    v-if="page === 6"
-    @goBack="togglePage"
-    @togglePage="togglePage"
-  />
+  <selectPlayerPage v-if="page === 6" @togglePage="togglePage" />
   <LoadingPage />
 
   <div
@@ -125,8 +121,8 @@ import selectPlayerPage from "./components/selectPlayer/selectPlayerPage.vue";
           />
           <span
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-6xl text-white font-handwritten transition-colors duration-300 hover:text-black"
-           style="font-family: 'Pacifico', cursive"
-            >
+            style="font-family: 'Pacifico', cursive"
+          >
             PLAY
           </span>
         </div>

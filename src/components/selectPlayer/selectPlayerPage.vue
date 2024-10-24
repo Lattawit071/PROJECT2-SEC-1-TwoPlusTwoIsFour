@@ -12,7 +12,6 @@ const selectedPlayer = ref(null);
 const isAddModalOpen = ref(false);
 const isEditModalOpen = ref(false);
 
-
 onMounted(async () => {
   playerList.value = await playerStore.getAllPlayer(
     `${import.meta.env.VITE_APP_URL}`
@@ -41,7 +40,6 @@ const openEditModal = (player) => {
   selectedPlayer.value = player;
   isEditModalOpen.value = true;
 };
-
 </script>
 
 <template>
